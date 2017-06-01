@@ -1,5 +1,5 @@
 jQuery( function( $ ) {
-	var api_url = vars.api_url;
+	var rest_api_url = vars.rest_api_url;
 	
 	pvc = { apps: {}, models: {}, collections: {}, views: {} };
 
@@ -20,7 +20,7 @@ jQuery( function( $ ) {
 	pvc.collections.Stats = Backbone.Collection.extend({
 		model: pvc.models.State,
 		
-		url: api_url
+		url: rest_api_url
 		
 	});
 	
@@ -57,18 +57,48 @@ jQuery( function( $ ) {
 	});
 	
 	pvc.apps.app = {
-		initialize: function( pvc_ids, api_url ) {
-			this.api_url = api_url;
+		initialize: function( pvc_ids, rest_api_url ) {
+			this.rest_api_url = rest_api_url;
 			console.log('Load Page View Count of ' + JSON.stringify(pvc_ids) );
-			$.get( this.api_url, { action: 'pvc_backbone_load_stats', post_ids: pvc_ids }, function( data_pvc ) {
-				console.log(data_pvc);
-				$.each( data_pvc, function (index, data) {
-					collection = new pvc.collections.Stats;
-					new pvc.views.AppView( { collection: collection, el : $('#pvc_stats_' + index ) } );
-					collection.add( data );
-					
-				});
+
+			view_pvc_ids = [];
+			increase_pvc_ids = [];
+
+			$.each( pvc_ids, function (index, data) {
+				if ( data.ask_update ) {
+					increase_pvc_ids.push( post_id );
+				} else {
+					view_pvc_ids.push( post_id );
+				}
 			});
+
+			if ( increase_pvc_ids.length ) {
+				$.get( this.rest_api_url + '/increase/' + increase_pvc_ids.join(','), function( data_pvc ) {
+					console.log(data_pvc);
+					if ( data_pvc.success ) {
+						$.each( data_pvc.items, function (index, data) {
+							collection = new pvc.collections.Stats;
+							new pvc.views.AppView( { collection: collection, el : $('#pvc_stats_' + index ) } );
+							collection.add( data );
+							
+						});
+					}
+				});
+			}
+
+			if ( view_pvc_ids.length ) {
+				$.get( this.rest_api_url + '/view/' + view_pvc_ids.join(','), function( data_pvc ) {
+					console.log(data_pvc);
+					if ( data_pvc.success ) {
+						$.each( data_pvc.items , function (index, data) {
+							collection = new pvc.collections.Stats;
+							new pvc.views.AppView( { collection: collection, el : $('#pvc_stats_' + index ) } );
+							collection.add( data );
+							
+						});
+					}
+				});
+			}
 		}
 
 	}
@@ -86,6 +116,6 @@ jQuery( document ).ready( function( $ ) {
 		});
 		
 		var app = pvc.apps.app;
-		app.initialize( pvc_ids, vars.api_url );
+		app.initialize( pvc_ids, vars.rest_api_url );
 	}
 });

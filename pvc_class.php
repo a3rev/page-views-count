@@ -200,6 +200,7 @@ class A3_PVC
 
 	public static function register_plugin_scripts() {
 		global $pvc_settings;
+		global $pvc_api;
 
 		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
 
@@ -223,7 +224,7 @@ class A3_PVC
 	</script>
     <?php
 		wp_enqueue_script( 'a3-pvc-backbone', A3_PVC_JS_URL . '/pvc.backbone'.$suffix.'.js', array( 'jquery', 'backbone', 'underscore' ), A3_PVC_VERSION );
-		wp_localize_script( 'a3-pvc-backbone', 'vars', array( 'api_url' => admin_url( 'admin-ajax.php' ) ) );
+		wp_localize_script( 'a3-pvc-backbone', 'vars', array( 'rest_api_url' => rest_url( '/' . $pvc_api->namespace ) ) );
 	}
 
 	public static function fixed_wordpress_seo_plugin( $ogdesc = '' ) {

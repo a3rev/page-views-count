@@ -3,7 +3,7 @@
  * Process when plugin is activated
  */
 function pvc_install(){
-	update_option('a3_pvc_version', '1.4.0');
+	update_option('a3_pvc_version', '1.4.0' );
 
 	// empty pvc_daily table for daily
 	wp_schedule_event( time(), 'daily', 'pvc_empty_daily_table_daily_event_hook' );
@@ -29,30 +29,13 @@ function pvc_deactivation() {
 update_option('a3rev_pvc_plugin', 'a3_page_view_count');
 update_option('a3rev_auth_pvc', '');
 
-
-/**
- * Load Localisation files.
- *
- * Note: the first-loaded translation file overrides any following ones if the same translation is present.
- *
- * Locales found in:
- * 		- WP_LANG_DIR/page-views-count/page-views-count-LOCALE.mo
- * 	 	- /wp-content/plugins/page-views-count/languages/page-views-count-LOCALE.mo (which if not found falls back to)
- * 	 	- WP_LANG_DIR/plugins/page-views-count-LOCALE.mo
- */
-function a3_pvc_load_plugin_textdomain() {
-	$locale = apply_filters( 'plugin_locale', get_locale(), 'page-views-count' );
-
-	load_textdomain( 'page-views-count', WP_LANG_DIR . '/page-views-count/page-views-count-' . $locale . '.mo' );
-	load_plugin_textdomain( 'page-views-count', false, A3_PVC_FOLDER . '/languages/' );
-}
-
 function a3_pvc_plugin_init() {
 	if ( get_option('pvc_just_installed') ) {
 		delete_option('pvc_just_installed');
 		wp_redirect( admin_url( 'options-general.php?page=a3-pvc', 'relative' ) );
 		exit;
 	}
+
 	// Set up localisation
 	a3_pvc_load_plugin_textdomain();
 }
