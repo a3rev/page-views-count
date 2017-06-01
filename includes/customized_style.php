@@ -7,7 +7,7 @@ body .pvc-stats-icon {
 	color: <?php echo $pvc_settings['icon_color']; ?> !important;
 }
 body .pvc_stats {
-<?php if ( 'center' == $pvc_settings['aligment'] ) { ?>
+<?php if ( 'centre' == $pvc_settings['aligment'] ) { ?>
 	text-align: center;
 	float: none;
 <?php } elseif ( 'right' == $pvc_settings['aligment'] ) { ?>
