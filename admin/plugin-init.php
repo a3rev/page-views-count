@@ -67,7 +67,12 @@ function pvc_empty_daily_table_do_daily() {
 	$wpdb->query("DELETE FROM " . $wpdb->prefix . "pvc_daily WHERE time <= '".date('Y-m-d', strtotime('-2 days'))."'");
 }
 
-add_action('genesis_after_post_content', array('A3_PVC', 'genesis_pvc_stats_echo'));
+$pvc_settings = get_option( 'pvc_settings', array( 'position' => 'bottom' ) );
+if ( 'top' == $pvc_settings['position'] ) {
+	add_action('genesis_before_post_content', array('A3_PVC', 'genesis_pvc_stats_echo'));
+} else {
+	add_action('genesis_after_post_content', array('A3_PVC', 'genesis_pvc_stats_echo'));
+}
 //add_action('loop_end', array('A3_PVC', 'pvc_stats_echo'), 9);
 add_filter('the_content', array('A3_PVC','pvc_stats_show'), 8);
 add_filter('the_excerpt', array('A3_PVC','excerpt_pvc_stats_show'), 8);
@@ -76,16 +81,13 @@ add_filter('the_excerpt', array('A3_PVC','excerpt_pvc_stats_show'), 8);
 // Fixed for Wordpress SEO plugin
 add_filter( 'wpseo_opengraph_desc', array( 'A3_PVC', 'fixed_wordpress_seo_plugin' ) );
 
-// Backbone load page view count stats
-add_action( 'wp_ajax_pvc_backbone_load_stats', array( 'A3_PVC', 'pvc_backbone_load_stats' ) );
-add_action( 'wp_ajax_nopriv_pvc_backbone_load_stats', array( 'A3_PVC', 'pvc_backbone_load_stats' ) );
-
 // Add ajax script to load page view count stats into footer
 add_action( 'wp_enqueue_scripts', array( 'A3_PVC', 'register_plugin_scripts' ) );
 
 // Check upgrade functions
 add_action('plugins_loaded', 'pvc_lite_upgrade_plugin');
 function pvc_lite_upgrade_plugin () {
+	global $a3_pvc_less;
 
 	if(version_compare(get_option('a3_pvc_version'), '1.2') === -1){
 		update_option('a3_pvc_version', '1.2');
@@ -126,7 +128,14 @@ function pvc_lite_upgrade_plugin () {
 		update_option( 'pvc_settings', $pvc_settings );
 	}
 
-	update_option('a3_pvc_version', '1.4.0');
+	if ( version_compare( get_option('a3_pvc_version'), '1.4.1' ) === -1 ) {
+		update_option('a3_pvc_version', '1.4.1');
+
+		// Build sass
+		$a3_pvc_less->plugin_build_sass();
+	}
+
+	update_option('a3_pvc_version', '1.4.1');
 
 }
 

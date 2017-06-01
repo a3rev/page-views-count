@@ -161,43 +161,6 @@ class A3_PVC
 		return $html;
 	}
 
-	public static function pvc_backbone_load_stats() {
-		$post_ids	= $_REQUEST['post_ids'];
-
-		$data = array();
-		$ids = array();
-		if ( is_array( $post_ids ) && count( $post_ids ) > 0 ) {
-			foreach ( $post_ids as $post_id => $post_data ) {
-				$ids[] = $post_id;
-				if ( isset( $post_data['ask_update'] ) && $post_data['ask_update'] == 'true' ) {
-					A3_PVC::pvc_stats_update( $post_id );
-				}
-			}
-			$results = A3_PVC::pvc_fetch_posts_stats( $ids );
-			if ( $results ) {
-				foreach( $results as $result ) {
-					$data[$result->post_id] = array (
-						'post_id'		=> (int) $result->post_id,
-						'total_view' 	=> (int) $result->total,
-						'today_view' 	=> (int) $result->today
-					);
-					$ids = array_diff( $ids, array( $result->post_id ) );
-				}
-			}
-
-			foreach ( $ids as $post_id ) {
-				$total = A3_PVC::pvc_fetch_post_total( $post_id );
-				$data[$post_id] = array (
-					'post_id'		=> (int) $post_id,
-					'total_view' 	=> (int) $total,
-					'today_view' 	=> 0
-				);
-			}
-		}
-		header( 'Content-Type: application/json', true, 200 );
-		die( json_encode( $data ) );
-	}
-
 	public static function register_plugin_scripts() {
 		global $pvc_settings;
 		global $pvc_api;
@@ -250,6 +213,7 @@ class A3_PVC
 
 	public static function pvc_stats_show($content){
 		remove_action('loop_end', array('A3_PVC', 'pvc_stats_echo'));
+		remove_action('genesis_before_post_content', array('A3_PVC', 'genesis_pvc_stats_echo'));
 		remove_action('genesis_after_post_content', array('A3_PVC', 'genesis_pvc_stats_echo'));
 		global $post;
 		if ( ! $post ) return;
@@ -272,9 +236,15 @@ class A3_PVC
 				if ( ! isset( $pvc_settings['enable_ajax_load'] ) || $pvc_settings['enable_ajax_load'] != 'yes' ) {
 					A3_PVC::pvc_stats_update($post->ID);
 				}
-				$content .= A3_PVC::pvc_stats_counter($post->ID, true );
+				$pvc_stats_html = A3_PVC::pvc_stats_counter($post->ID, true );
 			} else {
-				$content .= A3_PVC::pvc_stats_counter($post->ID);
+				$pvc_stats_html = A3_PVC::pvc_stats_counter($post->ID);
+			}
+
+			if ( 'top' == $pvc_settings['position'] ) {
+				$content = $pvc_stats_html . $content;
+			} else {
+				$content .= $pvc_stats_html;
 			}
 		}
 		return $content;
@@ -282,6 +252,7 @@ class A3_PVC
 
 	public static function excerpt_pvc_stats_show($excerpt){
 		remove_action('loop_end', array('A3_PVC', 'pvc_stats_echo'));
+		remove_action('genesis_before_post_content', array('A3_PVC', 'genesis_pvc_stats_echo'));
 		remove_action('genesis_after_post_content', array('A3_PVC', 'genesis_pvc_stats_echo'));
 		global $post;
 		if ( ! $post ) return;
@@ -290,7 +261,12 @@ class A3_PVC
 			$pvc_settings = get_option('pvc_settings', array() );
 		}
 		if ( self::pvc_is_activated( $post->ID ) && 'no' != $pvc_settings['show_on_excerpt_content'] ) {
-			$excerpt .= A3_PVC::pvc_stats_counter($post->ID);
+			$pvc_stats_html = A3_PVC::pvc_stats_counter($post->ID);
+			if ( 'top' == $pvc_settings['position'] ) {
+				$excerpt = $pvc_stats_html . $excerpt;
+			} else {
+				$excerpt .= $pvc_stats_html;
+			}
 		}
 		return $excerpt;
 	}
@@ -484,7 +460,12 @@ if ( 'responsi' === get_template() ) {
            remove_filter('the_content', array('A3_PVC','pvc_stats_show'), 8);
            remove_filter('the_excerpt', array('A3_PVC','excerpt_pvc_stats_show'), 8);
            if ( !is_admin() && !is_home() ) {
-               add_action('responsi_loop_after', 'add_view_count', 30);
+           		global $pvc_settings;
+           		if ( 'top' == $pvc_settings['position'] ) {
+					add_action('responsi_loop_before', 'add_view_count', 30);
+				} else {
+					add_action('responsi_loop_after', 'add_view_count', 30);
+				}
            }
        }
    }
