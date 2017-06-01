@@ -11,3 +11,12 @@
   float: left;
   padding: 5px !important;
 }
+.pvc_stats i.pvc-stats-icon.small {
+  font-size: 10px;
+}
+.pvc_stats i.pvc-stats-icon.medium {
+  font-size: 14px;
+}
+.pvc_stats i.pvc-stats-icon.large {
+  font-size: 18px;
+}

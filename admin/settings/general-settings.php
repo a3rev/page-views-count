@@ -232,6 +232,30 @@ class WP_PVC_General_Settings extends WP_PVC_Admin_UI
 			),
 
 			array(
+            	'name' 		=> __( 'Page Views Count Customize', 'page-views-count' ),
+                'type' 		=> 'heading',
+                'id'		=> 'page_views_count_customize_box',
+                'is_box'	=> true,
+           	),
+			array(
+				'name' => __( 'Icon Size', 'page-views-count' ),
+				'id' 		=> 'icon_size',
+				'default'	=> 'medium',
+				'type' 		=> 'select',
+				'options' => array( 
+					'small'  => __( 'Small', 'page-views-count' ),
+					'medium' => __( 'Medium', 'page-views-count' ),
+					'large'  => __( 'Large', 'page-views-count' ),
+				),
+			),
+			array(  
+				'name' => __( 'Icon Color', 'page-views-count' ),
+				'id' 		=> 'icon_color',
+				'default'	=> '#000000',
+				'type' 		=> 'color',
+			),
+
+			array(
             	'name' 		=> __( 'Page Views Count Load', 'page-views-count' ),
                 'type' 		=> 'heading',
                 'id'		=> 'page_views_count_load_box',

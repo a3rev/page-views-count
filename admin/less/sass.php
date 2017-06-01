@@ -6,7 +6,7 @@ if (!defined('ABSPATH'))
 class A3_PVC_Less
 {
 	public $plugin_name = 'pvc';
-	public $css_file_name = 'style';
+	public $css_file_name = 'pvc';
 	public $plugin_folder = A3_PVC_FOLDER;
 	public $plugin_dir = A3_PVC_DIR;
     
@@ -16,7 +16,7 @@ class A3_PVC_Less
     public function __construct()
     {
 		add_action( $this->plugin_name.'_after_settings_save_reset', array ($this, 'plugin_build_sass') );
-		add_action( 'wp_enqueue_scripts', array ($this, 'apply_style_css_fontend') , 12 );
+		add_action( 'wp_enqueue_scripts', array ($this, 'apply_style_css_fontend') , 11 );
     }
 
 	public function apply_style_css_fontend()

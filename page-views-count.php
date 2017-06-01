@@ -49,6 +49,7 @@ include ('admin/admin-interface.php');
 include ('admin/admin-pages/admin-pvc-page.php');
 
 include ('admin/admin-init.php');
+include ('admin/less/sass.php');
 
 include ("pvc_class.php");
 include ("classes/class-pvc-metabox.php");

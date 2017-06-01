@@ -151,9 +151,9 @@ class A3_PVC
 		$html = '<div class="pvc_clear"></div>';
 
 		if ( $pvc_settings['enable_ajax_load'] == 'yes' ) {
-			$stats_html = '<p id="pvc_stats_'.$post_id.'" class="pvc_stats '.$load_by_ajax_update_class.'" element-id="'.$post_id.'"><img src="'.A3_PVC_URL.'/ajax-loader.gif" border=0 /></p>';
+			$stats_html = '<p id="pvc_stats_'.$post_id.'" class="pvc_stats '.$load_by_ajax_update_class.'" element-id="'.$post_id.'"><i class="fa fa-bar-chart pvc-stats-icon '.$pvc_settings['icon_size'].'" aria-hidden="true"></i><img src="'.A3_PVC_URL.'/ajax-loader.gif" border=0 /></p>';
 		} else {
-			$stats_html = '<p class="pvc_stats" element-id="'.$post_id.'">' . A3_PVC::pvc_get_stats( $post_id ) . '</p>';
+			$stats_html = '<p class="pvc_stats" element-id="'.$post_id.'"><i class="fa fa-bar-chart pvc-stats-icon '.$pvc_settings['icon_size'].'" aria-hidden="true"></i>' . A3_PVC::pvc_get_stats( $post_id ) . '</p>';
 		}
 
 		$html .= apply_filters( 'pvc_filter_stats', $stats_html, $post_id );
@@ -204,13 +204,20 @@ class A3_PVC
 
 		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_enqueue_style( 'a3-pvc-style', A3_PVC_CSS_URL . '/style'.$suffix.'.css', false, A3_PVC_VERSION );
+		// If don't have any plugin or theme register font awesome style then register it from plugin framework
+		if ( ! wp_style_is( 'font-awesome-styles', 'registered' ) ) {
+			global $wp_pvc_admin_interface;
+			$wp_pvc_admin_interface->register_fontawesome_style();
+		}
+
+		wp_enqueue_style( 'a3-pvc-style', A3_PVC_CSS_URL . '/style'.$suffix.'.css', array( 'font-awesome-styles' ), A3_PVC_VERSION );
 
 		if ( $pvc_settings['enable_ajax_load'] != 'yes' ) return;
 
 	?>
     <!-- PVC Template -->
     <script type="text/template" id="pvc-stats-view-template">
+    <i class="fa fa-bar-chart pvc-stats-icon <?php echo $pvc_settings['icon_size']; ?>" aria-hidden="true"></i>
 	<% if ( total_view > 0 ) { %>
 		<%= total_view %> <%= total_view > 1 ? "<?php _e('total views', 'page-views-count'); ?>" : "<?php _e('total view', 'page-views-count'); ?>" %>,
 		<% if ( today_view > 0 ) { %>
