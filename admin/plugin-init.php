@@ -3,7 +3,7 @@
  * Process when plugin is activated
  */
 function pvc_install(){
-	update_option('a3_pvc_version', '1.4.0' );
+	update_option( 'a3_pvc_version', '2.0.0' );
 
 	// empty pvc_daily table for daily
 	wp_schedule_event( time(), 'daily', 'pvc_empty_daily_table_daily_event_hook' );
@@ -128,14 +128,14 @@ function pvc_lite_upgrade_plugin () {
 		update_option( 'pvc_settings', $pvc_settings );
 	}
 
-	if ( version_compare( get_option('a3_pvc_version'), '1.4.1' ) === -1 ) {
-		update_option('a3_pvc_version', '1.4.1');
+	if ( version_compare( get_option('a3_pvc_version'), '2.0.0' ) === -1 ) {
+		update_option('a3_pvc_version', '2.0.0');
 
 		// Build sass
 		$a3_pvc_less->plugin_build_sass();
 	}
 
-	update_option('a3_pvc_version', '1.4.1');
+	update_option('a3_pvc_version', '2.0.0');
 
 }
 

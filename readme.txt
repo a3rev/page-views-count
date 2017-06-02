@@ -1,13 +1,13 @@
 === Page View Count  ===
-Contributors: a3rev, A3 Revolution Software Development team, nguyencongtuan
+Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, postview count,
 Requires at least: 4.6
 Tested up to: 4.8
-Stable tag: 1.5.0
+Stable tag: 2.0.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Places an icon, all time views count and views today count at the bottom of posts, pages and custom post types on any Wordpress website.
+Places an icon, all time views count and views today count at the bottom of posts, pages and custom post types on any WordPress website.
 
 == DESCRIPTION ==
 
@@ -36,11 +36,11 @@ On the plugins dashboard in the + Page Views Count Function options box you will
 
 = TROUBLESHOOTING =
 
-* The number 1 support request we get about the plugin is that it double or triple counts page or post loads. Yes it does and if you see that it is a Red Flag that you have a misconfigfuration or bug in your theme or a plugin. Page Views Count does exactly that - counts each time the page or post is loading in the browser - if its counting twice it is because the browser is double loading the page. That is a bad thing and you or your developer needs to fix that.
+* The number 1 support request we get about the plugin is that it double or triple counts page or post loads. Yes it does and if you see that it is a Red Flag that you have a misconfiguration or bug in your theme or a plugin. Page Views Count does exactly that - counts each time the page or post is loading in the browser - if its counting twice it is because the browser is double loading the page. That is a bad thing and you or your developer needs to fix that.
   
 = CONTRIBUTE  =
 
-When you download a3 Lazy Load, you join our community. Regardless of if you are a WordPress beginner or experienced developer if youre interested in contributing to Page Views Count development head over to the [Page Views Count GitHub Repository](https://github.com/a3rev/a3-lazy-load) to find out how you can contribute.
+When you download a3 Lazy Load, you join our community. Regardless of if you are a WordPress beginner or experienced developer if youre interested in contributing to Page Views Count development head over to the [Page Views Count GitHub Repository](https://github.com/a3rev/page-views-count) to find out how you can contribute.
 Want to add a new language to a3 Lazy Load? Great! You can contribute via [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/page-views-count)
 
 
@@ -69,8 +69,11 @@ The manual installation method involves down loading our plugin and uploading it
 
 == Screenshots ==
 
-1. Page Views Count is added to the bottom of posts and pages
-2. Page Views Count simple admin panel.
+1. Page Views Count Dashboard
+2. Counter Position and Style Options box and settings
+3. Counter Position Bottom and Alignment set to Left
+4. Counter Position Bottom and Alignment set to Centre
+5. Counter Position Bottom and Alignment set to Right
 
 
 == Usage ==
@@ -85,6 +88,19 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.0.0 - 2017/06/02 =
+* Feature - Upgrade Stats image icon to fontawesome Chart Icon
+* Feature - Add new + Counter Position and Style options box on plugins admin panel
+* Feature - Added option to show Page Views Count at Top or Bottom of post and page content
+* Feature - Added Page Views Count Alignment options Left, Centre or Right
+* Feature - Added new fontawesome count icon size and colour settings
+* Feature - Registry endpoint /pvc/v1 for full automatic integration with WordPress JSON RESTful API
+* Feature - Plugin source code now on public Github repository to allow users and developers to contribute
+* Tweak - Update Ajax load for connect to WordPress JSON RESTful API instead of calling to admin-ajax.php
+* Tweak - Register fontawesome in plugin framework with style name font-awesome-styles
+* Tweak - Update plugins readme to show description of new features, link to Github Repo and translations page 
+* Tweak - Tested for compatibility with WordPress major version 4.8.0
 
 = 1.4.0 - 2016/04/15 =
 * Feature - Define new 'Background Color' type on plugin framework with ON | OFF switch to disable background or enable it
@@ -237,6 +253,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.0.0 =
+Major Feature Upgrade. Release of 7 new features and 2 code tweaks for compatibility with upcoming WordPress major version 4.8.0
 
 = 1.4.0 =
 Feature Upgrade. 3 new features, 5 tweaks for full compatibility with WordPress major version 4.5
