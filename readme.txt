@@ -40,8 +40,8 @@ On the plugins dashboard in the + Page Views Count Function options box you will
   
 = CONTRIBUTE  =
 
-When you download a3 Lazy Load, you join our community. Regardless of if you are a WordPress beginner or experienced developer if youre interested in contributing to Page Views Count development head over to the [Page Views Count GitHub Repository](https://github.com/a3rev/page-views-count) to find out how you can contribute.
-Want to add a new language to a3 Lazy Load? Great! You can contribute via [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/page-views-count)
+When you download Page Views Count, you join our community. Regardless of if you are a WordPress beginner or experienced developer if youre interested in contributing to Page Views Count development head over to the [Page Views Count GitHub Repository](https://github.com/a3rev/page-views-count) to find out how you can contribute.
+Want to add a new language to Page Views Count? Great! You can contribute via [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/page-views-count)
 
 
 == Installation ==
