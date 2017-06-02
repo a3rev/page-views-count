@@ -232,13 +232,13 @@ class WP_PVC_General_Settings extends WP_PVC_Admin_UI
 			),
 
 			array(
-            	'name' 		=> __( 'Page Views Count Customize', 'page-views-count' ),
+            	'name' 		=> __( 'Counter Position and Style', 'page-views-count' ),
                 'type' 		=> 'heading',
                 'id'		=> 'page_views_count_customize_box',
                 'is_box'	=> true,
            	),
            	array(
-				'name' => __( 'Position', 'page-views-count' ),
+				'name' => __( 'Counter Position', 'page-views-count' ),
 				'desc' 		=> '',
 				'id' 		=> 'position',
 				'default'	=> 'bottom',
@@ -249,7 +249,7 @@ class WP_PVC_General_Settings extends WP_PVC_Admin_UI
 				'unchecked_label' 	=> __( 'BOTTOM', 'page-views-count' ),
 			),
 			array(
-				'name' => __( 'Alignment', 'page-views-count' ),
+				'name' => __( 'Counter Alignment', 'page-views-count' ),
 				'desc' 		=> '',
 				'id' 		=> 'aligment',
 				'default'	=> 'left',
@@ -276,7 +276,7 @@ class WP_PVC_General_Settings extends WP_PVC_Admin_UI
 				),
 			),
 			array(
-				'name' => __( 'Icon Size', 'page-views-count' ),
+				'name' => __( 'Counter Icon Size', 'page-views-count' ),
 				'id' 		=> 'icon_size',
 				'default'	=> 'medium',
 				'type' 		=> 'select',
@@ -287,7 +287,7 @@ class WP_PVC_General_Settings extends WP_PVC_Admin_UI
 				),
 			),
 			array(  
-				'name' => __( 'Icon Color', 'page-views-count' ),
+				'name' => __( 'Counter Icon Color', 'page-views-count' ),
 				'id' 		=> 'icon_color',
 				'default'	=> '#000000',
 				'type' 		=> 'color',

@@ -151,9 +151,9 @@ class A3_PVC
 		$html = '<div class="pvc_clear"></div>';
 
 		if ( $pvc_settings['enable_ajax_load'] == 'yes' ) {
-			$stats_html = '<p id="pvc_stats_'.$post_id.'" class="pvc_stats '.$load_by_ajax_update_class.'" element-id="'.$post_id.'"><i class="fa fa-bar-chart pvc-stats-icon '.$pvc_settings['icon_size'].'" aria-hidden="true"></i><img src="'.A3_PVC_URL.'/ajax-loader.gif" border=0 /></p>';
+			$stats_html = '<p id="pvc_stats_'.$post_id.'" class="pvc_stats '.$load_by_ajax_update_class.'" element-id="'.$post_id.'"><i class="fa fa-bar-chart pvc-stats-icon '.$pvc_settings['icon_size'].'" aria-hidden="true"></i> <img src="'.A3_PVC_URL.'/ajax-loader.gif" border=0 /></p>';
 		} else {
-			$stats_html = '<p class="pvc_stats" element-id="'.$post_id.'"><i class="fa fa-bar-chart pvc-stats-icon '.$pvc_settings['icon_size'].'" aria-hidden="true"></i>' . A3_PVC::pvc_get_stats( $post_id ) . '</p>';
+			$stats_html = '<p class="pvc_stats" element-id="'.$post_id.'"><i class="fa fa-bar-chart pvc-stats-icon '.$pvc_settings['icon_size'].'" aria-hidden="true"></i> ' . A3_PVC::pvc_get_stats( $post_id ) . '</p>';
 		}
 
 		$html .= apply_filters( 'pvc_filter_stats', $stats_html, $post_id );
@@ -180,7 +180,7 @@ class A3_PVC
 	?>
     <!-- PVC Template -->
     <script type="text/template" id="pvc-stats-view-template">
-    <i class="fa fa-bar-chart pvc-stats-icon <?php echo $pvc_settings['icon_size']; ?>" aria-hidden="true"></i>
+    <i class="fa fa-bar-chart pvc-stats-icon <?php echo $pvc_settings['icon_size']; ?>" aria-hidden="true"></i> 
 	<% if ( total_view > 0 ) { %>
 		<%= total_view %> <%= total_view > 1 ? "<?php _e('total views', 'page-views-count'); ?>" : "<?php _e('total view', 'page-views-count'); ?>" %>,
 		<% if ( today_view > 0 ) { %>

@@ -1,75 +1,56 @@
 === Page View Count  ===
-Contributors: a3rev, nguyencongtuan
+Contributors: a3rev, A3 Revolution Software Development team, nguyencongtuan
 Tags: wordpress page view, page view count , post views, postview count,
-Requires at least: 3.8
-Tested up to: 4.5
-Stable tag: 1.4.0
+Requires at least: 4.6
+Tested up to: 4.8
+Stable tag: 1.5.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Places an icon, all time views count and views today count at the bottom of posts, pages and custom post types on any Wordpress website.
 
-== Description ==
+== DESCRIPTION ==
 
-Page Views Count does 2 things - beautifully
+A beautifully simple to set up plugin that gives site visitors and site owners the ability to quickly and easily see how many people have visited that page or post. 
 
-1. On the front end it adds an icon and page views count to the bottom of pages and posts on your WordPress website.
+= FEATURES =
 
-2. On the back end via check boxes you can apply or hide Page Views Count on all Posts, Pages and all custom posts types including WooCommerce and WP e-Commerce custom post types.
+* On the front end it adds an icon and page views count to the bottom or top of pages and posts on your WordPress website.
+* Switch ON | OFF hide Page Views Count for all Posts, Pages and all custom posts types including WooCommerce and WP e-Commerce custom post types.
+* Set the Position of the counter to show at the top of the page or post or at the bottom
+* Set alignment of the counter Left, Right or Centre
+* Set the colour and size of the counter icon
+* Option to use load by Ajax to prevent the count from being cached by caching plugins 
+* Option to Manually set / edit total views and views today from Page View Count meta box on any post or page editor
+* Lightweight - Fontawesome icon (no image to load) and called via WordPress JSON RESTful API (not on ajax-admin.php)
+* All options and settings are point click - absolutely no coding required  
 
+= DEVELOPERS =
 
-= Why we built it =
+On the plugins dashboard in the + Page Views Count Function options box you will find the Page Views Count functions and notes on how to use them. 
 
-We built this plugin and use this plugin because we think its is very good visual feedback for site users and site admins about the all time popularity and visits that day of individual posts and pages on any Wordpress website.
+* Use to manually add Page views count to any content or object in the theme. 
+* Use to add page View Count to any content that is not create using WordPress custom post / taxonomy type. 
+* Use to create a custom position of the Page Views Count 
+* Functions support echo and return parameters when getting visitor stats on any variable.
 
-= Functions =
+= TROUBLESHOOTING =
 
-Using the 2 functions the plugin provides that allows you to manually add view counts to any content or object in your theme. This is very useful if your theme or a plugin creates content that does not use custom post type. Also useful if you want to change the position of the Page View Count from the default bottom of the page. Support for echo and return parameters when getting visitor stats on any variable.
+* The number 1 support request we get about the plugin is that it double or triple counts page or post loads. Yes it does and if you see that it is a Red Flag that you have a misconfigfuration or bug in your theme or a plugin. Page Views Count does exactly that - counts each time the page or post is loading in the browser - if its counting twice it is because the browser is double loading the page. That is a bad thing and you or your developer needs to fix that.
+  
+= CONTRIBUTE  =
 
-= Featuring Sass (Simply Awesome Stylesheets) =
+When you download a3 Lazy Load, you join our community. Regardless of if you are a WordPress beginner or experienced developer if youre interested in contributing to Page Views Count development head over to the [Page Views Count GitHub Repository](https://github.com/a3rev/a3-lazy-load) to find out how you can contribute.
+Want to add a new language to a3 Lazy Load? Great! You can contribute via [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/page-views-count)
 
-* All the front end style display is created via Sass for faster loader and render.
-* Sass is the most mature, stable, and powerful professional grade CSS extension language in the world.
-* This plugins backend admin panel are created in Sass.
-
-
-= Featuring backbone.js =
-
-* All front end functions build with backbone.js
-* Will add full automatic integration with WordPress JSON RESTful API when it is released.
-
-= Mobile Responsive App style admin interface =
-
-* 100% compatible with WordPress v4.0 admin interface.
-* Backward compatibility to WordPress v3.8
-* Sass app style admin interface.
-* Admin app interface is fully mobile and tablet responsive.
-
-= Localization =
-
-If you do a translation for your site please send it to us and we'll include it in the plugins language folder and credit you here with the translation and a link to your site.
-
-* English (default) - always included.
-* Dutch - thanks to [Renee Klein](http://wpdiscounts.com)
-* Italian - thanks to [Antonio Petricca](http://www.gvmprotezionecivile.it)
-* Indonesian - thanks to [Ridha Harwan](https://tarjiem.com/ )
-* Russian
-* .pot file (page-views-count.pot) in languages folder for translations.
-* [Go here](http://a3rev.com/contact-us-page/) to send your translation files to us.
-
-= Documentation & Support =
-
-If you require support first of all please view the plugins docs on the a3rev wiki. [Click Here to view](http://docs.a3rev.com/user-guides/page-view-count/) If you don't find the information you are looking for - THEN please post your support request under the support tab here on this page. If the Page View Count gadget does not show on any page or post it will be because the theme you are using does not use the WordPress Codex not because the plugin does not work.
-
-PLEASE do not give the plugin a bad star rating - its the theme you are using not the plugin. Instead post about it on the support forum and we will have a look at it for you.
 
 == Installation ==
 
 = Minimum Requirements =
 
-* WordPress 3.8
-* PHP version 5.2.4 or greater
-* MySQL version 5.0 or greater
+* WordPress 4.6
+* PHP version 5.5.0 or greater
+* MySQL version 5.5.0 or greater
 
 = Automatic installation =
 
@@ -96,13 +77,11 @@ The manual installation method involves down loading our plugin and uploading it
 
 1. Install and activate the plugin
 
-2. Go to Settings > Page View Count
+2. Go to WordPress Settings menu > Page View Count Menu
 
-3. Select which post and page types you want the Page View Count to show on.
+3. Activate Page Views Count and use the options box settings to make the desired configuration
 
-4. Have fun.
-
-== Frequently Asked Questions ==
+4. Be sure to clear any caching and browser cache to see your Page Views Count
 
 
 == Changelog ==
