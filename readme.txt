@@ -92,15 +92,15 @@ The manual installation method involves down loading our plugin and uploading it
 = 2.0.0 - 2017/06/02 =
 * Feature - Upgrade Stats image icon to fontawesome Chart Icon
 * Feature - Add new + Counter Position and Style options box on plugins admin panel
-* Feature - Added option to show Page Views Count at Top or Bottom of post and page content
-* Feature - Added Page Views Count Alignment options Left, Centre or Right
-* Feature - Added new fontawesome count icon size and colour settings
+* Feature - Added option to show Page Views Count at Top or Bottom of post and page content
+* Feature - Added Page Views Count Alignment options Left, Centre or Right
+* Feature - Added new fontawesome count icon size and colour settings
 * Feature - Registry endpoint /pvc/v1 for full automatic integration with WordPress JSON RESTful API
-* Feature - Plugin source code now on public Github repository to allow users and developers to contribute
+* Feature - Plugin source code now on public Github repository to allow users and developers to contribute
 * Tweak - Update Ajax load for connect to WordPress JSON RESTful API instead of calling to admin-ajax.php
-* Tweak - Register fontawesome in plugin framework with style name font-awesome-styles
-* Tweak - Update plugins readme to show description of new features, link to Github Repo and translations page 
-* Tweak - Tested for compatibility with WordPress major version 4.8.0
+* Tweak - Register fontawesome in plugin framework with style name font-awesome-styles
+* Tweak - Update plugins readme to show description of new features, link to Github Repo and translations page 
+* Tweak - Tested for compatibility with WordPress major version 4.8.0
 
 = 1.4.0 - 2016/04/15 =
 * Feature - Define new 'Background Color' type on plugin framework with ON | OFF switch to disable background or enable it
