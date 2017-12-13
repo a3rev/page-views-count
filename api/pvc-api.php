@@ -24,7 +24,7 @@ class PVC_API
     public function rest_api_init() {
 
         foreach ( $this->rest_bases as $rest_base ) {
-            register_rest_route( $this->namespace, $rest_base . '/(?P<post_ids>[a-zA-Z0-9_]+)', array(
+            register_rest_route( $this->namespace, $rest_base . '/(?P<post_ids>([a-zA-Z0-9_]\,?)+)', array(
                 'methods'  => 'GET',
                 'callback' => array( $this, str_replace( '/', '', $rest_base ) . '_stats' ),
             ) );
