@@ -3,7 +3,7 @@
  * Process when plugin is activated
  */
 function pvc_install(){
-	update_option( 'a3_pvc_version', '2.0.0' );
+	update_option( 'a3_pvc_version', '2.0.1' );
 
 	// empty pvc_daily table for daily
 	wp_schedule_event( time(), 'daily', 'pvc_empty_daily_table_daily_event_hook' );
@@ -30,15 +30,11 @@ update_option('a3rev_pvc_plugin', 'a3_page_view_count');
 update_option('a3rev_auth_pvc', '');
 
 function a3_pvc_plugin_init() {
-	if ( get_option('pvc_just_installed') ) {
-		delete_option('pvc_just_installed');
-		wp_redirect( admin_url( 'options-general.php?page=a3-pvc', 'relative' ) );
-		exit;
-	}
 
 	// Set up localisation
 	a3_pvc_load_plugin_textdomain();
 }
+
 add_action( 'init', 'a3_pvc_plugin_init' );
 
 // Add custom style to dashboard
@@ -68,7 +64,7 @@ function pvc_empty_daily_table_do_daily() {
 }
 
 $pvc_settings = get_option( 'pvc_settings', array( 'position' => 'bottom' ) );
-if ( 'top' == $pvc_settings['position'] ) {
+if ( isset( $pvc_settings['position'] ) && 'top' == $pvc_settings['position'] ) {
 	add_action('genesis_before_post_content', array('A3_PVC', 'genesis_pvc_stats_echo'));
 } else {
 	add_action('genesis_after_post_content', array('A3_PVC', 'genesis_pvc_stats_echo'));
@@ -135,7 +131,7 @@ function pvc_lite_upgrade_plugin () {
 		$a3_pvc_less->plugin_build_sass();
 	}
 
-	update_option('a3_pvc_version', '2.0.0');
+	update_option('a3_pvc_version', '2.0.1');
 
 }
 

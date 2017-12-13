@@ -2,8 +2,8 @@
 Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, postview count,
 Requires at least: 4.6
-Tested up to: 4.9.0
-Stable tag: 2.0.0
+Tested up to: 4.9.1
+Stable tag: 2.0.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -88,6 +88,16 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.0.1 - 2017/12/13 =
+* Maintenance Update. 3 code tweaks for compatibility with WordPress 4.9.1 and 2 bug fixes
+* Tweak - Removed auto redirect to plugins admin panel on activation
+* Tweak - Added Settings link to plugins description on plugins menu
+* Tweak - Remove console log from script as it was causing theme Customizer to load slowly
+* Tweak - Tested for compatibility with WordPress 4.9.1
+* Fix - Update regex expression in the REST endpoint so that it accepts array-like params as expected.
+* Fix - Get correct item ID if params is parse as array
+* Credit - Thanks to Cypwu for the Github contribution for REST endpoint modification
 
 = 2.0.0 - 2017/06/02 =
 * Feature - Upgrade Stats image icon to fontawesome Chart Icon
@@ -253,6 +263,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.0.1 =
+Maintenance Update. 3 code tweaks for compatibility with WordPress 4.9.1 and 2 bug fixes
 
 = 2.0.0 =
 Major Feature Upgrade. Release of 7 new features and 2 code tweaks for compatibility with upcoming WordPress major version 4.8.0

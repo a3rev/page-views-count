@@ -36,7 +36,7 @@ jQuery( function( $ ) {
 		},
 		
 		render: function() {
-			console.log('Rendering Page View Count of ID #' + this.model.get('post_id') + ' - Today: #' + this.model.get('today_view') + ' - Total: #' + this.model.get('total_view'));
+			//console.log('Rendering Page View Count of ID #' + this.model.get('post_id') + ' - Today: #' + this.model.get('today_view') + ' - Total: #' + this.model.get('total_view'));
 			this.$el.html( this.template( this.model.toJSON() ) );
 			
 			return this;
@@ -59,22 +59,22 @@ jQuery( function( $ ) {
 	pvc.apps.app = {
 		initialize: function( pvc_ids, rest_api_url ) {
 			this.rest_api_url = rest_api_url;
-			console.log('Load Page View Count of ' + JSON.stringify(pvc_ids) );
+			//console.log('Load Page View Count of ' + JSON.stringify(pvc_ids) );
 
 			view_pvc_ids = [];
 			increase_pvc_ids = [];
 
 			$.each( pvc_ids, function (index, data) {
 				if ( data.ask_update ) {
-					increase_pvc_ids.push( post_id );
+					increase_pvc_ids.push( data.post_id );
 				} else {
-					view_pvc_ids.push( post_id );
+					view_pvc_ids.push( data.post_id );
 				}
 			});
 
 			if ( increase_pvc_ids.length ) {
 				$.get( this.rest_api_url + '/increase/' + increase_pvc_ids.join(','), function( data_pvc ) {
-					console.log(data_pvc);
+					//console.log(data_pvc);
 					if ( data_pvc.success ) {
 						$.each( data_pvc.items, function (index, data) {
 							collection = new pvc.collections.Stats;
@@ -88,7 +88,7 @@ jQuery( function( $ ) {
 
 			if ( view_pvc_ids.length ) {
 				$.get( this.rest_api_url + '/view/' + view_pvc_ids.join(','), function( data_pvc ) {
-					console.log(data_pvc);
+					//console.log(data_pvc);
 					if ( data_pvc.success ) {
 						$.each( data_pvc.items , function (index, data) {
 							collection = new pvc.collections.Stats;
