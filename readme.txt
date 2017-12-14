@@ -3,7 +3,7 @@ Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, postview count,
 Requires at least: 4.6
 Tested up to: 4.9.1
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -88,6 +88,12 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.0.2 - 2017/12/14 =
+* Maintenance Update. This update includes 3 bug fixes, including AMP pages conpatibility
+* Fix - Headers already sent warning. Delete trailing spaces at bottom of php file
+* Fix - Change attribute name element-id to data-element-id for compatibility with AMP. Thanks to @veenareddys for reporting the issue
+* Fix - Update SQL query for fix bug get incorrect total views when edit a Post or Page. Thanks to @groenhart for reporting this issue
 
 = 2.0.1 - 2017/12/13 =
 * Maintenance Update. 3 code tweaks for compatibility with WordPress 4.9.1 and 2 bug fixes
@@ -263,6 +269,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.0.2 =
+Maintenance Update. This update includes 3 bug fixes, including AMP pages compatibility
 
 = 2.0.1 =
 Maintenance Update. 3 code tweaks for compatibility with WordPress 4.9.1 and 2 bug fixes

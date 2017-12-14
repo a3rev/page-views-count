@@ -110,7 +110,7 @@ jQuery( document ).ready( function( $ ) {
 	if ( pvc_stats.length ) {
 		var pvc_ids = {};
 		$(".pvc_stats").each( function() {
-			post_id = $(this).attr('element-id');
+			post_id = $(this).data('element-id');
 			update_status = $(this).hasClass('pvc_load_by_ajax_update');
 			pvc_ids[post_id] = { post_id: post_id, ask_update : update_status };
 		});

@@ -49,20 +49,38 @@ class A3_PVC
 	}
 
 	public static function pvc_fetch_post_counts( $post_id ) {
-		global $wpdb;
-		$nowisnow = date('Y-m-d');
+		$total = A3_PVC::pvc_fetch_post_total( $post_id );
+		$today = A3_PVC::pvc_fetch_post_today( $post_id );
 
-		$sql = $wpdb->prepare( "SELECT t.postcount AS total, d.postcount AS today FROM ". $wpdb->prefix . "pvc_total AS t
-			LEFT JOIN ". $wpdb->prefix . "pvc_daily AS d ON t.postnum = d.postnum
-			WHERE t.postnum = %s AND d.time = %s", $post_id, $nowisnow );
-		return $wpdb->get_row($sql);
+		$post_counts        = new stdClass();
+		$post_counts->total = 0;
+		$post_counts->today = 0;
+
+		if ( ! empty( $total ) ) {
+			$post_counts->total = $total;
+		}
+
+		if ( ! empty( $today ) ) {
+			$post_counts->today = $today;
+		}
+
+		return $post_counts;
 	}
 
 	public static function pvc_fetch_post_total( $post_id ) {
 		global $wpdb;
 
-		$sql = $wpdb->prepare( "SELECT t.postcount AS total FROM ". $wpdb->prefix . "pvc_total AS t
-			WHERE t.postnum = %s", $post_id );
+		$sql = $wpdb->prepare( "SELECT postcount AS total FROM ". $wpdb->prefix . "pvc_total
+			WHERE postnum = %s", $post_id );
+		return $wpdb->get_var($sql);
+	}
+
+	public static function pvc_fetch_post_today( $post_id ) {
+		global $wpdb;
+		$nowisnow = date('Y-m-d');
+
+		$sql = $wpdb->prepare( "SELECT postcount AS today FROM ". $wpdb->prefix . "pvc_daily
+			WHERE postnum = %s AND time = %s", $post_id, $nowisnow );
 		return $wpdb->get_var($sql);
 	}
 
@@ -88,8 +106,6 @@ class A3_PVC
 				$wpdb->query( $wpdb->prepare( "INSERT INTO ". $wpdb->prefix . "pvc_daily (time, postnum, postcount) VALUES ('%s', '%s', 1)", $nowisnow, $post_id ) );
 		}
 
-		// get all the post view info so we can update meta fields
-		//$row = A3_PVC::pvc_fetch_post_counts( $post_id );
 	}
 
 	public static function pvc_stats_manual_update( $post_id, $new_total_views, $new_today_views ) {
@@ -117,23 +133,29 @@ class A3_PVC
 		}
 	}
 
-	public static function pvc_get_stats($post_id) {
+	public static function pvc_get_stats( $post_id ) {
 		global $wpdb;
 
 		$output_html = '';
 		// get all the post view info to display
-		$results = A3_PVC::pvc_fetch_post_counts( $post_id );
-		// get the stats and
-		if ( $results ){
-			$output_html .= number_format( $results->total ) . '&nbsp;' .__('total views', 'page-views-count') . ', ' . number_format( $results->today ) . '&nbsp;' .__('views today', 'page-views-count');
-		} else {
-			$total = A3_PVC::pvc_fetch_post_total( $post_id );
-			if ( $total > 0 ) {
-				$output_html .= number_format( $total ) . '&nbsp;' .__('total views', 'page-views-count') . ', ' .__('no views today', 'page-views-count');
+		$total = A3_PVC::pvc_fetch_post_total( $post_id );
+		$today = A3_PVC::pvc_fetch_post_today( $post_id );
+
+		if ( ! empty( $total ) ) {
+
+			$output_html .= number_format( $total ) . '&nbsp;' .__('total views', 'page-views-count');
+			$output_html .= ', ';
+
+			if ( ! empty( $today ) ) {
+				$output_html .= number_format( $results->today ) . '&nbsp;' .__('views today', 'page-views-count');
 			} else {
-				$output_html .=  __('No views yet', 'page-views-count');
+				$output_html .= __('no views today', 'page-views-count');
 			}
+
+		} else {
+			$output_html .=  __('No views yet', 'page-views-count');
 		}
+
 		$output_html = apply_filters( 'pvc_filter_get_stats', $output_html, $post_id );
 
 		return $output_html;
@@ -151,9 +173,9 @@ class A3_PVC
 		$html = '<div class="pvc_clear"></div>';
 
 		if ( $pvc_settings['enable_ajax_load'] == 'yes' ) {
-			$stats_html = '<p id="pvc_stats_'.$post_id.'" class="pvc_stats '.$load_by_ajax_update_class.'" element-id="'.$post_id.'"><i class="fa fa-bar-chart pvc-stats-icon '.$pvc_settings['icon_size'].'" aria-hidden="true"></i> <img src="'.A3_PVC_URL.'/ajax-loader.gif" border=0 /></p>';
+			$stats_html = '<p id="pvc_stats_'.$post_id.'" class="pvc_stats '.$load_by_ajax_update_class.'" data-element-id="'.$post_id.'"><i class="fa fa-bar-chart pvc-stats-icon '.$pvc_settings['icon_size'].'" aria-hidden="true"></i> <img src="'.A3_PVC_URL.'/ajax-loader.gif" border=0 /></p>';
 		} else {
-			$stats_html = '<p class="pvc_stats" element-id="'.$post_id.'"><i class="fa fa-bar-chart pvc-stats-icon '.$pvc_settings['icon_size'].'" aria-hidden="true"></i> ' . A3_PVC::pvc_get_stats( $post_id ) . '</p>';
+			$stats_html = '<p class="pvc_stats" data-element-id="'.$post_id.'"><i class="fa fa-bar-chart pvc-stats-icon '.$pvc_settings['icon_size'].'" aria-hidden="true"></i> ' . A3_PVC::pvc_get_stats( $post_id ) . '</p>';
 		}
 
 		$html .= apply_filters( 'pvc_filter_stats', $stats_html, $post_id );

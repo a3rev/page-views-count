@@ -179,4 +179,5 @@ class A3_PVC_Less
 }
 global $a3_pvc_less;
 $a3_pvc_less = new A3_PVC_Less();
+
 ?>
