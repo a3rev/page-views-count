@@ -104,6 +104,9 @@ class PVC_API
     public function view_stats( WP_REST_Request $request ) {
         @ini_set( 'display_errors', false );
 
+        header( 'Access-Control-Allow-Origin: *' );
+        header( 'Access-Control-Allow-Methods: GET' );
+
         $post_ids_text = $request->get_param( 'post_ids' );
 
         if ( '' == trim( $post_ids_text ) ) {
