@@ -220,10 +220,10 @@ class A3_PVC
 	}
 
 	public static function fixed_wordpress_seo_plugin( $ogdesc = '' ) {
-		if ( function_exists( 'wpseo_set_value' ) ) {
+		if ( class_exists( 'WPSEO_Meta' ) ) {
 			global $post;
 			$postid = $post->ID;
-			wpseo_set_value( 'opengraph-description', $ogdesc, $postid );
+			WPSEO_Meta::set_value( 'opengraph-description', $ogdesc, $postid );
 		}
 		return $ogdesc;
 	}

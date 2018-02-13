@@ -5,10 +5,10 @@ if (!defined('ABSPATH'))
 
 class A3_PVC_Less
 {
-	public $plugin_name = 'pvc';
-	public $css_file_name = 'pvc';
-	public $plugin_folder = A3_PVC_FOLDER;
-	public $plugin_dir = A3_PVC_DIR;
+    public $plugin_name   = A3_PVC_KEY;
+    public $css_file_name = 'pvc';
+    public $plugin_folder = A3_PVC_FOLDER;
+    public $plugin_dir    = A3_PVC_DIR;
     
     /*-----------------------------------------------------------------------------------*/
     /* Constructor */

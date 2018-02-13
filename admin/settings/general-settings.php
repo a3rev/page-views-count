@@ -123,9 +123,9 @@ class WP_PVC_General_Settings extends WP_PVC_Admin_UI
 			A3_PVC::pvc_reset_individual_items();
 		}
 
-		if ( ( isset( $_POST['bt_save_settings'] ) || isset( $_POST['bt_reset_settings'] ) ) && get_option( 'pvc_clean_on_deletion' ) == 0  )  {
+		if ( ( isset( $_POST['bt_save_settings'] ) || isset( $_POST['bt_reset_settings'] ) ) && get_option( $this->plugin_name . '_clean_on_deletion' ) == 0  )  {
 			$uninstallable_plugins = (array) get_option('uninstall_plugins');
-			unset($uninstallable_plugins[A3_PVC_PLUGIN_NAME]);
+			unset($uninstallable_plugins[ $this->plugin_path ]);
 			update_option('uninstall_plugins', $uninstallable_plugins);
 		}
 	}
@@ -220,7 +220,7 @@ class WP_PVC_General_Settings extends WP_PVC_Admin_UI
 			array(
 				'name' 		=> __( 'Clean up on Deletion', 'page-views-count' ),
 				'desc' 		=> __( 'On deletion (not deactivate) the plugin will completely remove all tables and data it created, leaving no trace it was ever here.', 'page-views-count'),
-				'id' 		=> 'pvc_clean_on_deletion',
+				'id' 		=> $this->plugin_name . '_clean_on_deletion',
 				'type' 		=> 'onoff_checkbox',
 				'default'	=> '0',
 				'separate_option'	=> true,
