@@ -3,7 +3,7 @@ Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, postview count,
 Requires at least: 4.6
 Tested up to: 4.9.4
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -48,9 +48,9 @@ Want to add a new language to Page Views Count? Great! You can contribute via [t
 
 = Minimum Requirements =
 
-* WordPress 4.6
-* PHP version 5.5.0 or greater
-* MySQL version 5.5.0 or greater
+* WordPress 4.6 or greater
+* PHP version 5.6.0 or greater
+* MySQL version 5.6 or greater OR MariaDB version 10.0 or greater
 
 = Automatic installation =
 
@@ -88,6 +88,13 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.0.4 - 2018/03/06 =
+* Maintenance Update. Fixes for Views today count always showing 0 value, PHP warning and conflict with Yoast SEO Facebook description
+* Tweak - Update Readme - Installation - Minimum Requirements PHP to version 5.6.0 
+* Fix - Update variable to resolve todays views always showing 0. Thanks to @stefanodalli  
+* Fix - Check if global $post exist to resolve PHP Notice Trying to get property of non-object in pvc_class.php on line 225
+* Fix - Remove old filter that was causing conflict with Yoast SEO Facebook description meta causing the post content to be used and not be changed. Thanks to @banana7777 for reporting the issue
 
 = 2.0.3 - 2018/02/13 =
 * Maintenance Update. Under the bonnet tweaks to keep your plugin running smoothly and is the foundation for new features to be developed this year 
@@ -277,6 +284,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.0.4 =
+Maintenance Update. Fixes for Views today count always showing 0 value, PHP warning and conflict with Yoast SEO Facebook description
 
 = 2.0.3 =
 Maintenance Update. This version updates the Plugin Framework to v 2.0.2, adds full compatibility with a3rev dashboard and WordPress v 4.9.4

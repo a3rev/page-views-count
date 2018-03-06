@@ -34,9 +34,9 @@ class WP_PVC_Admin_UI
 	public $framework_version      = '2.0.2';
 	public $plugin_name            = A3_PVC_KEY;
 	public $plugin_path            = A3_PVC_PLUGIN_NAME;
-	public $google_api_key_option  = A3_PVC_KEY . '_google_api_key';
-	public $toggle_box_open_option = A3_PVC_KEY . '_toggle_box_open';
-	public $version_transient      = A3_PVC_KEY . '_licinfo';
+	public $google_api_key_option  = '';
+	public $toggle_box_open_option = '';
+	public $version_transient      = '';
 	public $is_free_plugin         = true;
 	
 	public $support_url            = 'https://wordpress.org/support/plugin/page-views-count/';
@@ -69,6 +69,12 @@ class WP_PVC_Admin_UI
 	 * You must change to correct page you want to include scripts & styles, if you have many pages then use array() : array( 'quotes-orders-mode', 'quotes-orders-rule' )
 	 */
 	public $admin_pages = array();
+
+	public function __construct() {
+		$this->google_api_key_option  = A3_PVC_KEY . '_google_api_key';
+		$this->toggle_box_open_option = A3_PVC_KEY . '_toggle_box_open';
+		$this->version_transient      = A3_PVC_KEY . '_licinfo';
+	}
 	
 	
 	/*-----------------------------------------------------------------------------------*/

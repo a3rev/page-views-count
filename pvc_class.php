@@ -147,7 +147,7 @@ class A3_PVC
 			$output_html .= ', ';
 
 			if ( ! empty( $today ) ) {
-				$output_html .= number_format( $results->today ) . '&nbsp;' .__('views today', 'page-views-count');
+				$output_html .= number_format( $today ) . '&nbsp;' .__('views today', 'page-views-count');
 			} else {
 				$output_html .= __('no views today', 'page-views-count');
 			}
@@ -217,15 +217,6 @@ class A3_PVC
     <?php
 		wp_enqueue_script( 'a3-pvc-backbone', A3_PVC_JS_URL . '/pvc.backbone'.$suffix.'.js', array( 'jquery', 'backbone', 'underscore' ), A3_PVC_VERSION );
 		wp_localize_script( 'a3-pvc-backbone', 'vars', array( 'rest_api_url' => rest_url( '/' . $pvc_api->namespace ) ) );
-	}
-
-	public static function fixed_wordpress_seo_plugin( $ogdesc = '' ) {
-		if ( class_exists( 'WPSEO_Meta' ) ) {
-			global $post;
-			$postid = $post->ID;
-			WPSEO_Meta::set_value( 'opengraph-description', $ogdesc, $postid );
-		}
-		return $ogdesc;
 	}
 
 	public static function pvc_remove_stats($content) {
