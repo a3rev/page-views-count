@@ -31,7 +31,7 @@ class WP_PVC_Admin_UI
 	 * You must change to correct plugin name that you are working
 	 */
 
-	public $framework_version      = '2.0.2';
+	public $framework_version      = '2.0.3';
 	public $plugin_name            = A3_PVC_KEY;
 	public $plugin_path            = A3_PVC_PLUGIN_NAME;
 	public $google_api_key_option  = '';

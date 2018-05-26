@@ -2,8 +2,8 @@
 Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, postview count,
 Requires at least: 4.6
-Tested up to: 4.9.4
-Stable tag: 2.0.4
+Tested up to: 4.9.6
+Stable tag: 2.0.5
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -88,6 +88,12 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.0.5 - 2018/05/26 =
+* This maintenance update is for compatibility with WordPress 4.9.6 and the new GDPR compliance requirements for users in the EU 
+* Tweak - Test for compatibility with WordPress 4.9.6
+* Tweak - Check for any issues with GDPR compliance. None Found
+* Framework - Update a3rev Plugin Framework to version 2.0.3
 
 = 2.0.4 - 2018/03/06 =
 * Maintenance Update. Fixes for Views today count always showing 0 value, PHP warning and conflict with Yoast SEO Facebook description
@@ -284,6 +290,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.0.5 =
+Maintenance Update. Compatibility WordPress 4.9.6 and the new GDPR compliance requirements for users in the EU
 
 = 2.0.4 =
 Maintenance Update. Fixes for Views today count always showing 0 value, PHP warning and conflict with Yoast SEO Facebook description
