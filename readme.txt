@@ -1,9 +1,9 @@
 === Page View Count  ===
 Contributors: a3rev, a3rev Software, nguyencongtuan
-Tags: wordpress page view, page view count , post views, postview count,
+Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 4.6
-Tested up to: 4.9.6
-Stable tag: 2.0.5
+Tested up to: 5.0.1
+Stable tag: 2.1.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -13,16 +13,25 @@ Places an icon, all time views count and views today count at the bottom of post
 
 A beautifully simple to set up plugin that gives site visitors and site owners the ability to quickly and easily see how many people have visited that page or post. 
 
+= GUTENBERG BLOCK =
+If you are using the new Gutenberg editor once Page View Count is turned on from the plugins settings page the Global Page View Count meta will show under the sidebar Document Tab. Page View Count can be added to anywhere in your content by doing a block search for 'Page Views' or selecting the block from the Common Blocks menu.
+
+Adding the Page Views block to your content automatically deactivates the Global Page View counter on the post or page. You can then place the counter anywhere in the content and set the alignment for it.
+
+= COMPATIBILTY =
+Compatible with WordPress 5.0+ and backwards to WP 4.6.0. Compatible with Classic Editor plugin with 5.0+ (Gutenberg Deactivated)
+
 = FEATURES =
 
 * On the front end it adds an icon and page views count to the bottom or top of pages and posts on your WordPress website.
-* Switch ON | OFF hide Page Views Count for all Posts, Pages and all custom posts types including WooCommerce and WP e-Commerce custom post types.
+* Switch ON | OFF hide Page Views Count for all Posts, Pages and all custom posts types including WooCommerce custom post types.
 * Set the Position of the counter to show at the top of the page or post or at the bottom
 * Set alignment of the counter Left, Right or Centre
 * Set the colour and size of the counter icon
 * Option to use load by Ajax to prevent the count from being cached by caching plugins 
 * Option to Manually set / edit total views and views today from Page View Count meta box on any post or page editor
 * Lightweight - Fontawesome icon (no image to load) and called via WordPress JSON RESTful API (not on ajax-admin.php)
+* Page Views block (Gutenberg) allows you to set the counter anywhere in your content on any post or page.
 * All options and settings are point click - absolutely no coding required  
 
 = DEVELOPERS =
@@ -40,7 +49,7 @@ On the plugins dashboard in the + Page Views Count Function options box you will
   
 = CONTRIBUTE  =
 
-When you download Page Views Count, you join our community. Regardless of if you are a WordPress beginner or experienced developer if youÂ’re interested in contributing to Page Views Count development head over to the [Page Views Count GitHub Repository](https://github.com/a3rev/page-views-count) to find out how you can contribute.
+When you download Page Views Count, you join our community. Regardless of if you are a WordPress beginner or experienced developer if you’re interested in contributing to Page Views Count development head over to the [Page Views Count GitHub Repository](https://github.com/a3rev/page-views-count) to find out how you can contribute.
 Want to add a new language to Page Views Count? Great! You can contribute via [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/page-views-count)
 
 
@@ -88,6 +97,18 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.1.0 - 2018/12/14 =
+* This feature upgrade ports Page View Count editor meta to Page Views Gutenberg block. Full compatibility with WP 5.0.1, 4.9.9 and the Classic editor.
+* Feature - Add Dynamic Page Views Block for Gutenberg. Admin can use block to show anywhere in post content. When insert the block it auto deactivates global show PVC at top or bottom of that post.
+* Tweak - Global PVC metabox that shows on editor sidebar works with both Gutenberg and Classic Editor
+* Tweak - Update functions for frontend view so that it syncs count parameters with Dynamic Block Gutenberg
+* Framework - Replace wp_remote_fopen  with file_get_contents for get web fonts
+* Framework - Define new variable `is_load_google_fonts` for custom turn it off if plugins do not need to load google font
+* Framework - Register style name for dynamic style of plugin for use with Gutenberg block
+* Framework - Update Modal script and style to version 4.1.1
+* Framework - Update a3rev Plugin Framework to version 2.1.0
+* Tweak - Test for compatibility with WordPress 5.0.1 and WordPress 4.9.9
 
 = 2.0.5 - 2018/05/26 =
 * This maintenance update is for compatibility with WordPress 4.9.6 and the new GDPR compliance requirements for users in the EU 
@@ -290,6 +311,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.1.0 =
+This feature upgrade ports Page View Count editor meta box to Page Views Gutenberg block. Full compatibility with WP 5.0.1, 4.9.9 and the Classic Editor.
 
 = 2.0.5 =
 Maintenance Update. Compatibility WordPress 4.9.6 and the new GDPR compliance requirements for users in the EU

@@ -2,6 +2,9 @@
 <?php
 global $pvc_settings;
 ?>
+.pvc_clear {
+	clear: both;
+}
 /* Stats Icon */
 body .pvc-stats-icon {
 	color: <?php echo $pvc_settings['icon_color']; ?> !important;

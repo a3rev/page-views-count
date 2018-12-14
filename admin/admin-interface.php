@@ -40,6 +40,8 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 	/*-----------------------------------------------------------------------------------*/
 	public function __construct() {
 
+		parent::__construct();
+
 		$this->admin_includes();
 
 		add_action( 'init', array( $this, 'init_scripts' ) );
@@ -87,9 +89,30 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 
 	public function register_modal_scripts() {
 		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
-		wp_register_style( 'bootstrap-modal', $this->admin_plugin_url() . '/assets/css/modal' . $suffix . '.css', array(), '4.0.0', 'all' );
-		wp_register_script( 'bootstrap-util', $this->admin_plugin_url() . '/assets/js/bootstrap/util' . $suffix . '.js', array( 'jquery' ), '4.0.0', false );
-		wp_register_script( 'bootstrap-modal', $this->admin_plugin_url() . '/assets/js/bootstrap/modal' . $suffix . '.js', array( 'jquery', 'bootstrap-util' ), '4.0.0', false );
+		wp_register_style( 'bootstrap-modal', $this->admin_plugin_url() . '/assets/css/modal' . $suffix . '.css', array(), '4.1.1', 'all' );
+
+		if ( ! wp_script_is( 'bootstrap-util', 'registered' ) ) {
+			wp_register_script( 'bootstrap-util', $this->admin_plugin_url() . '/assets/js/bootstrap/util' . $suffix . '.js', array( 'jquery' ), '4.1.1', false );
+		}
+
+		wp_register_script( 'bootstrap-modal', $this->admin_plugin_url() . '/assets/js/bootstrap/modal' . $suffix . '.js', array( 'jquery', 'bootstrap-util' ), '4.1.1', false );
+	}
+
+	public function register_popover_scripts() {
+		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
+		wp_enqueue_style( 'bootstrap-popover', $this->admin_plugin_url() . '/assets/css/popover' . $suffix . '.css', array(), '4.1.1', 'all' );
+
+		wp_register_script( 'bootstrap-popper', $this->admin_plugin_url() . '/assets/js/bootstrap/popper.min.js', array( 'jquery' ), '4.1.1', false );
+
+		if ( ! wp_script_is( 'bootstrap-tooltip', 'registered' ) ) {
+			wp_register_script( 'bootstrap-tooltip', $this->admin_plugin_url() . '/assets/js/bootstrap/tooltip' . $suffix . '.js', array( 'jquery' ), '4.1.1', false );
+		}
+
+		if ( ! wp_script_is( 'bootstrap-util', 'registered' ) ) {
+			wp_register_script( 'bootstrap-util', $this->admin_plugin_url() . '/assets/js/bootstrap/util' . $suffix . '.js', array( 'jquery' ), '4.1.1', false );
+		}
+
+		wp_register_script( 'bootstrap-popover', $this->admin_plugin_url() . '/assets/js/bootstrap/popover' . $suffix . '.js', array( 'jquery', 'bootstrap-popper', 'bootstrap-util', 'bootstrap-tooltip' ), '4.1.1', false );
 	}
 	
 	/*-----------------------------------------------------------------------------------*/
@@ -100,16 +123,18 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 		
 		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
 		$rtl = is_rtl() ? '.rtl' : '';
+
+		$this->register_popover_scripts();
 		
 		wp_register_script( 'chosen', $this->admin_plugin_url() . '/assets/js/chosen/chosen.jquery' . $suffix . '.js', array( 'jquery' ), true, false );
 		wp_register_script( 'a3rev-chosen-new', $this->admin_plugin_url() . '/assets/js/chosen/chosen.jquery' . $suffix . '.js', array( 'jquery' ), $this->framework_version, false );
+		wp_register_script( 'a3rev-chosen-ajaxify', $this->admin_plugin_url() . '/assets/js/chosen/chosen.ajaxify.js', array( 'jquery', 'a3rev-chosen-new' ), $this->framework_version, false );
 		wp_register_script( 'a3rev-style-checkboxes', $this->admin_plugin_url() . '/assets/js/iphone-style-checkboxes' . $rtl . '.js', array('jquery'), $this->framework_version, false );
 		wp_register_script( 'jquery-ui-slider-rtl', $this->admin_plugin_url() . '/assets/js/ui-slider/jquery.ui.slider.rtl' . $suffix . '.js', array('jquery'), true, true );
 		
-		wp_register_script( 'a3rev-admin-ui-script', $this->admin_plugin_url() . '/assets/js/admin-ui-script.js', array('jquery'), $this->framework_version, true );
+		wp_register_script( 'a3rev-admin-ui-script', $this->admin_plugin_url() . '/assets/js/admin-ui-script.js', array('jquery', 'bootstrap-popover' ), $this->framework_version, true );
 		wp_register_script( 'a3rev-typography-preview', $this->admin_plugin_url() . '/assets/js/a3rev-typography-preview.js',  array('jquery'), $this->framework_version, true );
 		wp_register_script( 'a3rev-settings-preview', $this->admin_plugin_url() . '/assets/js/a3rev-settings-preview.js',  array('jquery'), $this->framework_version, true );
-		wp_register_script( 'jquery-tiptip', $this->admin_plugin_url() . '/assets/js/tipTip/jquery.tipTip' . $suffix . '.js', array( 'jquery' ), true, true );
 		wp_register_script( 'a3rev-metabox-ui', $this->admin_plugin_url() . '/assets/js/data-meta-boxes.js', array( 'jquery' ), $this->framework_version, true );
 		wp_register_script( 'jquery-rwd-image-maps', $this->admin_plugin_url() . '/assets/js/rwdImageMaps/jquery.rwdImageMaps.min.js', array( 'jquery' ), true, true );
 		wp_register_script( 'jquery-datetime-picker', $this->admin_plugin_url() . '/assets/js/datetimepicker/jquery.datetimepicker.js', array( 'jquery' ), true, true );
@@ -123,12 +148,11 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 			wp_enqueue_script( 'jquery-ui-slider' );
 		}
 		wp_enqueue_script( 'chosen' );
-		wp_enqueue_script( 'a3rev-chosen-new' );
+		wp_enqueue_script( 'a3rev-chosen-ajaxify' );
 		wp_enqueue_script( 'a3rev-style-checkboxes' );
 		wp_enqueue_script( 'a3rev-admin-ui-script' );
 		wp_enqueue_script( 'a3rev-typography-preview' );
 		wp_enqueue_script( 'a3rev-settings-preview' );
-		wp_enqueue_script( 'jquery-tiptip' );
 		wp_enqueue_script( 'a3rev-metabox-ui' );
 
 	} // End admin_script_load()
@@ -233,7 +257,6 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 		wp_enqueue_style( 'wp-color-picker' );
 		wp_enqueue_style( 'jquery-datetime-picker', $this->admin_plugin_url() . '/assets/css/jquery.datetimepicker.css' );
 		wp_enqueue_style( 'a3rev-chosen-new-style', $this->admin_plugin_url() . '/assets/js/chosen/chosen' . $suffix . '.css', array(), $this->framework_version );
-		wp_enqueue_style( 'a3rev-tiptip-style', $this->admin_plugin_url() . '/assets/js/tipTip/tipTip.css' );
 		wp_enqueue_style( 'a3rev-metabox-ui-style', $this->admin_plugin_url() . '/assets/css/a3_admin_metabox.css', array(), $this->framework_version );
 
 		if ( is_rtl() ) {
@@ -1121,7 +1144,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 	 * @return void
 	 * ========================================================================
 	 * Option Array Structure :
-	 * type					=> row | column | heading | ajax_submit | ajax_multi_submit | google_api_key | onoff_toggle_box 
+	 * type					=> row | column | heading | ajax_submit | ajax_multi_submit | google_api_key | google_map_api_key | onoff_toggle_box 
 	 * 						   | text | email | number | password | color | bg_color | textarea | select | multiselect | radio | onoff_radio | checkbox | onoff_checkbox 
 	 *						   | switcher_checkbox | image_size | single_select_page | typography | border | border_styles | border_corner | box_shadow 
 	 *						   | slider | upload | wp_editor | array_textfields | time_picker
@@ -1158,6 +1181,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 	 * checked_label		=> text : apply for onoff_checkbox, switcher_checkbox only ( set it to show the text instead ON word default )
 	 * unchecked_label		=> text : apply for onoff_checkbox, switcher_checkbox only ( set it to show the text instead OFF word default  )
 	 * options				=> array : apply for select, multiselect, radio types
+	 * options_url		 	=> url : apply for select, multiselect
 	 *
 	 * onoff_options		=> array : apply for onoff_radio only
 	 *						   ---------------- example ---------------------
@@ -1457,7 +1481,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 	
 			} elseif ( $tip ) {
 	
-				$tip = '<div class="help_tip a3-plugin-ui-icon a3-plugin-ui-help-icon" data-tip="' . esc_attr( $tip ) . '"></div>';
+				$tip = '<div class="help_tip a3-plugin-ui-icon a3-plugin-ui-help-icon" data-trigger="hover" data-content="' . esc_attr( $tip ) . '"></div>';
 	
 			}
 			
@@ -1712,7 +1736,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 						// open box handle
 						echo '<div data-form-key="'. esc_attr( trim( $form_key ) ) .'" data-box-id="'. esc_attr( $heading_box_id ) .'" class="a3rev_panel_box_handle ' . $box_handle_class .'" >' . "\n\n";
 
-						echo ( ! empty( $value['name'] ) ) ? '<h3 class="a3-plugin-ui-panel-box '. $toggle_box_class . ' ' . $opened_class . '">'. esc_html( $value['name'] ) .' '. $view_doc .'</h3>' : '';
+						echo ( ! empty( $value['name'] ) ) ? '<h3 class="a3-plugin-ui-panel-box '. $toggle_box_class . ' ' . $opened_class . '">'. $value['name'] .' '. $view_doc .'</h3>' : '';
 
 						if ( stristr( $value['class'], 'pro_feature_fields' ) !== false && ! empty( $value['id'] ) ) $this->upgrade_top_message( true, sanitize_title( $value['id'] ) );
 						elseif ( stristr( $value['class'], 'pro_feature_fields' ) !== false ) $this->upgrade_top_message( true );
@@ -1738,7 +1762,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 						if ( stristr( $value['class'], 'pro_feature_fields' ) !== false && ! empty( $value['id'] ) ) $this->upgrade_top_message( true, sanitize_title( $value['id'] ) );
 						elseif ( stristr( $value['class'], 'pro_feature_fields' ) !== false ) $this->upgrade_top_message( true );
 
-						echo ( ! empty( $value['name'] ) ) ? '<h3>'. esc_html( $value['name'] ) .' '. $view_doc .'</h3>' : '';
+						echo ( ! empty( $value['name'] ) ) ? '<h3>'. $value['name'] .' '. $view_doc .'</h3>' : '';
 					}
 
 					if ( ! empty( $value['desc'] ) ) {
@@ -1810,6 +1834,62 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 
 				break;
 
+				// Google Map API Key input
+				case 'google_map_api_key':
+
+					$google_map_api_key        = $this->settings_get_option( $this->google_map_api_key_option );
+					$google_map_api_key_enable = $this->settings_get_option( $this->google_map_api_key_option . '_enable', 0 );
+					if ( ! isset( $value['checked_label'] ) ) $value['checked_label'] = __( 'ON', 'page-views-count' );
+					if ( ! isset( $value['unchecked_label'] ) ) $value['unchecked_label'] = __( 'OFF', 'page-views-count' );
+
+					?><tr valign="top">
+						<th scope="row" class="titledesc">
+                        	<?php echo $tip; ?>
+							<label for="<?php echo $this->google_map_api_key_option; ?>"><?php echo __( 'Google Maps API', 'page-views-count' ); ?></label>
+						</th>
+						<td class="forminp forminp-onoff_checkbox forminp-<?php echo sanitize_title( $value['type'] ) ?>">
+							<input
+								name="<?php echo $this->google_map_api_key_option; ?>_enable"
+                                id="<?php echo $this->google_map_api_key_option; ?>_enable"
+								class="a3rev-ui-onoff_checkbox a3rev-ui-onoff_google_api_key_enable"
+                                checked_label="<?php echo esc_html( $value['checked_label'] ); ?>"
+                                unchecked_label="<?php echo esc_html( $value['unchecked_label'] ); ?>"
+                                type="checkbox"
+								value="1"
+								<?php checked( $google_map_api_key_enable, 1 ); ?>
+								/> <span class="description" style="margin-left:5px;"><?php echo __( 'Switch ON to connect to Google Maps API', 'page-views-count' ); ?></span>
+
+							<div>&nbsp;</div>
+							<div class="a3rev-ui-google-api-key-container" style="<?php if( 1 != $google_map_api_key_enable ) { echo 'display: none;'; } ?>">
+								<div class="a3rev-ui-google-api-key-description"><?php echo sprintf( __( "Enter your existing Google Map API Key below. Don't have a key? Visit <a href='%s' target='_blank'>Google Maps API</a> to create a key", 'page-views-count' ), 'https://developers.google.com/maps/documentation/javascript/get-api-key' ); ?></div>
+								<div class="a3rev-ui-google-api-key-inside 
+									<?php
+									if ( $this->is_valid_google_map_api_key() ) {
+										echo 'a3rev-ui-google-valid-key';
+									} elseif ( '' != $google_map_api_key ) {
+										echo 'a3rev-ui-google-unvalid-key';
+									}
+									?>
+									">
+									<input
+										name="<?php echo $this->google_map_api_key_option; ?>"
+										id="<?php echo $this->google_map_api_key_option; ?>"
+										type="text"
+										style="<?php echo esc_attr( $value['css'] ); ?>"
+										value="<?php echo esc_attr( $google_map_api_key ); ?>"
+										class="a3rev-ui-text a3rev-ui-<?php echo sanitize_title( $value['type'] ) ?> <?php echo esc_attr( $value['class'] ); ?>"
+		                                placeholder="<?php echo __( 'Google Map API Key', 'page-views-count' ); ?>"
+										<?php echo implode( ' ', $custom_attributes ); ?>
+										/>
+									<p class="a3rev-ui-google-valid-key-message"><?php echo __( 'Your Google API Key is valid and automatic font updates are enabled.', 'page-views-count' ); ?></p>
+									<p class="a3rev-ui-google-unvalid-key-message"><?php echo __( 'Please enter a valid Google API Key.', 'page-views-count' ); ?></p>
+								</div>
+							</div>
+						</td>
+					</tr><?php
+
+				break;
+
 				// Manual Check New Version when click on the button instead of wait for daily
 				case 'manual_check_version':
 
@@ -1850,7 +1930,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					$submit_data      = json_encode( $value['submit_data'] );
 
 					?><tr valign="top">
-						<th scope="row" class="titledesc"><?php echo $tip; ?><?php echo esc_html( $value['name'] ) ?></th>
+						<th scope="row" class="titledesc"><?php echo $tip; ?><?php echo $value['name']; ?></th>
 						<td class="forminp">
 
                             <div class="a3rev-ui-<?php echo sanitize_title( $value['type'] ) ?>-control">
@@ -1891,6 +1971,12 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					$errors_text      = $value['errors_text'];
 					$statistic_column = isset( $value['statistic_column'] ) ? $value['statistic_column'] : 1;
 
+					$notice          = isset( $value['notice'] ) ? $value['notice'] : '';
+					$confirm_message = '';
+					if ( isset( $value['confirm_run'] ) && $value['confirm_run']['allow'] ) {
+						$confirm_message = isset( $value['confirm_run']['message'] ) ? $value['confirm_run']['message'] : '';
+					}
+
 					$multi_current_items = 0;
 					$multi_total_items   = 0;
 
@@ -1917,7 +2003,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					$multi_ajax = json_encode( $multi_ajax );
 
 					?><tr valign="top">
-						<th scope="row" class="titledesc"><?php echo $tip; ?><?php echo esc_html( $value['name'] ) ?></th>
+						<th scope="row" class="titledesc"><?php echo $tip; ?><?php echo $value['name']; ?></th>
 						<td class="forminp">
 
                             <div class="a3rev-ui-<?php echo sanitize_title( $value['type'] ) ?>-control">
@@ -1931,11 +2017,17 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 									class="a3rev-ui-<?php echo sanitize_title( $value['type'] ) ?>-button <?php echo esc_attr( $value['class'] ); ?>"
 									style="<?php echo esc_attr( $value['css'] ); ?>"
 									<?php echo implode( ' ', $custom_attributes ); ?>
+								<?php if ( ! empty( $confirm_message ) ) { ?>
+									data-confirm_message="<?php echo esc_attr( $confirm_message ); ?>"
+								<?php } ?> 
 								><?php echo $button_name; ?></button>
 								<span class="a3rev-ui-<?php echo sanitize_title( $value['type'] ) ?>-successed"><?php echo $successed_text; ?></span>
 								<span class="a3rev-ui-<?php echo sanitize_title( $value['type'] ) ?>-errors"><?php echo $errors_text; ?></span>
 
 								<!-- Progress Bar -->
+								<?php if ( ! empty( $notice ) ) { ?>
+								<div class="a3rev-ui-progress-notice"><?php echo $notice; ?></div>
+								<?php } ?>
 								<div class="a3rev-ui-progress-bar-wrap">
 									<div class="a3rev-ui-progress-inner" data-current="<?php echo $multi_current_items; ?>" data-total="<?php echo $multi_total_items; ?>" ></div>
 									<div class="a3rev-ui-progressing-text"><?php echo $progressing_text; ?></div>
@@ -2039,7 +2131,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo $tip; ?>
-							<label for="<?php echo $id_attribute; ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo $id_attribute; ?>"><?php echo $value['name']; ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
 							<input
@@ -2066,7 +2158,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo $tip; ?>
-							<label for="<?php echo $id_attribute; ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo $id_attribute; ?>"><?php echo $value['name']; ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
 							<input
@@ -2097,7 +2189,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
 							<?php echo $tip; ?>
-							<label for="<?php echo $id_attribute; ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo $id_attribute; ?>"><?php echo $value['name']; ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
 							<input
@@ -2133,7 +2225,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo $tip; ?>
-							<label for="<?php echo $id_attribute; ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo $id_attribute; ?>"><?php echo $value['name']; ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
 							<?php echo $description; ?>
@@ -2159,11 +2251,17 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 						$value['class'] .= ' chzn-rtl';
 					}
 					if ( ! isset( $value['options'] ) ) $value['options'] = array();
+
+					$is_ajax = false;
+					if ( isset( $value['options_url'] ) && ! empty( $value['options_url'] ) ) {
+						$is_ajax = true;
+						$value['class'] .= ' chzn-select-ajaxify';
+					}
 		
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo $tip; ?>
-							<label for="<?php echo $id_attribute; ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo $id_attribute; ?>"><?php echo $value['name']; ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
 							<select
@@ -2174,6 +2272,11 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 								data-placeholder="<?php echo esc_html( $value['placeholder'] ); ?>"
 								<?php echo implode( ' ', $custom_attributes ); ?>
 								<?php if ( $value['type'] == 'multiselect' ) echo 'multiple="multiple"'; ?>
+								<?php if ( $is_ajax ) {
+									echo 'options_url="'.esc_url( $value['options_url'] ).'"';
+									echo 'data-no_results_text="Please enter 3 or more characters"';
+								}
+								?>
 								>
 								<?php
 								if ( is_array( $value['options'] ) && count( $value['options'] ) > 0 ) {
@@ -2225,7 +2328,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo $tip; ?>
-							<label for="<?php echo $id_attribute; ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo $id_attribute; ?>"><?php echo $value['name']; ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
 							<fieldset>
@@ -2264,7 +2367,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo $tip; ?>
-							<label for="<?php echo $id_attribute; ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo $id_attribute; ?>"><?php echo $value['name']; ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
 							<fieldset>
@@ -2316,7 +2419,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 							if ( $value['show_if_checked'] == 'option' ) echo 'show_options_if_checked';
 						?>">
 						<th scope="row" class="titledesc">
-                        	<label for="<?php echo $id_attribute; ?>"><?php echo esc_html( $value['name'] ); ?></label>
+                        	<label for="<?php echo $id_attribute; ?>"><?php echo $value['name']; ?></label>
                         </th>
 						<td class="forminp forminp-checkbox">
 							<fieldset>
@@ -2332,7 +2435,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					}
 	
 					?>
-						<legend class="screen-reader-text"><span><?php echo esc_html( $value['name'] ) ?></span></legend>
+						<legend class="screen-reader-text"><span><?php echo $value['name']; ?></span></legend>
 	
 						<label for="<?php echo $id_attribute; ?>">
 						<input
@@ -2369,7 +2472,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo $tip; ?>
-							<label for="<?php echo $id_attribute; ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo $id_attribute; ?>"><?php echo $value['name']; ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
 							<input
@@ -2398,7 +2501,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo $tip; ?>
-							<label for="<?php echo $id_attribute; ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo $id_attribute; ?>"><?php echo $value['name']; ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
 							<input
@@ -2425,7 +2528,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					$crop 	= checked( 1, $option_value['crop'], false );
 	
 					?><tr valign="top">
-						<th scope="row" class="titledesc"><?php echo $tip; ?><?php echo esc_html( $value['name'] ) ?></th>
+						<th scope="row" class="titledesc"><?php echo $tip; ?><?php echo $value['name']; ?></th>
 						<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
 	
 							<label><?php _e( 'Width', 'page-views-count' ); ?> <input name="<?php echo $name_attribute; ?>[width]" id="<?php echo $id_attribute; ?>-width" type="text" class="a3rev-ui-<?php echo sanitize_title( $value['type'] ) ?>-width" value="<?php echo $width; ?>" /></label>
@@ -2460,7 +2563,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 						$args = wp_parse_args( $value['args'], $args );
 	
 					?><tr valign="top">
-						<th scope="row" class="titledesc"><?php echo $tip; ?><?php echo esc_html( $value['name'] ) ?></th>
+						<th scope="row" class="titledesc"><?php echo $tip; ?><?php echo $value['name']; ?></th>
 						<td class="forminp">
 							<?php echo str_replace(' id=', " data-placeholder='" . esc_html( $value['placeholder'] ) .  "' style='" . $value['css'] . "' class='" . $value['class'] . "' id=", wp_dropdown_pages( $args ) ); ?> <?php echo $description; ?>
 						</td>
@@ -2483,7 +2586,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					$color       = $option_value['color'];
 
 					?><tr valign="top">
-						<th scope="row" class="titledesc"><?php echo $tip; ?><?php echo esc_html( $value['name'] ) ?></th>
+						<th scope="row" class="titledesc"><?php echo $tip; ?><?php echo $value['name']; ?></th>
 						<td class="forminp">
                         	<?php echo $description; ?>
                             <div class="a3rev-ui-<?php echo sanitize_title( $value['type'] ) ?>-control">
@@ -2637,7 +2740,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					$bottom_right_corner = intval( $bottom_right_corner );
 				
 					?><tr valign="top">
-						<th scope="row" class="titledesc"><?php echo $tip; ?><?php echo esc_html( $value['name'] ) ?></th>
+						<th scope="row" class="titledesc"><?php echo $tip; ?><?php echo $value['name']; ?></th>
 						<td class="forminp forminp-border_corner">
 							<?php echo $description; ?>
                             <div class="a3rev-ui-settings-control">
@@ -2804,7 +2907,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					$color	= $option_value['color'];
 				
 					?><tr valign="top">
-						<th scope="row" class="titledesc"><?php echo $tip; ?><?php echo esc_html( $value['name'] ) ?></th>
+						<th scope="row" class="titledesc"><?php echo $tip; ?><?php echo $value['name']; ?></th>
 						<td class="forminp">
 							<?php echo $description; ?>
                             <div class="a3rev-ui-settings-control">
@@ -2903,7 +3006,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					$bottom_right_corner = intval( $bottom_right_corner );
 				
 					?><tr valign="top">
-						<th scope="row" class="titledesc"><?php echo $tip; ?><?php echo esc_html( $value['name'] ) ?></th>
+						<th scope="row" class="titledesc"><?php echo $tip; ?><?php echo $value['name']; ?></th>
 						<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
                             <div class="a3rev-ui-settings-control">	
                                 <!-- Border Corner : Rounded or Square -->
@@ -3029,7 +3132,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					$inset		= $option_value['inset'];
 				
 					?><tr valign="top">
-						<th scope="row" class="titledesc"><?php echo $tip; ?><?php echo esc_html( $value['name'] ) ?></th>
+						<th scope="row" class="titledesc"><?php echo $tip; ?><?php echo $value['name']; ?></th>
 						<td class="forminp forminp-box_shadow">
                             <input
                                     name="<?php echo $name_attribute; ?>[enable]"
@@ -3163,7 +3266,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo $tip; ?>
-							<label for="<?php echo $id_attribute; ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo $id_attribute; ?>"><?php echo $value['name']; ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
                         <div class="a3rev-ui-slide-container">
@@ -3207,11 +3310,11 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo $tip; ?>
-							<label for="<?php echo $id_attribute; ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo $id_attribute; ?>"><?php echo $value['name']; ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
                         	<?php echo $description; ?>
-                        	<?php echo $wp_pvc_uploader->upload_input( $name_attribute, $id_attribute, $option_value, $attachment_id, $value['default'], esc_html( $value['name'] ), $class, esc_attr( $value['css'] ) , '', $strip_methods );?>
+                        	<?php echo $wp_pvc_uploader->upload_input( $name_attribute, $id_attribute, $option_value, $attachment_id, $value['default'], $value['name'], $class, esc_attr( $value['css'] ) , '', $strip_methods );?>
 						</td>
 					</tr><?php
 									
@@ -3225,7 +3328,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo $tip; ?>
-							<label for="<?php echo $id_attribute; ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo $id_attribute; ?>"><?php echo $value['name']; ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
                         	<?php echo $description; ?>
@@ -3249,7 +3352,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo $tip; ?>
-							<label for="<?php echo $id_attribute; ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo $id_attribute; ?>"><?php echo $value['name']; ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
                         	<?php echo $description; ?>
@@ -3315,7 +3418,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
                                     style="<?php echo esc_attr( $text_field['css'] ); ?>"
                                     value="<?php echo esc_attr( $option_value ); ?>"
                                     class="a3rev-ui-<?php echo sanitize_title( $value['type'] ) ?> <?php echo esc_attr( $text_field['class'] ); ?>"
-                                    /> <span><?php echo esc_html( $text_field['name'] ); ?></span></label> 
+                                    /> <span><?php echo $text_field['name']; ?></span></label> 
 							<?php
 							}
 							?>
@@ -3334,7 +3437,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo $tip; ?>
-							<label for="<?php echo $id_attribute; ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo $id_attribute; ?>"><?php echo $value['name']; ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
                         	<input
@@ -3533,7 +3636,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 			// open box handle
 			echo '<div data-form-key="custom-boxes" data-box-id="'. esc_attr( $heading_box_id ) .'" class="a3rev_panel_box_handle" >' . "\n\n";
 
-			echo ( ! empty( $options['name'] ) ) ? '<h3 class="a3-plugin-ui-panel-box '. $toggle_box_class . ' ' . $opened_class . '">'. esc_html( $options['name'] ) .' '. $view_doc .'</h3>' : '';
+			echo ( ! empty( $options['name'] ) ) ? '<h3 class="a3-plugin-ui-panel-box '. $toggle_box_class . ' ' . $opened_class . '">'. $options['name'] .' '. $view_doc .'</h3>' : '';
 
 			if ( stristr( $options['class'], 'pro_feature_fields' ) !== false && ! empty( $options['id'] ) ) $this->upgrade_top_message( true, sanitize_title( $options['id'] ) );
 			elseif ( stristr( $options['class'], 'pro_feature_fields' ) !== false ) $this->upgrade_top_message( true );
@@ -3551,7 +3654,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 			if ( stristr( $options['class'], 'pro_feature_fields' ) !== false && ! empty( $options['id'] ) ) $this->upgrade_top_message( true, sanitize_title( $options['id'] ) );
 			elseif ( stristr( $options['class'], 'pro_feature_fields' ) !== false ) $this->upgrade_top_message( true );
 
-			echo ( ! empty( $options['name'] ) ) ? '<h3>'. esc_html( $options['name'] ) .' '. $view_doc .'</h3>' : '';
+			echo ( ! empty( $options['name'] ) ) ? '<h3>'. $options['name'] .' '. $view_doc .'</h3>' : '';
 		}
 
 		if ( ! empty( $options['desc'] ) ) {

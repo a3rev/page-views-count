@@ -23,6 +23,7 @@ define('A3_PVC_IMAGES_URL', A3_PVC_URL . '/assets/images');
 
 define( 'A3_PVC_KEY', 'a3_page_view_count' );
 define( 'A3_PVC_VERSION', '2.0.5' );
+define( 'A3_PVC_G_FONTS', false );
 
 /**
  * Load Localisation files.
@@ -54,6 +55,7 @@ include ('admin/less/sass.php');
 
 include ("pvc_class.php");
 include ("classes/class-pvc-metabox.php");
+include ('src/blocks.php');
 
 include ('admin/plugin-init.php');
 
@@ -67,12 +69,12 @@ register_activation_hook(__FILE__, 'pvc_install');
  */
 register_deactivation_hook(__FILE__, 'pvc_deactivation');
 
-function pvc_stats( $postid, $have_echo = 1 ) {
-    return A3_PVC::custom_stats_echo( $postid, $have_echo );
+function pvc_stats( $postid, $have_echo = 1, $attributes = array() ) {
+    return A3_PVC::custom_stats_echo( $postid, $have_echo, $attributes );
 }
 
-function pvc_stats_update( $postid, $have_echo = 1 ) {
-    return A3_PVC::custom_stats_update_echo( $postid, $have_echo );
+function pvc_stats_update( $postid, $have_echo = 1, $attributes = array() ) {
+    return A3_PVC::custom_stats_update_echo( $postid, $have_echo, $attributes );
 }
 
 function pvc_is_activated( $postid = 0 ) {

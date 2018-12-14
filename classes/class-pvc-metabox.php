@@ -17,6 +17,10 @@ class PVC_MetaBox
 			,$post_type
 			,'side'
 			,'high'
+			, array( 
+				'__block_editor_compatible_meta_box' => true,
+				'__back_compat_meta_box' => false,
+			)
 		);
 	}
 

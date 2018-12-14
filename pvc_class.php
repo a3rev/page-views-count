@@ -162,7 +162,7 @@ class A3_PVC
 	}
 
 	// get the total page views and daily page views for the post
-	public static function pvc_stats_counter( $post_id, $increase_views = false ) {
+	public static function pvc_stats_counter( $post_id, $increase_views = false, $attributes = array() ) {
 		global $wpdb;
 		global $pvc_settings;
 
@@ -172,10 +172,30 @@ class A3_PVC
 		// get the stats and
 		$html = '<div class="pvc_clear"></div>';
 
-		if ( $pvc_settings['enable_ajax_load'] == 'yes' ) {
-			$stats_html = '<p id="pvc_stats_'.$post_id.'" class="pvc_stats '.$load_by_ajax_update_class.'" data-element-id="'.$post_id.'"><i class="fa fa-bar-chart pvc-stats-icon '.$pvc_settings['icon_size'].'" aria-hidden="true"></i> <img src="'.A3_PVC_URL.'/ajax-loader.gif" border=0 /></p>';
+		$custom_class = '';
+		if ( ! empty( $attributes['className'] ) ) {
+			$custom_class = $attributes['className'];
+		}
+
+		$custom_style = '';
+		if ( ! empty( $attributes['align'] ) ) {
+			switch ( $attributes['align'] ) {
+				case 'center':
+					$custom_style = 'text-align:center;float:none;';
+					break;
+				case 'right':
+					$custom_style = 'float:right;';
+					break;
+				default:
+					$custom_style = 'float:left;';
+					break;
+			}
+		}
+
+		if ( $pvc_settings['enable_ajax_load'] == 'yes' && empty( $attributes['in_editor'] ) ) {
+			$stats_html = '<p id="pvc_stats_'.$post_id.'" class="pvc_stats '. $custom_class .' '.$load_by_ajax_update_class.'" data-element-id="'.$post_id.'" style="'. $custom_style .'"><i class="fa fa-bar-chart pvc-stats-icon '.$pvc_settings['icon_size'].'" aria-hidden="true"></i> <img src="'.A3_PVC_URL.'/ajax-loader.gif" border=0 /></p>';
 		} else {
-			$stats_html = '<p class="pvc_stats" data-element-id="'.$post_id.'"><i class="fa fa-bar-chart pvc-stats-icon '.$pvc_settings['icon_size'].'" aria-hidden="true"></i> ' . A3_PVC::pvc_get_stats( $post_id ) . '</p>';
+			$stats_html = '<p class="pvc_stats '. $custom_class .'" data-element-id="'.$post_id.'" style="'. $custom_style .'"><i class="fa fa-bar-chart pvc-stats-icon '.$pvc_settings['icon_size'].'" aria-hidden="true"></i> ' . A3_PVC::pvc_get_stats( $post_id ) . '</p>';
 		}
 
 		$html .= apply_filters( 'pvc_filter_stats', $stats_html, $post_id );
@@ -307,14 +327,14 @@ class A3_PVC
 		}
 	}
 
-	public static function custom_stats_echo($postid=0, $have_echo = 1){
+	public static function custom_stats_echo($postid=0, $have_echo = 1, $attributes = array() ){
 		if($have_echo == 1)
-			echo A3_PVC::pvc_stats_counter($postid);
+			echo A3_PVC::pvc_stats_counter($postid, false, $attributes );
 		else
-			return A3_PVC::pvc_stats_counter($postid);
+			return A3_PVC::pvc_stats_counter($postid, false, $attributes );
 	}
 
-	public static function custom_stats_update_echo($postid=0, $have_echo=1){
+	public static function custom_stats_update_echo($postid=0, $have_echo=1, $attributes = array() ){
 		$output = '';
 		global $pvc_settings;
 		if ( empty( $pvc_settings ) ) {
@@ -324,7 +344,7 @@ class A3_PVC
 			A3_PVC::pvc_stats_update($postid);
 		}
 
-		$output .= A3_PVC::pvc_stats_counter($postid, true );
+		$output .= A3_PVC::pvc_stats_counter($postid, true, $attributes );
 
 		if ( $have_echo == 1 )
 			echo $output;
