@@ -12,14 +12,13 @@
   line-height: 1;
   color: #000;
   text-shadow: 0 1px 0 #fff;
-  opacity: 0.5;
+  opacity: .5;
 }
 
-.modal .close:hover,
-.modal .close:focus {
+.modal .close:hover, .modal .close:focus {
   color: #000;
   text-decoration: none;
-  opacity: 0.75;
+  opacity: .75;
 }
 
 .modal .close:not(:disabled):not(.disabled) {
@@ -61,7 +60,7 @@
   pointer-events: none;
 }
 
-.modal.fade {
+.modal.fade{
   opacity: 1;
 }
 
@@ -167,11 +166,11 @@
 }
 
 .modal-footer > :not(:first-child) {
-  margin-left: 0.25rem;
+  margin-left: .25rem;
 }
 
 .modal-footer > :not(:last-child) {
-  margin-right: 0.25rem;
+  margin-right: .25rem;
 }
 
 .modal-scrollbar-measure {

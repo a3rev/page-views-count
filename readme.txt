@@ -2,8 +2,8 @@
 Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 4.6
-Tested up to: 5.0.1
-Stable tag: 2.1.0
+Tested up to: 5.0.2
+Stable tag: 2.1.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -97,6 +97,12 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.1.1 – 2018/12/17 =
+* This is a maintenance update for WordPress version 5.0.2 and PHP 7.3 compatibility. 
+* Framework – Update to use WordPress ESLint rules 
+* Framework – Test and update for compatibility with PHP 7.3
+* Tweak - Test for compatibility with WordPress 
 
 = 2.1.0 - 2018/12/14 =
 * This feature upgrade ports Page View Count editor meta to Page Views Gutenberg block. Full compatibility with WP 5.0.1, 4.9.9 and the Classic editor.
@@ -311,6 +317,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.1.1 =
+This is a maintenance update for WordPress version 5.0.2 and PHP 7.3 compatibility
 
 = 2.1.0 =
 This feature upgrade ports Page View Count editor meta box to Page Views Gutenberg block. Full compatibility with WP 5.0.1, 4.9.9 and the Classic Editor.

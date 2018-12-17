@@ -4,7 +4,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
-var Util = (function($) {
+var Util = function ($) {
   /**
    * ------------------------------------------------------------------------
    * Private TransitionEnd Helpers
@@ -15,10 +15,7 @@ var Util = (function($) {
   var MILLISECONDS_MULTIPLIER = 1000; // Shoutout AngusCroll (https://goo.gl/pxwQGp)
 
   function toType(obj) {
-    return {}.toString
-      .call(obj)
-      .match(/\s([a-z]+)/i)[1]
-      .toLowerCase();
+    return {}.toString.call(obj).match(/\s([a-z]+)/i)[1].toLowerCase();
   }
 
   function getSpecialTransitionEndEvent() {
@@ -31,7 +28,7 @@ var Util = (function($) {
         }
 
         return undefined; // eslint-disable-line no-undefined
-      },
+      }
     };
   }
 
@@ -39,10 +36,10 @@ var Util = (function($) {
     var _this = this;
 
     var called = false;
-    $(this).one(Util.TRANSITION_END, function() {
+    $(this).one(Util.TRANSITION_END, function () {
       called = true;
     });
-    setTimeout(function() {
+    setTimeout(function () {
       if (!called) {
         Util.triggerTransitionEnd(_this);
       }
@@ -59,6 +56,7 @@ var Util = (function($) {
    * Public Util Api
    * --------------------------------------------------------------------------
    */
+
 
   var Util = {
     TRANSITION_END: 'bsTransitionEnd',
@@ -89,12 +87,14 @@ var Util = (function($) {
         return 0;
       } // Get transition-duration of the element
 
+
       var transitionDuration = $(element).css('transition-duration');
       var floatTransitionDuration = parseFloat(transitionDuration); // Return 0 if element or transition duration is not found
 
       if (!floatTransitionDuration) {
         return 0;
       } // If multiple durations are defined, take the first
+
 
       transitionDuration = transitionDuration.split(',')[0];
       return parseFloat(transitionDuration) * MILLISECONDS_MULTIPLIER;
@@ -120,17 +120,12 @@ var Util = (function($) {
           var valueType = value && Util.isElement(value) ? 'element' : toType(value);
 
           if (!new RegExp(expectedTypes).test(valueType)) {
-            throw new Error(
-              componentName.toUpperCase() +
-                ': ' +
-                ('Option "' + property + '" provided type "' + valueType + '" ') +
-                ('but expected type "' + expectedTypes + '".'),
-            );
+            throw new Error(componentName.toUpperCase() + ": " + ("Option \"" + property + "\" provided type \"" + valueType + "\" ") + ("but expected type \"" + expectedTypes + "\"."));
           }
         }
       }
-    },
+    }
   };
   setTransitionEndSupport();
   return Util;
-})(jQuery);
+}(jQuery);
