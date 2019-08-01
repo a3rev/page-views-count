@@ -2,7 +2,7 @@
 /*
 Plugin Name: Page Views Count
 Description: Show front end users all time views and views today on posts, pages, index pages and custom post types with the Page Views Count Plugin. Use the Page Views Count function to add page views to any content type or object created by your theme or plugins.
-Version: 2.1.2
+Version: 2.1.3
 Requires at least: 4.6
 Tested up to: 5.2.2
 Author: a3rev Software
@@ -22,7 +22,7 @@ define('A3_PVC_JS_URL', A3_PVC_URL . '/assets/js');
 define('A3_PVC_IMAGES_URL', A3_PVC_URL . '/assets/images');
 
 define( 'A3_PVC_KEY', 'a3_page_view_count' );
-define( 'A3_PVC_VERSION', '2.1.2' );
+define( 'A3_PVC_VERSION', '2.1.3' );
 define( 'A3_PVC_G_FONTS', false );
 
 /**
