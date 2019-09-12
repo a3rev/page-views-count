@@ -8,12 +8,14 @@
  * @package CGB
  */
 
+namespace A3Rev\PageViewsCount;
+
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class PVC_Stats_Blocks {
+class Blocks {
 
 	public function __construct() {
 
@@ -71,7 +73,32 @@ class PVC_Stats_Blocks {
 		// );
 	}
 
+	public function create_a3blocks_section() {
+
+		add_filter( 'block_categories', function( $categories ) {
+
+			$category_slugs = wp_list_pluck( $categories, 'slug' );
+
+			if ( in_array( 'a3rev-blocks', $category_slugs ) ) {
+				return $categories;
+			}
+
+			return array_merge(
+				array(
+					array(
+						'slug' => 'a3rev-blocks',
+						'title' => __( 'a3rev Blocks' ),
+						'icon' => '',
+					),
+				),
+				$categories
+			);
+		}, 2 );
+	}
+
 	public function register_block() {
+
+		$this->create_a3blocks_section();
 
 		if ( ! function_exists( 'register_block_type' ) ) {
 			// Gutenberg is not active.
@@ -174,5 +201,3 @@ class PVC_Stats_Blocks {
 
 	}
 }
-
-new PVC_Stats_Blocks();

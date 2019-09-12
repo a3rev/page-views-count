@@ -1,5 +1,7 @@
 <?php
-class PVC_MetaBox
+namespace A3Rev\PageViewsCount;
+
+class MetaBox
 {
 	public function __construct() {
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
@@ -156,6 +158,5 @@ class PVC_MetaBox
 	}
 
 }
-new PVC_MetaBox();
 
 ?>

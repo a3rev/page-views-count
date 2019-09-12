@@ -120,7 +120,7 @@ class WP_PVC_General_Settings extends WP_PVC_Admin_UI
 	public function clean_on_deletion() {
 		if ( isset( $_POST['bt_save_settings'] ) && isset( $_POST['pvc_reset_all_individual'] ) ) {
 			delete_option( 'pvc_reset_all_individual' );
-			A3_PVC::pvc_reset_individual_items();
+			\A3Rev\PageViewsCount\A3_PVC::pvc_reset_individual_items();
 		}
 
 		if ( ( isset( $_POST['bt_save_settings'] ) || isset( $_POST['bt_reset_settings'] ) ) && get_option( $this->plugin_name . '_clean_on_deletion' ) == 0  )  {

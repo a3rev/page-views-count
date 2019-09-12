@@ -2,8 +2,8 @@
 Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 4.6
-Tested up to: 5.2.2
-Stable tag: 2.1.3
+Tested up to: 5.2.3
+Stable tag: 2.2.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -97,6 +97,10 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.2.0 - 2019/09/12 =
+* This feature upgrade is a full refactor of the plugins PHP to PHP dependency manager Composer with autoloading.
+* Feature - Plugin fully refactored to Composer for cleaner code and faster PHP code
 
 = 2.1.3 - 2019/08/01 =
 * This maintenance upgrade is to fix a style conflict with fontawesome icons
@@ -325,6 +329,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.2.0 =
+This feature upgrade is a full refactor of the plugins PHP to PHP dependency manager Composer with autoloading.
 
 = 2.1.3 =
 This maintenance upgrade is to fix a style conflict with fontawesome icons

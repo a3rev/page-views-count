@@ -1,13 +1,12 @@
 <?php
-if (!defined('ABSPATH')) exit;
- // Exit if accessed directly
+namespace A3Rev\PageViewsCount;
 
 // File Security Check
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-class PVC_API
+class API
 {
 
     public $namespace = 'pvc/v1';
@@ -62,7 +61,7 @@ class PVC_API
         return $items_data;
     }
 
-    public function increase_stats( WP_REST_Request $request ) {
+    public function increase_stats( \WP_REST_Request $request ) {
         @ini_set( 'display_errors', false );
 
         $post_ids_text = $request->get_param( 'post_ids' );
@@ -101,7 +100,7 @@ class PVC_API
         return wp_send_json( $json_data );
     }
 
-    public function view_stats( WP_REST_Request $request ) {
+    public function view_stats( \WP_REST_Request $request ) {
         @ini_set( 'display_errors', false );
 
         $post_ids_text = $request->get_param( 'post_ids' );
@@ -132,8 +131,5 @@ class PVC_API
         return wp_send_json( $json_data );
     }
 }
-
-global $pvc_api;
-$pvc_api = new PVC_API();
 
 ?>
