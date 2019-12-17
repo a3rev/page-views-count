@@ -6,6 +6,7 @@
 /package-lock.json export-ignore
 /package.json export-ignore
 /README.md export-ignore
+/prettier.config.js export-ignore
 /.vscode/ export-ignore
 /node_modules/ export-ignore
 /composer.* export-ignore

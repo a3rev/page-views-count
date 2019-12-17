@@ -150,13 +150,11 @@ class MetaBox
 
 		// Manual change Total Views and Today Views
 		if ( isset( $_POST['a3_pvc_total_views'] ) && isset( $_POST['a3_pvc_today_views'] ) ) {
-			$total_views = trim( $_POST['a3_pvc_total_views'] );
-			$today_views = trim( $_POST['a3_pvc_today_views'] );
+			$total_views = absint( trim( $_POST['a3_pvc_total_views'] ) );
+			$today_views = absint( trim( $_POST['a3_pvc_today_views'] ) );
 
 			A3_PVC::pvc_stats_manual_update( $post_id, $total_views, $today_views );
 		}
 	}
 
 }
-
-?>

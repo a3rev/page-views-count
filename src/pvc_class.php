@@ -476,4 +476,3 @@ class A3_PVC
 		return $links;
 	}
 }
-?>

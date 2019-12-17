@@ -2,8 +2,8 @@
 Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 4.6
-Tested up to: 5.2.3
-Stable tag: 2.2.0
+Tested up to: 5.3.1
+Stable tag: 2.2.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -98,6 +98,13 @@ The manual installation method involves down loading our plugin and uploading it
 
 == Changelog ==
 
+= 2.2.1 - 2019/12/17 =
+* This maintenance release has a full code security review plus compatibility with WordPress 5.3.1
+* Tweak - Remove the hard coded PHP error_reporting display errors false from compile sass to css
+* Tweak - Test for compatibility with WordPress 5.3.1
+* Dev - Replace file_get_contents with HTTP API wp_remote_get
+* Dev - Ensure that all inputs are sanitized and all outputs are escaped
+
 = 2.2.0 - 2019/09/12 =
 * This feature upgrade is a full refactor of the plugins PHP to PHP dependency manager Composer with autoloading.
 * Feature - Plugin fully refactored to Composer for cleaner code and faster PHP code
@@ -110,10 +117,10 @@ The manual installation method involves down loading our plugin and uploading it
 * This is a maintenance upgrade to fix a potentially fatal error conflict with sites running PHP 7.3 plus compatibility with WordPress 5.2.2
 * Fix - PHP warning continue targeting switch is equivalent to break for compatibility on PHP 7.3
 
-= 2.1.1 – 2018/12/17 =
+= 2.1.1 - 2018/12/17 =
 * This is a maintenance update for WordPress version 5.0.2 and PHP 7.3 compatibility. 
-* Framework – Update to use WordPress ESLint rules 
-* Framework – Test and update for compatibility with PHP 7.3
+* Framework - Update to use WordPress ESLint rules 
+* Framework - Test and update for compatibility with PHP 7.3
 * Tweak - Test for compatibility with WordPress 
 
 = 2.1.0 - 2018/12/14 =
