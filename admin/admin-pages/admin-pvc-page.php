@@ -1,9 +1,13 @@
 <?php
-/* "Copyright 2012 A3 Revolution Web Design" This software is distributed under the terms of GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 */
+/* "Copyright 2012 a3 Revolution Web Design" This software is distributed under the terms of GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 */
+
+namespace A3Rev\PageViewsCount\FrameWork\Pages {
+
+use A3Rev\PageViewsCount\FrameWork;
+
 // File Security Check
 if ( ! defined( 'ABSPATH' ) ) exit;
-?>
-<?php
+
 /*-----------------------------------------------------------------------------------
 WP PVC Admin Page
 
@@ -21,8 +25,8 @@ TABLE OF CONTENTS
 
 -----------------------------------------------------------------------------------*/
 
-class WP_PVC_Admin_Page extends WP_PVC_Admin_UI
-{	
+class Settings extends FrameWork\Admin_UI
+{
 	/**
 	 * @var string
 	 */
@@ -93,19 +97,16 @@ class WP_PVC_Admin_Page extends WP_PVC_Admin_UI
 	/* Include all tabs into this page
 	/*-----------------------------------------------------------------------------------*/
 	public function tabs_include() {
-		
-		include_once( $this->admin_plugin_dir() . '/tabs/admin-pvc-tab.php' );
-		
+		global $wp_pvc_general_tab;
+		$wp_pvc_general_tab = new FrameWork\Tabs\Global_Settings();
 	}
 	
 	/*-----------------------------------------------------------------------------------*/
 	/* admin_settings_page() */
 	/* Show Settings Page */
 	/*-----------------------------------------------------------------------------------*/
-	public function admin_settings_page() {
-		global $wp_pvc_admin_init;
-		
-		$wp_pvc_admin_init->admin_settings_page( $this->page_data() );
+	public function admin_settings_page() {		
+		$GLOBALS[$this->plugin_prefix.'admin_init']->admin_settings_page( $this->page_data() );
 	}
 	
 	/*-----------------------------------------------------------------------------------*/
@@ -121,8 +122,10 @@ class WP_PVC_Admin_Page extends WP_PVC_Admin_UI
 	}
 }
 
-global $wp_pvc_admin_page;
-$wp_pvc_admin_page = new WP_PVC_Admin_Page();
+}
+
+// global code
+namespace {
 
 /** 
  * wp_pvc_admin_page_show()
@@ -138,4 +141,4 @@ function wp_pvc_callback_settings_page_show() {
 	$wp_pvc_admin_page->callback_admin_settings_page();
 }
 
-?>
+}

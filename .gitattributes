@@ -10,3 +10,4 @@
 /.vscode/ export-ignore
 /node_modules/ export-ignore
 /composer.* export-ignore
+/.travis.yml export-ignore

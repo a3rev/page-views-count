@@ -1,9 +1,11 @@
 <?php
 /* "Copyright 2012 A3 Revolution Web Design" This software is distributed under the terms of GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 */
+
+namespace A3Rev\PageViewsCount\FrameWork {
+
 // File Security Check
 if ( ! defined( 'ABSPATH' ) ) exit;
-?>
-<?php
+
 /*-----------------------------------------------------------------------------------
 A3rev Plugin Admin Interface
 
@@ -32,7 +34,7 @@ TABLE OF CONTENTS
 
 -----------------------------------------------------------------------------------*/
 
-class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
+class Admin_Interface extends Admin_UI
 {
 
 	/*-----------------------------------------------------------------------------------*/
@@ -214,7 +216,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 							$current_update_plugins = get_site_transient( 'update_plugins' );
 							if ( isset( $current_update_plugins->response ) ) {
 								if ( empty( $current_update_plugins->response[$this->plugin_path] ) ) {
-									$current_update_plugins->response[$this->plugin_path] = new stdClass();
+									$current_update_plugins->response[$this->plugin_path] = new \stdClass();
 								}
 								$current_update_plugins->response[$this->plugin_path]->url = "http://www.a3rev.com";
 								$current_update_plugins->response[$this->plugin_path]->slug = $this->plugin_name;
@@ -296,10 +298,10 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 	/*-----------------------------------------------------------------------------------*/
 	public function admin_includes() {
 		// Includes Font Face Lib
-		include_once( 'includes/fonts_face.php' );
+		$GLOBALS[$this->plugin_prefix.'fonts_face'] = new Fonts_Face();
 		
 		// Includes Uploader Lib
-		include_once( 'includes/uploader/class-uploader.php' );
+		$GLOBALS[$this->plugin_prefix.'uploader'] = new Uploader();
 	}
 	
 	/*-----------------------------------------------------------------------------------*/
@@ -421,9 +423,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 		$new_settings = array(); $new_single_setting = ''; // :)
 		
 		// Get settings for option values is an array and it's in single option name for all settings
-		if ( trim( $option_name ) != '' ) {
-			global ${$option_name};
-			
+		if ( trim( $option_name ) != '' ) {			
 			$default_settings = $this->get_settings_default( $options, $option_name );
 			
 			$current_settings = get_option( $option_name );
@@ -433,7 +433,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 			$current_settings = array_map( array( $this, 'admin_stripslashes' ), $current_settings );
 			$current_settings = apply_filters( $this->plugin_name . '_' . $option_name . '_get_settings' , $current_settings );
 			
-			$$option_name = $current_settings;
+			$GLOBALS[$option_name] = $current_settings;
 			
 		}
 		
@@ -461,7 +461,6 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 			}
 			
 			if ( trim( $option_name ) == '' || $value['separate_option'] != false ) {
-				global ${$id_attribute};
 				
 				$current_setting = get_option( $id_attribute, $value['default'] );
 				
@@ -492,7 +491,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 				
 				$current_setting = apply_filters( $this->plugin_name . '_' . $id_attribute . '_get_setting' , $current_setting );
 				
-				$$id_attribute = $current_setting;
+				$GLOBALS[$id_attribute] = $current_setting;
 			}
 		}
 		
@@ -511,7 +510,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 
 				if ( trim( $option_name ) != '' ) {
 					update_option( $option_name, $new_settings );
-					$$option_name = $new_settings;
+					$GLOBALS[$option_name] = $new_settings;
 				}
 				
 				foreach ( $options as $value ) {
@@ -539,7 +538,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 					
 					if ( trim( $option_name ) == '' || $value['separate_option'] != false ) {
 						update_option( $id_attribute,  $new_single_setting );
-						$$id_attribute = $new_single_setting;
+						$GLOBALS[$id_attribute] = $new_single_setting;
 					}
 				}
 			}
@@ -1356,7 +1355,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 	 */
 	 
 	public function admin_forms( $options, $form_key, $option_name = '', $form_messages = array() ) {
-		global $wp_pvc_fonts_face, $wp_pvc_uploader, $current_subtab;
+		global $current_subtab;
 		
 		$new_settings = array(); $new_single_setting = ''; // :)
 		$admin_message = '';
@@ -1886,7 +1885,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 								<div class="a3rev-ui-google-api-key-description"><?php echo sprintf( __( "Enter your existing Google Fonts API Key below. Don't have a key? Visit <a href='%s' target='_blank'>Google Developer API</a> to create a key", 'page-views-count' ), 'https://developers.google.com/fonts/docs/developer_api#APIKey' ); ?></div>
 								<div class="a3rev-ui-google-api-key-inside 
 									<?php
-									if ( $wp_pvc_fonts_face->is_valid_google_api_key() ) {
+									if ( $GLOBALS[$this->plugin_prefix.'fonts_face']->is_valid_google_api_key() ) {
 										echo 'a3rev-ui-google-valid-key';
 									} elseif ( '' != $google_api_key ) {
 										echo 'a3rev-ui-google-unvalid-key';
@@ -2708,7 +2707,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 								>
 								<optgroup label="<?php _e( '-- Default Fonts --', 'page-views-count' ); ?>">
                                 <?php
-									foreach ( $wp_pvc_fonts_face->get_default_fonts() as $val => $text ) {
+									foreach ( $GLOBALS[$this->plugin_prefix.'fonts_face']->get_default_fonts() as $val => $text ) {
 										?>
                                         <option value="<?php echo esc_attr( $val ); ?>" <?php
 												selected( esc_attr( $val ), esc_attr( $face ) );
@@ -2719,7 +2718,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
                                 </optgroup>
                                 <optgroup label="<?php _e( '-- Google Fonts --', 'page-views-count' ); ?>">
                                 <?php
-									foreach ( $wp_pvc_fonts_face->get_google_fonts() as $font ) {
+									foreach ( $GLOBALS[$this->plugin_prefix.'fonts_face']->get_google_fonts() as $font ) {
 										?>
                                         <option value="<?php echo esc_attr( $font['name'] ); ?>" <?php
 												selected( esc_attr( $font['name'] ), esc_attr( $face ) );
@@ -3392,7 +3391,7 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 						</th>
 						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
                         	<?php echo $description; ?>
-                        	<?php echo $wp_pvc_uploader->upload_input( $name_attribute, $id_attribute, $option_value, $attachment_id, $value['default'], $value['name'], $class, esc_attr( $value['css'] ) , '', $strip_methods );?>
+                        	<?php echo $GLOBALS[$this->plugin_prefix.'uploader']->upload_input( $name_attribute, $id_attribute, $option_value, $attachment_id, $value['default'], $value['name'], $class, esc_attr( $value['css'] ) , '', $strip_methods );?>
 						</td>
 					</tr><?php
 									
@@ -3927,7 +3926,4 @@ class WP_PVC_Admin_Interface extends WP_PVC_Admin_UI
 
 }
 
-global $wp_pvc_admin_interface;
-$wp_pvc_admin_interface = new WP_PVC_Admin_Interface();
-
-?>
+}

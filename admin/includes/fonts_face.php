@@ -1,9 +1,11 @@
 <?php
 /* "Copyright 2012 A3 Revolution Web Design" This software is distributed under the terms of GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 */
+
+namespace A3Rev\PageViewsCount\FrameWork {
+
 // File Security Check
 if ( ! defined( 'ABSPATH' ) ) exit;
-?>
-<?php
+
 /*-----------------------------------------------------------------------------------
 A3rev Plugin Fonts Face
 
@@ -19,7 +21,7 @@ TABLE OF CONTENTS
 
 -----------------------------------------------------------------------------------*/
 
-class WP_PVC_Fonts_Face extends WP_PVC_Admin_UI
+class Fonts_Face extends Admin_UI
 {
 
 	/**
@@ -449,7 +451,7 @@ class WP_PVC_Fonts_Face extends WP_PVC_Admin_UI
 				// Check it is a valid request
 				if ( ! is_wp_error( $respone_api ) ) {
 
-					$json_string = get_magic_quotes_gpc() ? stripslashes( $respone_api['body'] ) : $respone_api['body'];
+					$json_string = version_compare( PHP_VERSION, '7.4', '>=' ) || get_magic_quotes_gpc() ? stripslashes( $respone_api['body'] ) : $respone_api['body'];
 					$response_fonts = json_decode( $json_string, true );
 
 					// Make sure that the valid response from google is not an error message
@@ -468,7 +470,7 @@ class WP_PVC_Fonts_Face extends WP_PVC_Admin_UI
 					$response = wp_remote_get( $this->admin_plugin_url() . '/assets/webfonts/webfonts.json', array( 'timeout' => 120 ) );
 					$webfonts = wp_remote_retrieve_body( $response );
 					if ( ! empty( $webfonts ) ) {
-						$json_string = get_magic_quotes_gpc() ? stripslashes( $webfonts ) : $webfonts;
+						$json_string = version_compare( PHP_VERSION, '7.4', '>=' ) || get_magic_quotes_gpc() ? stripslashes( $webfonts ) : $webfonts;
 						$response_fonts = json_decode( $json_string, true );
 					}
 				}
@@ -522,7 +524,7 @@ class WP_PVC_Fonts_Face extends WP_PVC_Admin_UI
 					$response = wp_remote_get( $this->admin_plugin_url() . '/assets/webfonts/webfonts.json', array( 'timeout' => 120 ) );
 					$webfonts = wp_remote_retrieve_body( $response );
 					if ( ! empty( $webfonts ) ) {
-						$json_string = get_magic_quotes_gpc() ? stripslashes( $webfonts ) : $webfonts;
+						$json_string = version_compare( PHP_VERSION, '7.4', '>=' ) || get_magic_quotes_gpc() ? stripslashes( $webfonts ) : $webfonts;
 						$response_fonts = json_decode( $json_string, true );
 					}
 				}
@@ -642,5 +644,4 @@ class WP_PVC_Fonts_Face extends WP_PVC_Admin_UI
 
 }
 
-global $wp_pvc_fonts_face;
-$wp_pvc_fonts_face = new WP_PVC_Fonts_Face();
+}

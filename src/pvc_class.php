@@ -3,6 +3,11 @@ namespace A3Rev\PageViewsCount;
 
 class A3_PVC
 {
+
+	public static $chart_icon = '<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="chart-bar" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-chart-bar fa-w-16 fa-2x"><path fill="currentColor" d="M396.8 352h22.4c6.4 0 12.8-6.4 12.8-12.8V108.8c0-6.4-6.4-12.8-12.8-12.8h-22.4c-6.4 0-12.8 6.4-12.8 12.8v230.4c0 6.4 6.4 12.8 12.8 12.8zm-192 0h22.4c6.4 0 12.8-6.4 12.8-12.8V140.8c0-6.4-6.4-12.8-12.8-12.8h-22.4c-6.4 0-12.8 6.4-12.8 12.8v198.4c0 6.4 6.4 12.8 12.8 12.8zm96 0h22.4c6.4 0 12.8-6.4 12.8-12.8V204.8c0-6.4-6.4-12.8-12.8-12.8h-22.4c-6.4 0-12.8 6.4-12.8 12.8v134.4c0 6.4 6.4 12.8 12.8 12.8zM496 400H48V80c0-8.84-7.16-16-16-16H16C7.16 64 0 71.16 0 80v336c0 17.67 14.33 32 32 32h464c8.84 0 16-7.16 16-16v-16c0-8.84-7.16-16-16-16zm-387.2-48h22.4c6.4 0 12.8-6.4 12.8-12.8v-70.4c0-6.4-6.4-12.8-12.8-12.8h-22.4c-6.4 0-12.8 6.4-12.8 12.8v70.4c0 6.4 6.4 12.8 12.8 12.8z" class=""></path></svg>';
+
+	public static $eye_icon = '<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="eye" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-eye fa-w-18 fa-2x"><path fill="currentColor" d="M288 144a110.94 110.94 0 0 0-31.24 5 55.4 55.4 0 0 1 7.24 27 56 56 0 0 1-56 56 55.4 55.4 0 0 1-27-7.24A111.71 111.71 0 1 0 288 144zm284.52 97.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400c-98.65 0-189.09-55-237.93-144C98.91 167 189.34 112 288 112s189.09 55 237.93 144C477.1 345 386.66 400 288 400z" class=""></path></svg>';
+
 	public static function upgrade_version_1_2(){
 		global $wpdb;
 		$sql = "ALTER TABLE ". $wpdb->prefix . "pvc_total CHANGE `postnum` `postnum` VARCHAR( 255 ) NOT NULL";
@@ -135,8 +140,9 @@ class A3_PVC
 		}
 	}
 
-	public static function pvc_get_stats( $post_id ) {
+	public static function pvc_get_stats( $post_id, $views_type = 'all' ) {
 		global $wpdb;
+		global $pvc_settings;
 
 		$output_html = '';
 		// get all the post view info to display
@@ -146,12 +152,19 @@ class A3_PVC
 		if ( ! empty( $total ) ) {
 
 			$output_html .= number_format( $total ) . '&nbsp;' .__('total views', 'page-views-count');
-			$output_html .= ', ';
 
-			if ( ! empty( $today ) ) {
-				$output_html .= number_format( $today ) . '&nbsp;' .__('views today', 'page-views-count');
-			} else {
-				$output_html .= __('no views today', 'page-views-count');
+			if ( empty( $views_type ) ) {
+				$views_type = $pvc_settings['views_type'];
+			}
+
+			if ( 'all' === $views_type ) {
+				$output_html .= ', ';
+
+				if ( ! empty( $today ) ) {
+					$output_html .= number_format( $today ) . '&nbsp;' .__('views today', 'page-views-count');
+				} else {
+					$output_html .= __('no views today', 'page-views-count');
+				}
 			}
 
 		} else {
@@ -194,10 +207,17 @@ class A3_PVC
 			}
 		}
 
-		if ( $pvc_settings['enable_ajax_load'] == 'yes' && empty( $attributes['in_editor'] ) ) {
-			$stats_html = '<p id="pvc_stats_'.$post_id.'" class="pvc_stats '. $custom_class .' '.$load_by_ajax_update_class.'" data-element-id="'.$post_id.'" style="'. $custom_style .'"><i class="fa fa-bar-chart pvc-stats-icon '.$pvc_settings['icon_size'].'" aria-hidden="true"></i> <img src="'.A3_PVC_URL.'/ajax-loader.gif" border=0 /></p>';
+		$views_type = '';
+		if ( ! empty( $attributes['views_type'] ) ) {
+			$views_type = esc_attr( $attributes['views_type'] );
 		} else {
-			$stats_html = '<p class="pvc_stats '. $custom_class .'" data-element-id="'.$post_id.'" style="'. $custom_style .'"><i class="fa fa-bar-chart pvc-stats-icon '.$pvc_settings['icon_size'].'" aria-hidden="true"></i> ' . self::pvc_get_stats( $post_id ) . '</p>';
+			$views_type = $pvc_settings['views_type'];
+		}
+
+		if ( $pvc_settings['enable_ajax_load'] == 'yes' && empty( $attributes['in_editor'] ) ) {
+			$stats_html = '<p id="pvc_stats_'.$post_id.'" class="pvc_stats '. $views_type .' '. $custom_class .' '.$load_by_ajax_update_class.'" data-element-id="'.$post_id.'" style="'. $custom_style .'"><i class="pvc-stats-icon '.$pvc_settings['icon_size'].'" aria-hidden="true">'. ( 'eye' == $pvc_settings['icon'] ? self::$eye_icon : self::$chart_icon ) .'</i> <img src="'.A3_PVC_URL.'/ajax-loader.gif" border=0 /></p>';
+		} else {
+			$stats_html = '<p class="pvc_stats '. $views_type .' '. $custom_class .'" data-element-id="'.$post_id.'" style="'. $custom_style .'"><i class="pvc-stats-icon '.$pvc_settings['icon_size'].'" aria-hidden="true">'. ( 'eye' == $pvc_settings['icon'] ? self::$eye_icon : self::$chart_icon ) .'</i> ' . self::pvc_get_stats( $post_id, $views_type ) . '</p>';
 		}
 
 		$html .= apply_filters( 'pvc_filter_stats', $stats_html, $post_id );
@@ -211,31 +231,30 @@ class A3_PVC
 
 		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
 
-		// If don't have any plugin or theme register font awesome style then register it from plugin framework
-		if ( ! wp_style_is( 'font-awesome-styles', 'registered' ) ) {
-			global $wp_pvc_admin_interface;
-			$wp_pvc_admin_interface->register_fontawesome_style();
-		}
-
-		wp_enqueue_style( 'a3-pvc-style', A3_PVC_CSS_URL . '/style'.$suffix.'.css', array( 'font-awesome-styles' ), A3_PVC_VERSION );
+		wp_enqueue_style( 'a3-pvc-style', A3_PVC_CSS_URL . '/style'.$suffix.'.css', array(), A3_PVC_VERSION );
 
 		if ( $pvc_settings['enable_ajax_load'] != 'yes' ) return;
 
 	?>
+	<?php // @codingStandardsIgnoreStart ?>
+	<?php // phpcs:disable ?>
     <!-- PVC Template -->
     <script type="text/template" id="pvc-stats-view-template">
-    <i class="fa fa-bar-chart pvc-stats-icon <?php echo $pvc_settings['icon_size']; ?>" aria-hidden="true"></i> 
+    <i class="pvc-stats-icon <?php echo $pvc_settings['icon_size']; ?>" aria-hidden="true"><?php echo ( 'eye' == $pvc_settings['icon'] ? self::$eye_icon : self::$chart_icon ); ?></i> 
 	<% if ( total_view > 0 ) { %>
-		<%= total_view %> <%= total_view > 1 ? "<?php _e('total views', 'page-views-count'); ?>" : "<?php _e('total view', 'page-views-count'); ?>" %>,
+		<%= total_view %> <%= total_view > 1 ? "<?php _e('total views', 'page-views-count'); ?>" : "<?php _e('total view', 'page-views-count'); ?>" %><span class="views_today">,
 		<% if ( today_view > 0 ) { %>
 			<%= today_view %> <%= today_view > 1 ? "<?php _e('views today', 'page-views-count'); ?>" : "<?php _e('view today', 'page-views-count'); ?>" %>
 		<% } else { %>
 		<?php _e('no views today', 'page-views-count'); ?>
 		<% } %>
+		</span>
 	<% } else { %>
 	<?php _e('No views yet', 'page-views-count'); ?>
 	<% } %>
 	</script>
+	<?php // phpcs:enable ?>
+	<?php // @codingStandardsIgnoreEnd ?>
     <?php
 		wp_enqueue_script( 'a3-pvc-backbone', A3_PVC_JS_URL . '/pvc.backbone'.$suffix.'.js', array( 'jquery', 'backbone', 'underscore' ), A3_PVC_VERSION );
 		wp_localize_script( 'a3-pvc-backbone', 'vars', array( 'rest_api_url' => rest_url( '/' . $pvc_api->namespace ) ) );

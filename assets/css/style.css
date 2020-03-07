@@ -11,12 +11,18 @@
   float: left;
   padding: 5px !important;
 }
-.pvc_stats .pvc-stats-icon.small {
-  font-size: 10px;
+.pvc_stats.total_only .views_today {
+	display: none;
 }
-.pvc_stats .pvc-stats-icon.medium {
-  font-size: 14px;
+.pvc_stats .pvc-stats-icon {
+  vertical-align: middle;
 }
-.pvc_stats .pvc-stats-icon.large {
-  font-size: 18px;
+.pvc_stats .pvc-stats-icon.small svg {
+  width: 16px;
+}
+.pvc_stats .pvc-stats-icon.medium svg {
+  width: 20px;
+}
+.pvc_stats .pvc-stats-icon.large svg {
+  width: 24px;
 }

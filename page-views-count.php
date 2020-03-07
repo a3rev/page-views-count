@@ -22,18 +22,37 @@ define('A3_PVC_JS_URL', A3_PVC_URL . '/assets/js');
 define('A3_PVC_IMAGES_URL', A3_PVC_URL . '/assets/images');
 
 define( 'A3_PVC_KEY', 'a3_page_view_count' );
+define( 'A3_PVC_PREFIX', 'wp_pvc_' );
 define( 'A3_PVC_VERSION', '2.2.1' );
 define( 'A3_PVC_G_FONTS', false );
+
+use \A3Rev\PageViewsCount\FrameWork;
 
 if ( version_compare( PHP_VERSION, '5.6.0', '>=' ) ) {
 	require __DIR__ . '/vendor/autoload.php';
 
-	// Gutenberg blocks init
-	new \A3Rev\PageViewsCount\Blocks();
-	new \A3Rev\PageViewsCount\MetaBox();
-
 	global $pvc_api;
 	$pvc_api = new \A3Rev\PageViewsCount\API();
+
+	/**
+	 * Plugin Framework init
+	 */
+	$GLOBALS[A3_PVC_PREFIX.'admin_interface'] = new FrameWork\Admin_Interface();
+
+	global $wp_pvc_admin_page;
+	$wp_pvc_admin_page = new FrameWork\Pages\Settings();
+
+	$GLOBALS[A3_PVC_PREFIX.'admin_init'] = new FrameWork\Admin_Init();
+
+	$GLOBALS[A3_PVC_PREFIX.'less'] = new FrameWork\Less_Sass();
+
+	new \A3Rev\PageViewsCount\MetaBox();
+
+	// Gutenberg blocks init
+	new \A3Rev\PageViewsCount\Blocks();
+
+	new \A3Rev\PageViewsCount\Shortcode();
+
 } else {
 	return;
 }
@@ -54,14 +73,6 @@ function a3_pvc_load_plugin_textdomain() {
 	load_textdomain( 'page-views-count', WP_LANG_DIR . '/page-views-count/page-views-count-' . $locale . '.mo' );
 	load_plugin_textdomain( 'page-views-count', false, A3_PVC_FOLDER . '/languages/' );
 }
-
-include ('admin/admin-ui.php');
-include ('admin/admin-interface.php');
-
-include ('admin/admin-pages/admin-pvc-page.php');
-
-include ('admin/admin-init.php');
-include ('admin/less/sass.php');
 
 include ('admin/plugin-init.php');
 

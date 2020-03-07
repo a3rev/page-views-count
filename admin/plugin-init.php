@@ -10,11 +10,7 @@ function pvc_install(){
 
 	\A3Rev\PageViewsCount\A3_PVC::install_database();
 
-	// Set Settings Default from Admin Init
-	global $wp_pvc_admin_init;
-	$wp_pvc_admin_init->set_default_settings();
-
-	delete_metadata( 'user', 0, $wp_pvc_admin_init->plugin_name . '-' . 'plugin_framework_global_box' . '-' . 'opened', '', true );
+	delete_metadata( 'user', 0, $GLOBALS[A3_PVC_PREFIX.'admin_init']->plugin_name . '-' . 'plugin_framework_global_box' . '-' . 'opened', '', true );
 
 	update_option('pvc_just_installed', true);
 }
@@ -31,11 +27,25 @@ update_option('a3rev_auth_pvc', '');
 
 function a3_pvc_plugin_init() {
 
+	if ( get_option( 'pvc_just_installed' ) ) {
+		delete_option( 'pvc_just_installed' );
+
+		// Set Settings Default from Admin Init
+		$GLOBALS[A3_PVC_PREFIX.'admin_init']->set_default_settings();
+
+		// Build sass
+		$GLOBALS[A3_PVC_PREFIX.'less']->plugin_build_sass();
+	}
+
 	// Set up localisation
 	a3_pvc_load_plugin_textdomain();
 }
 
 add_action( 'init', 'a3_pvc_plugin_init' );
+
+add_action( 'widgets_init', function() {
+	register_widget( '\A3Rev\PageViewsCount\Widget\PVC' );
+} );
 
 // Add custom style to dashboard
 add_action( 'admin_enqueue_scripts', array( '\A3Rev\PageViewsCount\A3_PVC', 'a3_wp_admin' ) );
@@ -48,11 +58,10 @@ add_filter( 'plugin_row_meta', array('\A3Rev\PageViewsCount\A3_PVC', 'plugin_ext
 
 
 // Need to call Admin Init to show Admin UI
-global $wp_pvc_admin_init;
-$wp_pvc_admin_init->init();
+$GLOBALS[A3_PVC_PREFIX.'admin_init']->init();
 
 // Add upgrade notice to Dashboard pages
-add_filter( $wp_pvc_admin_init->plugin_name . '_plugin_extension_boxes', array( '\A3Rev\PageViewsCount\A3_PVC', 'plugin_extension_box' ) );
+add_filter( $GLOBALS[A3_PVC_PREFIX.'admin_init']->plugin_name . '_plugin_extension_boxes', array( '\A3Rev\PageViewsCount\A3_PVC', 'plugin_extension_box' ) );
 
 /**
  * On the scheduled action hook, run the function.
@@ -80,7 +89,6 @@ add_action( 'wp_enqueue_scripts', array( '\A3Rev\PageViewsCount\A3_PVC', 'regist
 // Check upgrade functions
 add_action('plugins_loaded', 'pvc_lite_upgrade_plugin');
 function pvc_lite_upgrade_plugin () {
-	global $a3_pvc_less;
 
 	if(version_compare(get_option('a3_pvc_version'), '1.2') === -1){
 		update_option('a3_pvc_version', '1.2');
@@ -125,7 +133,7 @@ function pvc_lite_upgrade_plugin () {
 		update_option('a3_pvc_version', '2.0.0');
 
 		// Build sass
-		$a3_pvc_less->plugin_build_sass();
+		$GLOBALS[A3_PVC_PREFIX.'less']->plugin_build_sass();
 	}
 
 	update_option( 'a3_pvc_version', A3_PVC_VERSION );

@@ -17,6 +17,7 @@ class ComposerStaticInitfab6881b855981328ce7846d0605a2ca
         'A3Rev\\PageViewsCount\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
+            1 => __DIR__ . '/../..' . '/admin',
         ),
     );
 
@@ -24,7 +25,18 @@ class ComposerStaticInitfab6881b855981328ce7846d0605a2ca
         'A3Rev\\PageViewsCount\\A3_PVC' => __DIR__ . '/../..' . '/src/pvc_class.php',
         'A3Rev\\PageViewsCount\\API' => __DIR__ . '/../..' . '/src/api/pvc-api.php',
         'A3Rev\\PageViewsCount\\Blocks' => __DIR__ . '/../..' . '/src/blocks.php',
+        'A3Rev\\PageViewsCount\\FrameWork\\Admin_Init' => __DIR__ . '/../..' . '/admin/admin-init.php',
+        'A3Rev\\PageViewsCount\\FrameWork\\Admin_Interface' => __DIR__ . '/../..' . '/admin/admin-interface.php',
+        'A3Rev\\PageViewsCount\\FrameWork\\Admin_UI' => __DIR__ . '/../..' . '/admin/admin-ui.php',
+        'A3Rev\\PageViewsCount\\FrameWork\\Fonts_Face' => __DIR__ . '/../..' . '/admin/includes/fonts_face.php',
+        'A3Rev\\PageViewsCount\\FrameWork\\Less_Sass' => __DIR__ . '/../..' . '/admin/less/sass.php',
+        'A3Rev\\PageViewsCount\\FrameWork\\Pages\\Settings' => __DIR__ . '/../..' . '/admin/admin-pages/admin-pvc-page.php',
+        'A3Rev\\PageViewsCount\\FrameWork\\Settings\\Global_Panel' => __DIR__ . '/../..' . '/admin/settings/general-settings.php',
+        'A3Rev\\PageViewsCount\\FrameWork\\Tabs\\Global_Settings' => __DIR__ . '/../..' . '/admin/tabs/admin-pvc-tab.php',
+        'A3Rev\\PageViewsCount\\FrameWork\\Uploader' => __DIR__ . '/../..' . '/admin/includes/uploader/class-uploader.php',
         'A3Rev\\PageViewsCount\\MetaBox' => __DIR__ . '/../..' . '/src/metabox/class-pvc-metabox.php',
+        'A3Rev\\PageViewsCount\\Shortcode' => __DIR__ . '/../..' . '/src/pvc_shortcode.php',
+        'A3Rev\\PageViewsCount\\Widget\\PVC' => __DIR__ . '/../..' . '/src/pvc_widget.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

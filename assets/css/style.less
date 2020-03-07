@@ -6,15 +6,21 @@
     float: left;
    	.padding(5px !important, 5px !important, 5px !important, 5px !important);
 
+      &.total_only .views_today {
+         display: none;
+      }
+
    	.pvc-stats-icon {
-   		&.small {
-   			font-size: 10px;
+         vertical-align: middle;
+
+   		&.small svg {
+   			width: 16px;
    		}
-   		&.medium {
-   			font-size: 14px;
+   		&.medium svg {
+   			width: 20px;
    		}
-   		&.large {
-   			font-size: 18px;
+   		&.large svg {
+   			width: 24px;
    		}
    	}
 }

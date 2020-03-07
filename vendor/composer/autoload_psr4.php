@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'A3Rev\\PageViewsCount\\' => array($baseDir . '/src'),
+    'A3Rev\\PageViewsCount\\' => array($baseDir . '/src', $baseDir . '/admin'),
 );

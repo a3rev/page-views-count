@@ -1,9 +1,13 @@
 <?php
-/* "Copyright 2012 A3 Revolution Web Design" This software is distributed under the terms of GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 */
+/* "Copyright 2012 a3 Revolution Web Design" This software is distributed under the terms of GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 */
+
+namespace A3Rev\PageViewsCount\FrameWork\Tabs {
+
+use A3Rev\PageViewsCount\FrameWork;
+
 // File Security Check
 if ( ! defined( 'ABSPATH' ) ) exit;
-?>
-<?php
+
 /*-----------------------------------------------------------------------------------
 WP PVC General Tab
 
@@ -22,8 +26,8 @@ TABLE OF CONTENTS
 
 -----------------------------------------------------------------------------------*/
 
-class WP_PVC_Generate_Tab extends WP_PVC_Admin_UI
-{	
+class Global_Settings extends FrameWork\Admin_UI
+{
 	/**
 	 * @var string
 	 */
@@ -103,8 +107,9 @@ class WP_PVC_Generate_Tab extends WP_PVC_Admin_UI
 	public function settings_include() {
 		
 		// Includes Settings file
-		include_once( $this->admin_plugin_dir() . '/settings/general-settings.php' );
-		
+		global $wp_pvc_general_settings;
+		$wp_pvc_general_settings = new FrameWork\Settings\Global_Panel();
+
 	}
 	
 	/*-----------------------------------------------------------------------------------*/
@@ -121,8 +126,9 @@ class WP_PVC_Generate_Tab extends WP_PVC_Admin_UI
 	}
 }
 
-global $wp_pvc_general_tab;
-$wp_pvc_general_tab = new WP_PVC_Generate_Tab();
+}
+
+namespace {
 
 /** 
  * wp_pvc_general_tab_manager()
@@ -133,4 +139,4 @@ function wp_pvc_general_tab_manager() {
 	$wp_pvc_general_tab->tab_manager();
 }
 
-?>
+}

@@ -1,9 +1,12 @@
 <?php
+
+namespace A3Rev\PageViewsCount\FrameWork {
+
 // File Security Check
 if (!defined('ABSPATH'))
     exit;
 
-class A3_PVC_Less
+class Less_Sass
 {
     public $plugin_name   = A3_PVC_KEY;
     public $css_file_name = 'pvc';
@@ -134,7 +137,7 @@ class A3_PVC_Less
                 $wp_filesystem->put_contents($less_file, $sass_data, 0644);
                 $css_file     = $_upload_dir['basedir'] . '/sass/' . $filename . '.css';
                 $css_min_file = $_upload_dir['basedir'] . '/sass/' . $filename . '.min.css';
-                $compile      = new Compile_Less_Sass;
+                $compile      = new \Compile_Less_Sass;
                 $compile->compileLessFile($less_file, $css_file, $css_min_file);
             }
         }
@@ -187,7 +190,6 @@ class A3_PVC_Less
         return $version_number;
     }
 }
-global $a3_pvc_less;
-$a3_pvc_less = new A3_PVC_Less();
 
-?>
+}
+

@@ -337,6 +337,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 == Upgrade Notice ==
 
+= 2.2.1 =
+This maintenance release has a full code security review plus compatibility with WordPress 5.3.1
+
 = 2.2.0 =
 This feature upgrade is a full refactor of the plugins PHP to PHP dependency manager Composer with autoloading.
 

@@ -126,8 +126,7 @@ class Blocks {
 			'render_callback' 	=> array( $this, 'render' )
 		);
 
-		global $a3_pvc_less;
-		if ( $a3_pvc_less->register_dynamic_style_file() ) {
+		if ( $GLOBALS[A3_PVC_PREFIX.'less']->register_dynamic_style_file() ) {
 			$block_args = array_merge( $block_args, array( 'editor_style' => 'a3pvc' ) );
 		}
 

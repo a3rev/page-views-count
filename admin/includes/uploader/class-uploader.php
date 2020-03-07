@@ -1,9 +1,11 @@
 <?php
 /* "Copyright 2012 a3 Revolution Web Design" This software is distributed under the terms of GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 */
+
+namespace A3Rev\PageViewsCount\FrameWork {
+
 // File Security Check
 if ( ! defined( 'ABSPATH' ) ) exit;
-?>
-<?php
+
 /*-----------------------------------------------------------------------------------
 A3rev Plugin Uploader
 
@@ -22,7 +24,7 @@ TABLE OF CONTENTS
 - inside_popup()
 
 -----------------------------------------------------------------------------------*/
-class WP_PVC_Uploader extends WP_PVC_Admin_UI
+class Uploader extends Admin_UI
 {
 
 	/**
@@ -135,7 +137,4 @@ class WP_PVC_Uploader extends WP_PVC_Admin_UI
 	}
 }
 
-global $wp_pvc_uploader;
-$wp_pvc_uploader = new WP_PVC_Uploader();
-
-?>
+}

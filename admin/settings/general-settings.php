@@ -1,9 +1,13 @@
 <?php
-/* "Copyright 2012 A3 Revolution Web Design" This software is distributed under the terms of GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 */
+/* "Copyright 2012 a3 Revolution Web Design" This software is distributed under the terms of GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 */
+
+namespace A3Rev\PageViewsCount\FrameWork\Settings {
+
+use A3Rev\PageViewsCount\FrameWork;
+
 // File Security Check
 if ( ! defined( 'ABSPATH' ) ) exit;
-?>
-<?php
+
 /*-----------------------------------------------------------------------------------
 WP PVC General Settings
 
@@ -28,7 +32,7 @@ TABLE OF CONTENTS
 
 -----------------------------------------------------------------------------------*/
 
-class WP_PVC_General_Settings extends WP_PVC_Admin_UI
+class Global_Panel extends FrameWork\Admin_UI
 {
 
 	/**
@@ -89,6 +93,8 @@ class WP_PVC_General_Settings extends WP_PVC_Admin_UI
 
 		add_action( $this->plugin_name . '_get_all_settings' , array( $this, 'get_settings' ) );
 
+		add_action( $this->plugin_name . '_settings_' . 'pvc_page_view_count_shortcode_box' . '_start', array( $this, 'page_view_count_shortcode_content' ) );
+
 		add_action( $this->plugin_name . '_settings_' . 'pvc_page_view_count_function_box' . '_start', array( $this, 'page_view_count_function_content' ) );
 
 	}
@@ -108,9 +114,8 @@ class WP_PVC_General_Settings extends WP_PVC_Admin_UI
 	/* Set default settings with function called from Admin Interface */
 	/*-----------------------------------------------------------------------------------*/
 	public function set_default_settings() {
-		global $wp_pvc_admin_interface;
 		$this->init_form_fields();
-		$wp_pvc_admin_interface->reset_settings( $this->form_fields, $this->option_name, false );
+		$GLOBALS[$this->plugin_prefix.'admin_interface']->reset_settings( $this->form_fields, $this->option_name, false );
 	}
 
 	/*-----------------------------------------------------------------------------------*/
@@ -135,9 +140,8 @@ class WP_PVC_General_Settings extends WP_PVC_Admin_UI
 	/* Get settings with function called from Admin Interface */
 	/*-----------------------------------------------------------------------------------*/
 	public function get_settings() {
-		global $wp_pvc_admin_interface;
 		$this->init_form_fields();
-		$wp_pvc_admin_interface->get_settings( $this->form_fields, $this->option_name );
+		$GLOBALS[$this->plugin_prefix.'admin_interface']->get_settings( $this->form_fields, $this->option_name );
 	}
 
 	/**
@@ -181,11 +185,10 @@ class WP_PVC_General_Settings extends WP_PVC_Admin_UI
 	/* Call the form from Admin Interface
 	/*-----------------------------------------------------------------------------------*/
 	public function settings_form() {
-		global $wp_pvc_admin_interface;
 		$this->init_form_fields();
 
 		$output = '';
-		$output .= $wp_pvc_admin_interface->admin_forms( $this->form_fields, $this->form_key, $this->option_name, $this->form_messages );
+		$output .= $GLOBALS[$this->plugin_prefix.'admin_interface']->admin_forms( $this->form_fields, $this->form_key, $this->option_name, $this->form_messages );
 
 		return $output;
 	}
@@ -270,6 +273,49 @@ class WP_PVC_General_Settings extends WP_PVC_Admin_UI
 					array(
 						'val' => 'right',
 						'text' => __( 'Right', 'page-views-count' ),
+						'checked_label'	=> __( 'ON', 'page-views-count' ),
+						'unchecked_label' => __( 'OFF', 'page-views-count' ),
+					),
+				),
+			),
+			array(
+				'name' => __( 'Counter Views Type', 'page-views-count' ),
+				'desc' 		=> '',
+				'id' 		=> 'views_type',
+				'default'	=> 'all',
+				'type' 		=> 'onoff_radio',
+				'onoff_options' => array(
+					array(
+						'val' => 'all',
+						'text' => __( '## Total Views, ## Views Today', 'page-views-count' ),
+						'checked_label'	=> __( 'ON', 'page-views-count' ),
+						'unchecked_label' => __( 'OFF', 'page-views-count' ),
+					),
+					array(
+						'val' => 'total_only',
+						'text' => __( '## Total Views', 'page-views-count' ),
+						'checked_label'	=> __( 'ON', 'page-views-count' ),
+						'unchecked_label' => __( 'OFF', 'page-views-count' ),
+					),
+				),
+			),
+
+			array(
+				'name' => __( 'Counter Icon', 'page-views-count' ),
+				'desc' 		=> '',
+				'id' 		=> 'icon',
+				'default'	=> 'chart',
+				'type' 		=> 'onoff_radio',
+				'onoff_options' => array(
+					array(
+						'val' => 'chart',
+						'text' => '<i><img src="' . A3_PVC_IMAGES_URL . '/chart.svg" width="24" height="24" /></i>',
+						'checked_label'	=> __( 'ON', 'page-views-count' ),
+						'unchecked_label' => __( 'OFF', 'page-views-count' ),
+					),
+					array(
+						'val' => 'eye',
+						'text' => '<i><img src="' . A3_PVC_IMAGES_URL . '/eye.svg" width="24" height="24" /><i>',
 						'checked_label'	=> __( 'ON', 'page-views-count' ),
 						'unchecked_label' => __( 'OFF', 'page-views-count' ),
 					),
@@ -409,6 +455,13 @@ class WP_PVC_General_Settings extends WP_PVC_Admin_UI
 			),
 
 			array(
+				'name' 		=> __( 'Page Views Count Shortcode', 'page-views-count' ),
+                'type' 		=> 'heading',
+                'id'		=> 'pvc_page_view_count_shortcode_box',
+                'is_box'	=> true,
+           	),
+
+			array(
 				'name' 		=> __( 'Page Views Count Function', 'page-views-count' ),
                 'type' 		=> 'heading',
                 'id'		=> 'pvc_page_view_count_function_box',
@@ -417,6 +470,35 @@ class WP_PVC_General_Settings extends WP_PVC_Admin_UI
         ) );
 
 		$this->form_fields = apply_filters( $this->option_name . '_settings_fields', $this->form_fields );
+	}
+
+	public function page_view_count_shortcode_content() {
+	?>
+		</table>
+		<table class="form-table">
+			<tr valign="top">
+  				<th scope="row"><?php _e('Shortcode', 'page-views-count'); ?></th>
+    			<td>
+    				<style>
+    					.shortcode_parameter {
+    						width: 140px;
+    						display: inline-block;
+    						font-weight: bold;
+    					}
+    				</style>
+	                <p>[pvc_stats postid="" increase="1" show_views_today="1"] <br /><br />
+	                	<span class="shortcode_parameter">postid:</span> <span class="description"><?php _e( 'Post/Page ID want to show stats, leave empty for use ID of current post.', 'page-views-count' ); ?></span> <br /><br />
+
+	                	<span class="shortcode_parameter">increase:</span> (1|0) <br />
+	                	<span class="shortcode_parameter"></span> 1: <span class="description"><?php _e( 'increase count and show stats.', 'page-views-count' ); ?></span> <br />
+	                	<span class="shortcode_parameter"></span> 0: <span class="description"><?php _e( 'show stats only without increase count.', 'page-views-count' ); ?></span> <br /><br />
+
+	                	<span class="shortcode_parameter">show_views_today:</span> (1|0) <br />
+	                	<span class="shortcode_parameter"></span> 1: <span class="description"><?php _e( 'show Views Today.', 'page-views-count' ); ?></span> <br />
+	                	<span class="shortcode_parameter"></span> 0: <span class="description"><?php _e( 'hide Views Today.', 'page-views-count' ); ?></span>
+	                </p>
+			</tr>
+    <?php
 	}
 
 	public function page_view_count_function_content() {
@@ -441,8 +523,9 @@ class WP_PVC_General_Settings extends WP_PVC_Admin_UI
 	}
 }
 
-global $wp_pvc_general_settings;
-$wp_pvc_general_settings = new WP_PVC_General_Settings();
+}
+
+namespace {
 
 /**
  * wp_pvc_general_settings_form()
@@ -453,4 +536,4 @@ function wp_pvc_general_settings_form() {
 	$wp_pvc_general_settings->settings_form();
 }
 
-?>
+}

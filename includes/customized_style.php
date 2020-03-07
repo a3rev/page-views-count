@@ -18,4 +18,16 @@ body .pvc_stats {
 	float: right;
 <?php } ?>
 }
+body .pvc_stats .pvc-stats-icon {
+	vertical-align: middle;
+}
+body .pvc_stats .pvc-stats-icon.small svg {
+	width: 16px;
+}
+body .pvc_stats .pvc-stats-icon.medium svg {
+	width: 20px;
+}
+body .pvc_stats .pvc-stats-icon.large svg {
+	width: 24px;
+}
 </style>

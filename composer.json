@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-          "A3Rev\\PageViewsCount\\": "src/"
+          "A3Rev\\PageViewsCount\\": [ "src/", "admin/" ]
         }
     }
 }

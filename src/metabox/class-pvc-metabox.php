@@ -33,7 +33,6 @@ class MetaBox
 	 */
 	public function render_meta_box_content( $post ) {
 		global $wp_version;
-		global $wp_pvc_admin_interface;
 
 		wp_enqueue_script( 'jquery' );
 
