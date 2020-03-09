@@ -27,5 +27,15 @@ function _manually_load_plugin() {
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
+function _manual_install_data() {
+
+	\A3Rev\PageViewsCount\A3_PVC::install_database();
+
+	$GLOBALS[A3_PVC_PREFIX.'admin_init']->set_default_settings();
+
+	echo esc_html( 'Installing Page View Count Data ...' . PHP_EOL );
+}
+tests_add_filter( 'setup_theme', '_manual_install_data' );
+
 // Start up the WP testing environment.
 require $_tests_dir . '/includes/bootstrap.php';
