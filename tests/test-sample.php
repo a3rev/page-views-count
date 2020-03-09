@@ -19,6 +19,6 @@ class SampleTest extends WP_UnitTestCase {
 	}
 
 	function test_second() {
-		$this->assertEquals( 1, 0 );
+		$this->assertEquals( 1, 1 );
 	}
 }

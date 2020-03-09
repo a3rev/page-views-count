@@ -41,10 +41,6 @@ env:
 
 matrix:
   fast_finish: true
-  include:
-    - name: "Coding standard check"
-      php: 7.4
-      env: WP_VERSION=latest
   allow_failures:
     - php: nightly
 
