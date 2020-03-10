@@ -41,13 +41,13 @@ env:
 matrix:
   fast_finish: true
   include:
-    - name: "Coding standard check"
+    - name: "PHP:7.4 - Coding standard check"
       php: 7.4
       env: WP_VERSION=latest WP_MULTISITE=0 RUN_PHPCS=1
-    - name: "Unit tests code coverage"
+    - name: "PHP:7.4 - Unit tests code coverage"
       php: 7.4
       env: WP_VERSION=latest WP_MULTISITE=0 RUN_CODE_COVERAGE=1
-    - name: "Unit tests using WordPress nightly"
+    - name: "PHP:7.4 - Unit tests using WordPress nightly"
       php: 7.4
       env: WP_VERSION=nightly WP_MULTISITE=0
   allow_failures:
