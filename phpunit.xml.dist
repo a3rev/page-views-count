@@ -8,7 +8,7 @@
 	>
 	<testsuites>
 		<testsuite name="WordPress Plugin Test Suite">
-			<directory prefix="test-" suffix=".php">./tests/</directory>
+			<directory prefix="test-" suffix=".php" phpVersion="7.1.0" phpVersionOperator=">=">./tests/</directory>
 		</testsuite>
 	</testsuites>
 </phpunit>
