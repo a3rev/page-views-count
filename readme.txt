@@ -1,9 +1,9 @@
 === Page View Count  ===
 Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
-Requires at least: 4.6
-Tested up to: 5.3.1
-Stable tag: 2.2.1
+Requires at least: 4.9
+Tested up to: 5.3.2
+Stable tag: 2.3.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -12,14 +12,6 @@ Places an icon, all time views count and views today count at the bottom of post
 == DESCRIPTION ==
 
 A beautifully simple to set up plugin that gives site visitors and site owners the ability to quickly and easily see how many people have visited that page or post. 
-
-= GUTENBERG BLOCK =
-If you are using the new Gutenberg editor once Page View Count is turned on from the plugins settings page the Global Page View Count meta will show under the sidebar Document Tab. Page View Count can be added to anywhere in your content by doing a block search for 'Page Views' or selecting the block from the Common Blocks menu.
-
-Adding the Page Views block to your content automatically deactivates the Global Page View counter on the post or page. You can then place the counter anywhere in the content and set the alignment for it.
-
-= COMPATIBILTY =
-Compatible with WordPress 5.0+ and backwards to WP 4.6.0. Compatible with Classic Editor plugin with 5.0+ (Gutenberg Deactivated)
 
 = FEATURES =
 
@@ -30,9 +22,22 @@ Compatible with WordPress 5.0+ and backwards to WP 4.6.0. Compatible with Classi
 * Set the colour and size of the counter icon
 * Option to use load by Ajax to prevent the count from being cached by caching plugins 
 * Option to Manually set / edit total views and views today from Page View Count meta box on any post or page editor
-* Lightweight - Fontawesome icon (no image to load) and called via WordPress JSON RESTful API (not on ajax-admin.php)
-* Page Views block (Gutenberg) allows you to set the counter anywhere in your content on any post or page.
+* Add Page Views counter via the PVC Gutenberg block 
+* Add Page Views counter via shortcode
+* Add Page Views counter via widget
+* Developers can add the Page Views Counter via php tag
 * All options and settings are point click - absolutely no coding required  
+
+= COMPATIBILTY =
+Compatible with WordPress 5.3+ and backwards to WP 4.9.0. Compatible with Classic Editor plugin with 5.0+ (Gutenberg Deactivated)
+
+= GUTENBERG BLOCK =
+Using the Gutenberg Editor. Use the Page View Count Block to add the counter to any page or post content.  Block search for 'Page Views' or selecting the block from the a3rev Blocks menu.
+
+Adding the Page Views block to your content automatically deactivates the Global Page View counter on the post or page.
+
+= ELEMENTOR TEMPLATES =
+Fully compatible with Elementor templates. Add counter via Shortcode or widget to any template.
 
 = DEVELOPERS =
 
@@ -49,7 +54,7 @@ On the plugins dashboard in the + Page Views Count Function options box you will
   
 = CONTRIBUTE  =
 
-When you download Page Views Count, you join our community. Regardless of if you are a WordPress beginner or experienced developer if you’re interested in contributing to Page Views Count development head over to the [Page Views Count GitHub Repository](https://github.com/a3rev/page-views-count) to find out how you can contribute.
+When you download Page Views Count, you join our community. Regardless of if you are a WordPress beginner or experienced developer if you'’re interested in contributing to Page Views Count development head over to the [Page Views Count GitHub Repository](https://github.com/a3rev/page-views-count) to find out how you can contribute.
 Want to add a new language to Page Views Count? Great! You can contribute via [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/page-views-count)
 
 
@@ -57,8 +62,8 @@ Want to add a new language to Page Views Count? Great! You can contribute via [t
 
 = Minimum Requirements =
 
-* WordPress 4.6 or greater
-* PHP version 5.6.0 or greater
+* WordPress 4.9 or greater
+* PHP version 7.0 or greater
 * MySQL version 5.6 or greater OR MariaDB version 10.0 or greater
 
 = Automatic installation =
@@ -97,6 +102,24 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.3.0 - 2020/03/10 =
+* This feature release contains, new PVC shortcode, new PVC Widget, option to only show total views, a new eye icon option, full compatibility with Elementor Templates, completion of PHP Composer refactor and 4 PHP fixes for compatibility with PHP v 7.0 to 7.4. 
+* Feature - Add new PVC shortcode `[pvc_stats postid="" increase="1" show_views_today="1"]` 
+* Feature - Add new PVC widget
+* Feature - Add new Counter Icon eye option
+* Feature - Add Counter Views Type option: Default is ## Total Views, ## Views Today, Option is ## Total Views (hide Views Today)
+* Feature - Plugin Framework fully refactored to Composer for cleaner code and faster PHP code
+* Feature - Full compatibility with Elementor Templates
+* Tweak - Conter Position and Style Options box, added Counter Views Type option
+* Tweak - Counter Position and Style Options box, added new Counter Icon eye option
+* Tweak - Added new + Page Views Count Shortcode options box with shortcode and parameters
+* Tweak - Update plugin for compatibility with new version of plugin Framework
+* Tweak - Tested for compatibility with WordPress v 5.3.2
+* Fix - Update global ${$this- to $GLOBALS[$this to resolve 7.0+ PHP warnings
+* Fix - Update global ${$option to $GLOBALS[$option to resolve 7.0+ PHP warnings
+* Fix - Update less PHP lib that use square brackets [] instead of curly braces {} for Array , depreciated in PHP 7.4
+* Fix - Validate for not use get_magic_quotes_gpc function for PHP 7.4
 
 = 2.2.1 - 2019/12/17 =
 * This maintenance release has a full code security review plus compatibility with WordPress 5.3.1
@@ -337,6 +360,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 == Upgrade Notice ==
 
+= 2.3.0 =
+This feature release contains, new PVC shortcode, new PVC Widget, option to only show total views, a new eye icon option, full compatibility with Elementor Templates, completion of PHP Composer refactor and 4 PHP fixes for compatibility with PHP v 7.0 to 7.4.
+
 = 2.2.1 =
 This maintenance release has a full code security review plus compatibility with WordPress 5.3.1
 
@@ -413,7 +439,7 @@ Update you plugin now for 1 framework code tweak plus 1 bug fix and full compati
 Upgrade now for a bug fix for missed style when disable AJAX load view counts in version release 1.0.6.1.
 
 = 1.0.6.1 =
-Upgrade now for a bug fix for Sass in yesterdayâ€™s major version release 1.0.6.
+Upgrade now for a bug fix for Sass in yesterday's major version release 1.0.6.
 
 = 1.0.6 =
 Upgrade now for the beginning of conversion of plugin to backbone.js and Sass. Much faster front-end load and less calls on server.
