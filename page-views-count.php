@@ -106,18 +106,3 @@ function pvc_check_exclude( $postid = 0 ) {
 		return true;
 	}
 }
-
-class foo {
-    function foo() {
-        echo 'I am the constructor';
-    }
-}
-
-function f() {
-    // Valid in PHP 5 only.
-    global $$foo->bar;
-
-    // Valid in PHP 5 and 7.
-    global ${$foo->bar};
-}
-
