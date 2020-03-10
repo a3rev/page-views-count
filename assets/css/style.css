@@ -18,11 +18,11 @@
   vertical-align: middle;
 }
 .pvc_stats .pvc-stats-icon.small svg {
-  width: 16px;
+  width: 18px;
 }
 .pvc_stats .pvc-stats-icon.medium svg {
-  width: 20px;
+  width: 24px;
 }
 .pvc_stats .pvc-stats-icon.large svg {
-  width: 24px;
+  width: 30px;
 }
