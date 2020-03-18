@@ -11,8 +11,9 @@
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
-const { BlockControls, AlignmentToolbar, InspectorControls } = wp.editor;
-const { Placeholder, ServerSideRender, PanelBody, PanelRow, ToggleControl } = wp.components;
+const { BlockControls, AlignmentToolbar, InspectorControls } = wp.blockEditor;
+const { Placeholder, PanelBody, PanelRow, ToggleControl } = wp.components;
+const { serverSideRender: ServerSideRender } = wp;
 const { Fragment } = wp.element;
 const { select } = wp.data;
 

@@ -151,7 +151,7 @@ class A3_PVC
 
 		if ( ! empty( $total ) ) {
 
-			$output_html .= number_format( $total ) . '&nbsp;' .__('total views', 'page-views-count');
+			$output_html .= $pvc_settings['total_text_before'] . '&nbsp;' . number_format( $total ) . '&nbsp;' . $pvc_settings['total_text_after'];
 
 			if ( empty( $views_type ) ) {
 				$views_type = $pvc_settings['views_type'];
@@ -161,14 +161,14 @@ class A3_PVC
 				$output_html .= ', ';
 
 				if ( ! empty( $today ) ) {
-					$output_html .= number_format( $today ) . '&nbsp;' .__('views today', 'page-views-count');
+					$output_html .= $pvc_settings['today_text_before'] . '&nbsp;' . number_format( $today ) . '&nbsp;' . $pvc_settings['today_text_after'];
 				} else {
-					$output_html .= __('no views today', 'page-views-count');
+					$output_html .= $pvc_settings['today_no_views_text'];
 				}
 			}
 
 		} else {
-			$output_html .=  __('No views yet', 'page-views-count');
+			$output_html .=  $pvc_settings['total_no_views_text'];
 		}
 
 		$output_html = apply_filters( 'pvc_filter_get_stats', $output_html, $post_id );
@@ -242,15 +242,15 @@ class A3_PVC
     <script type="text/template" id="pvc-stats-view-template">
     <i class="pvc-stats-icon <?php echo $pvc_settings['icon_size']; ?>" aria-hidden="true"><?php echo ( 'eye' == $pvc_settings['icon'] ? self::$eye_icon : self::$chart_icon ); ?></i> 
 	<% if ( total_view > 0 ) { %>
-		<%= total_view %> <%= total_view > 1 ? "<?php _e('total views', 'page-views-count'); ?>" : "<?php _e('total view', 'page-views-count'); ?>" %><span class="views_today">,
+		<?php echo $pvc_settings['total_text_before']; ?> <%= total_view %> <?php echo $pvc_settings['total_text_after']; ?><span class="views_today">,
 		<% if ( today_view > 0 ) { %>
-			<%= today_view %> <%= today_view > 1 ? "<?php _e('views today', 'page-views-count'); ?>" : "<?php _e('view today', 'page-views-count'); ?>" %>
+			<?php echo $pvc_settings['today_text_before']; ?> <%= today_view %> <?php echo $pvc_settings['today_text_after']; ?>
 		<% } else { %>
-		<?php _e('no views today', 'page-views-count'); ?>
+		<?php echo $pvc_settings['today_no_views_text']; ?>
 		<% } %>
 		</span>
 	<% } else { %>
-	<?php _e('No views yet', 'page-views-count'); ?>
+	<?php echo $pvc_settings['total_no_views_text']; ?>
 	<% } %>
 	</script>
 	<?php // phpcs:enable ?>

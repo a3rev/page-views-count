@@ -36,6 +36,7 @@ class ComposerStaticInitfab6881b855981328ce7846d0605a2ca
         'A3Rev\\PageViewsCount\\FrameWork\\Uploader' => __DIR__ . '/../..' . '/admin/includes/uploader/class-uploader.php',
         'A3Rev\\PageViewsCount\\MetaBox' => __DIR__ . '/../..' . '/src/metabox/class-pvc-metabox.php',
         'A3Rev\\PageViewsCount\\Shortcode' => __DIR__ . '/../..' . '/src/pvc_shortcode.php',
+        'A3Rev\\PageViewsCount\\WPML_Functions' => __DIR__ . '/../..' . '/src/class-wpml-functions.php',
         'A3Rev\\PageViewsCount\\Widget\\PVC' => __DIR__ . '/../..' . '/src/pvc_widget.php',
     );
 

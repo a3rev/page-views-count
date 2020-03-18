@@ -188,4 +188,16 @@ if ( 'responsi' === get_template() ) {
    add_action('wp_head', 'add_view_count_for_theme');
 }
 
-?>
+function pvc_ict_t_e( $name, $string ) {
+	global $pvc_wpml;
+	$string = ( function_exists('icl_t') ? icl_t( $pvc_wpml->plugin_wpml_name, $name, $string ) : $string );
+	
+	echo $string;
+}
+
+function pvc_ict_t__( $name, $string ) {
+	global $pvc_wpml;
+	$string = ( function_exists('icl_t') ? icl_t( $pvc_wpml->plugin_wpml_name, $name, $string ) : $string );
+	
+	return $string;
+}

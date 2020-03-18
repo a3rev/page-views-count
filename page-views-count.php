@@ -34,6 +34,9 @@ if ( version_compare( PHP_VERSION, '5.6.0', '>=' ) ) {
 	global $pvc_api;
 	$pvc_api = new \A3Rev\PageViewsCount\API();
 
+	global $pvc_wpml;
+	$pvc_wpml = new \A3Rev\PageViewsCount\WPML_Functions();
+
 	/**
 	 * Plugin Framework init
 	 */

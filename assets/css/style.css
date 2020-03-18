@@ -17,6 +17,9 @@
 .pvc_stats .pvc-stats-icon {
   vertical-align: middle;
 }
+.pvc_stats .pvc-stats-icon svg {
+  display: initial;
+}
 .pvc_stats .pvc-stats-icon.small svg {
   width: 18px;
 }

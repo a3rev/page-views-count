@@ -299,9 +299,61 @@ class Global_Panel extends FrameWork\Admin_UI
 					),
 				),
 			),
+			array(  
+				'name' 		=> __( 'Total Views Text', 'page-views-count' ),
+				'id' 		=> 'total_text',
+				'type' 		=> 'array_textfields',
+				'ids'		=> array( 
+	 								array(  'id' 		=> 'total_text_before',
+	 										'name' 		=> '##',
+	 										'css'		=> 'width:200px;',
+	 										'default'	=> '',
+									),
+									array(  'id' 		=> 'total_text_after',
+	 										'name' 		=> ' <span class="description"> ' .__( 'Empty Field = Nothing Shows', 'page-views-count' ) . '</span>',
+	 										'css'		=> 'width:200px;',
+	 										'default'	=> __( 'total views', 'page-views-count' ) 
+									),
+	 							)
+			),
+			array(  
+				'name' 		=> __( 'Views Today Text', 'page-views-count' ),
+				'id' 		=> 'today_text',
+				'type' 		=> 'array_textfields',
+				'ids'		=> array( 
+	 								array(  'id' 		=> 'today_text_before',
+	 										'name' 		=> '##',
+	 										'css'		=> 'width:200px;',
+	 										'default'	=> '',
+									),
+									array(  'id' 		=> 'today_text_after',
+	 										'name' 		=> ' <span class="description"> ' .__( 'Empty Field = Nothing Shows', 'page-views-count' ) . '</span>', 
+	 										'css'		=> 'width:200px;',
+	 										'default'	=> __( 'views today', 'page-views-count' ) 
+									),
+	 							)
+			),
+			array(  
+				'name' 		=> __( 'No Views Total', 'page-views-count' ),
+				'id' 		=> 'total_no_views_text',
+				'type' 		=> 'text',
+				'default'	=> __( 'No views yet', 'page-views-count' ),
+			),
+			array(  
+				'name' 		=> __( 'No Views Today', 'page-views-count' ),
+				'id' 		=> 'today_no_views_text',
+				'type' 		=> 'text',
+				'default'	=> __( 'no views today', 'page-views-count' ),
+			),
 
 			array(
-				'name' => __( 'Counter Icon', 'page-views-count' ),
+            	'name' 		=> __( 'Counter Icon', 'page-views-count' ),
+                'type' 		=> 'heading',
+                'id'		=> 'page_views_count_customize_box',
+                'is_box'	=> true,
+           	),
+           	array(
+				'name' => __( 'Select Icon', 'page-views-count' ),
 				'desc' 		=> '',
 				'id' 		=> 'icon',
 				'default'	=> 'chart',
@@ -322,7 +374,7 @@ class Global_Panel extends FrameWork\Admin_UI
 				),
 			),
 			array(
-				'name' => __( 'Counter Icon Size', 'page-views-count' ),
+				'name' => __( 'Icon Size', 'page-views-count' ),
 				'id' 		=> 'icon_size',
 				'default'	=> 'medium',
 				'type' 		=> 'select',
@@ -333,7 +385,7 @@ class Global_Panel extends FrameWork\Admin_UI
 				),
 			),
 			array(  
-				'name' => __( 'Counter Icon Color', 'page-views-count' ),
+				'name' => __( 'Icon Color', 'page-views-count' ),
 				'id' 		=> 'icon_color',
 				'default'	=> '#000000',
 				'type' 		=> 'color',
