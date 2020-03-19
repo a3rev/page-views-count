@@ -235,7 +235,7 @@ class Global_Panel extends FrameWork\Admin_UI
 			),
 
 			array(
-            	'name' 		=> __( 'Counter Position and Style', 'page-views-count' ),
+            	'name' 		=> __( 'Counter Position and Type', 'page-views-count' ),
                 'type' 		=> 'heading',
                 'id'		=> 'page_views_count_customize_box',
                 'is_box'	=> true,
@@ -332,18 +332,6 @@ class Global_Panel extends FrameWork\Admin_UI
 	 										'default'	=> __( 'views today', 'page-views-count' ) 
 									),
 	 							)
-			),
-			array(  
-				'name' 		=> __( 'No Views Total', 'page-views-count' ),
-				'id' 		=> 'total_no_views_text',
-				'type' 		=> 'text',
-				'default'	=> __( 'No views yet', 'page-views-count' ),
-			),
-			array(  
-				'name' 		=> __( 'No Views Today', 'page-views-count' ),
-				'id' 		=> 'today_no_views_text',
-				'type' 		=> 'text',
-				'default'	=> __( 'no views today', 'page-views-count' ),
 			),
 
 			array(

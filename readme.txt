@@ -1,9 +1,9 @@
 === Page View Count  ===
 Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
-Requires at least: 4.9
-Tested up to: 5.3.2
-Stable tag: 2.3.0
+Requires at least: 5.0
+Tested up to: 5.4.0
+Stable tag: 2.4.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -62,7 +62,7 @@ Want to add a new language to Page Views Count? Great! You can contribute via [t
 
 = Minimum Requirements =
 
-* WordPress 4.9 or greater
+* WordPress 5.0 or greater
 * PHP version 7.0 or greater
 * MySQL version 5.6 or greater OR MariaDB version 10.0 or greater
 
@@ -83,11 +83,11 @@ The manual installation method involves down loading our plugin and uploading it
 
 == Screenshots ==
 
-1. Page Views Count Dashboard
-2. Counter Position and Style Options box and settings
-3. Counter Position Bottom and Alignment set to Left
-4. Counter Position Bottom and Alignment set to Centre
-5. Counter Position Bottom and Alignment set to Right
+1. Counter
+2. PVC Admin
+3. Counter position and type
+4. PVC Widget
+5. PVC Gutenberg Block
 
 
 == Usage ==
@@ -102,6 +102,20 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.4.0 - 2020/03/19 =
+* This big feature release adds dynamic text, change Total Views and Views Today text from the plugins dashboard. Add support for Dynamic Text string translation. Compatibility with WordPress 5.4, Gutenberg 7.5, WooCommerce 4.0 plus PHP 7.0 to 7.4 
+* Feature - Add dynamic text support for Total Views and Views Today day text from plugin settings
+* Feature - Option to show text on either side of the count number or both sides
+* Feature - Add dynamic text strings support for translations with plugins like WPML and Qtranslate
+* Tweak - Add the dynamic text options to the Counter Position and Style option box.
+* Tweak - Replace No total views yet text with the number 0 
+* Tweak - Do not show Views Today when the count is 0  
+* Tweak - Move the Counter Icon settings to new options box.
+* Tweak - Update Gutenberg block for work compatibility with Gutenberg latest version 7.5
+* Tweak - Test for compatibility with WordPress 5.4
+* Tweak - Run Travis CI unit build tests for PHP compatibility issues with PHP 7.0 to 7.4
+* Tweak - Update readme decription screenshots.
 
 = 2.3.0 - 2020/03/10 =
 * This feature release contains, new PVC shortcode, new PVC Widget, option to only show total views, a new eye icon option, full compatibility with Elementor Templates, completion of PHP Composer refactor and 4 PHP fixes for compatibility with PHP v 7.0 to 7.4. 
@@ -359,6 +373,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.4.0 =
+This big feature release adds dynamic text, change Total Views and Views Today text from the plugins dashboard. Add support for Dynamic Text string translation. Compatibility with WordPress 5.4, Gutenberg 7.5, WooCommerce 4.0 plus PHP 7.0 to 7.4
 
 = 2.3.0 =
 This feature release contains, new PVC shortcode, new PVC Widget, option to only show total views, a new eye icon option, full compatibility with Elementor Templates, completion of PHP Composer refactor and 4 PHP fixes for compatibility with PHP v 7.0 to 7.4.

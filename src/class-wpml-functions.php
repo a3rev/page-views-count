@@ -46,10 +46,6 @@ class WPML_Functions
 			icl_register_string($this->plugin_wpml_name, 'Today Text Before', $pvc_settings['today_text_before'] );
 
 			icl_register_string($this->plugin_wpml_name, 'Today Text After', $pvc_settings['today_text_after'] );
-
-			icl_register_string($this->plugin_wpml_name, 'No Views Total', $pvc_settings['total_no_views_text'] );
-
-			icl_register_string($this->plugin_wpml_name, 'No Views Today', $pvc_settings['today_no_views_text'] );
 			
 		}
 	}
@@ -66,12 +62,6 @@ class WPML_Functions
 
 		if ( is_array( $current_settings ) && isset( $current_settings['today_text_after'] ) ) 
 			$current_settings['today_text_after'] = ( function_exists('icl_t') ? icl_t( $this->plugin_wpml_name, 'Today Text After', $current_settings['today_text_after'] ) : $current_settings['today_text_after'] );
-
-		if ( is_array( $current_settings ) && isset( $current_settings['total_no_views_text'] ) ) 
-			$current_settings['total_no_views_text'] = ( function_exists('icl_t') ? icl_t( $this->plugin_wpml_name, 'No Views Total', $current_settings['total_no_views_text'] ) : $current_settings['total_no_views_text'] );
-
-		if ( is_array( $current_settings ) && isset( $current_settings['today_no_views_text'] ) ) 
-			$current_settings['today_no_views_text'] = ( function_exists('icl_t') ? icl_t( $this->plugin_wpml_name, 'No Views Today', $current_settings['today_no_views_text'] ) : $current_settings['today_no_views_text'] );
 		
 		
 		return $current_settings;

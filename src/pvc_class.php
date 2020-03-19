@@ -149,26 +149,16 @@ class A3_PVC
 		$total = self::pvc_fetch_post_total( $post_id );
 		$today = self::pvc_fetch_post_today( $post_id );
 
-		if ( ! empty( $total ) ) {
+		$output_html .= $pvc_settings['total_text_before'] . '&nbsp;' . number_format( $total ) . '&nbsp;' . $pvc_settings['total_text_after'];
 
-			$output_html .= $pvc_settings['total_text_before'] . '&nbsp;' . number_format( $total ) . '&nbsp;' . $pvc_settings['total_text_after'];
+		if ( empty( $views_type ) ) {
+			$views_type = $pvc_settings['views_type'];
+		}
 
-			if ( empty( $views_type ) ) {
-				$views_type = $pvc_settings['views_type'];
-			}
+		if ( 'all' === $views_type && ! empty( $today ) ) {
+			$output_html .= ', ';
 
-			if ( 'all' === $views_type ) {
-				$output_html .= ', ';
-
-				if ( ! empty( $today ) ) {
-					$output_html .= $pvc_settings['today_text_before'] . '&nbsp;' . number_format( $today ) . '&nbsp;' . $pvc_settings['today_text_after'];
-				} else {
-					$output_html .= $pvc_settings['today_no_views_text'];
-				}
-			}
-
-		} else {
-			$output_html .=  $pvc_settings['total_no_views_text'];
+			$output_html .= $pvc_settings['today_text_before'] . '&nbsp;' . number_format( $today ) . '&nbsp;' . $pvc_settings['today_text_after'];
 		}
 
 		$output_html = apply_filters( 'pvc_filter_get_stats', $output_html, $post_id );
@@ -241,17 +231,11 @@ class A3_PVC
     <!-- PVC Template -->
     <script type="text/template" id="pvc-stats-view-template">
     <i class="pvc-stats-icon <?php echo $pvc_settings['icon_size']; ?>" aria-hidden="true"><?php echo ( 'eye' == $pvc_settings['icon'] ? self::$eye_icon : self::$chart_icon ); ?></i> 
-	<% if ( total_view > 0 ) { %>
-		<?php echo $pvc_settings['total_text_before']; ?> <%= total_view %> <?php echo $pvc_settings['total_text_after']; ?><span class="views_today">,
-		<% if ( today_view > 0 ) { %>
-			<?php echo $pvc_settings['today_text_before']; ?> <%= today_view %> <?php echo $pvc_settings['today_text_after']; ?>
-		<% } else { %>
-		<?php echo $pvc_settings['today_no_views_text']; ?>
-		<% } %>
-		</span>
-	<% } else { %>
-	<?php echo $pvc_settings['total_no_views_text']; ?>
+	<?php echo $pvc_settings['total_text_before']; ?> <%= total_view %> <?php echo $pvc_settings['total_text_after']; ?>
+	<% if ( today_view > 0 ) { %>
+		<span class="views_today">, <?php echo $pvc_settings['today_text_before']; ?> <%= today_view %> <?php echo $pvc_settings['today_text_after']; ?></span>
 	<% } %>
+	</span>
 	</script>
 	<?php // phpcs:enable ?>
 	<?php // @codingStandardsIgnoreEnd ?>
