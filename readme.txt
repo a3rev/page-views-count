@@ -3,7 +3,7 @@ Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 5.0
 Tested up to: 5.4.0
-Stable tag: 2.4.0
+Stable tag: 2.4.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -102,6 +102,10 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.4.1 - 2020/04/03 =
+* This maintenance release fixes a PHP global function missed in the last update.
+* Fix - Update some code from global ${$this- to $GLOBALS[$this missed on previous version
 
 = 2.4.0 - 2020/03/19 =
 * This big feature release adds dynamic text, change Total Views and Views Today text from the plugins dashboard. Add support for Dynamic Text string translation. Compatibility with WordPress 5.4, Gutenberg 7.5, WooCommerce 4.0 plus PHP 7.0 to 7.4 
@@ -373,6 +377,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.4.1 =
+This maintenance release fixes a PHP global function missed in the last update.
 
 = 2.4.0 =
 This big feature release adds dynamic text, change Total Views and Views Today text from the plugins dashboard. Add support for Dynamic Text string translation. Compatibility with WordPress 5.4, Gutenberg 7.5, WooCommerce 4.0 plus PHP 7.0 to 7.4

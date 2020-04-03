@@ -33,11 +33,10 @@ class WPML_Functions
 	
 	// Registry Dynamic String for WPML
 	public function wpml_register_dynamic_string() {
-		global ${A3_PVC_PREFIX.'admin_interface'};
 
 		if ( function_exists('icl_register_string') ) {
 			
-			$pvc_settings = array_map( array( ${A3_PVC_PREFIX.'admin_interface'}, 'admin_stripslashes' ), get_option( 'pvc_settings', array() ) );
+			$pvc_settings = array_map( array( $GLOBALS[A3_PVC_PREFIX.'admin_interface'], 'admin_stripslashes' ), get_option( 'pvc_settings', array() ) );
 
 			icl_register_string($this->plugin_wpml_name, 'Total Text Before', $pvc_settings['total_text_before'] );
 
