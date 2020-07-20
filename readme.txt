@@ -2,8 +2,8 @@
 Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 5.0
-Tested up to: 5.4.0
-Stable tag: 2.4.1
+Tested up to: 5.4.2
+Stable tag: 2.4.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -102,6 +102,13 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.4.2 - 2020/07/20 =
+* This maintenance release has a performance tweak, plus compatibility with WordPress 5.4.2, Gutenberg 8.5.1 and WooCommerce 4.3.0
+* Tweak - Reduce the block scripts on first load in the Gutenberg Editor
+* Tweak - Test for compatibility with WordPress 5.4.2
+* Tweak - Test for compatibility with WooCommerce 4.3.0
+* Tweak - Test for compatibility with Gutenberg 8.5.1
 
 = 2.4.1 - 2020/04/03 =
 * This maintenance release fixes a PHP global function missed in the last update.
@@ -377,6 +384,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.4.2 =
+This maintenance release has a performance tweak, plus compatibility with WordPress 5.4.2, Gutenberg 8.5.1 and WooCommerce 4.3.0
 
 = 2.4.1 =
 This maintenance release fixes a PHP global function missed in the last update.
