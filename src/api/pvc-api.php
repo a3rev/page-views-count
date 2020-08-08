@@ -26,6 +26,7 @@ class API
             register_rest_route( $this->namespace, $rest_base . '/(?P<post_ids>([a-zA-Z0-9_]\,?)+)', array(
                 'methods'  => 'GET',
                 'callback' => array( $this, str_replace( '/', '', $rest_base ) . '_stats' ),
+                'permission_callback' => '__return_true',
             ) );
         }
     }

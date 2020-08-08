@@ -2,8 +2,8 @@
 Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 5.0
-Tested up to: 5.4.2
-Stable tag: 2.4.2
+Tested up to: 5.5
+Stable tag: 2.4.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -102,6 +102,12 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.4.3 - 2020/08/08 =
+* This maintenance release is for compatibility with WordPress major version 5.5 and WooCommerce 4.3.1.
+* Tweak - Test for compatibility with WordPress 5.5
+* Tweak - Test for compatibility with WooCommerce 4.3.1
+* Tweak - Return default true for permission_callback, required from register_rest_route on WordPress 5.5
 
 = 2.4.2 - 2020/07/20 =
 * This maintenance release has a performance tweak, plus compatibility with WordPress 5.4.2, Gutenberg 8.5.1 and WooCommerce 4.3.0
@@ -384,6 +390,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.4.3 =
+This maintenance release is for compatibility with WordPress major version 5.5 and WooCommerce 4.3.1.
 
 = 2.4.2 =
 This maintenance release has a performance tweak, plus compatibility with WordPress 5.4.2, Gutenberg 8.5.1 and WooCommerce 4.3.0
