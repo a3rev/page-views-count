@@ -49,6 +49,11 @@ registerBlockType('page-views-count/stats', {
 		__('Views', 'page-views-count'),
 		__('Stats', 'page-views-count'),
 	],
+	example: {
+		attributes: {
+			isPreview: true,
+		},
+	},
 
 	attributes: {
 		align: {
@@ -61,6 +66,13 @@ registerBlockType('page-views-count/stats', {
 			type: 'boolean',
 			default: true,
 		},
+		/**
+		 * For previewing?
+		 */
+		isPreview: {
+			type: 'boolean',
+			default: false,
+		},
 	},
 
 	/**
@@ -72,6 +84,18 @@ registerBlockType('page-views-count/stats', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	edit: ({ attributes, setAttributes }) => {
+
+		if ( attributes.isPreview ) {
+			return ( <img
+				src={ pvcblock.preview }
+				alt={ __( 'Page Views Count Preview', 'page-views-count' ) }
+				style={ {
+					width: '100%',
+					height: 'auto',
+				} }
+			/> );
+		}
+
 		const { align, isDisabled } = attributes;
 		const postID = select('core/editor').getCurrentPostId();
 

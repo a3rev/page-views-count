@@ -64,6 +64,10 @@ class Blocks {
 			true // Enqueue the script in the footer.
 		);
 
+		wp_localize_script( 'page_views_count-cgb-block-js', 'pvcblock', array( 
+			'preview'    => A3_PVC_URL.  '/src/blocks/stats/preview.jpg',
+		) );
+
 		// Styles.
 		// wp_enqueue_style(
 		// 	'page_views_count-cgb-block-editor-css', // Handle.
@@ -121,7 +125,11 @@ class Blocks {
 				'isDisabled' => array(
 					'type' 		=> 'boolean',
 					'default'	=> true,
-				)
+				),
+				'isPreview'	=> array(
+					'type'    => 'boolean',
+					'default' => false,
+				),
 			),
 			'render_callback' 	=> array( $this, 'render' )
 		);
@@ -148,7 +156,11 @@ class Blocks {
 				'isDisabled' => array(
 					'type' 		=> 'boolean',
 					'default'	=> true,
-				)
+				),
+				'isPreview'	=> array(
+					'type'    => 'boolean',
+					'default' => false,
+				),
 			),
 			'render_callback' 	=> array( $this, 'render_editor' )
 		) );

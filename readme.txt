@@ -3,7 +3,7 @@ Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 5.0
 Tested up to: 5.6
-Stable tag: 2.4.4
+Stable tag: 2.4.5
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -102,6 +102,10 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.4.5 - 2020/12/15 =
+* This maintenance release adds a block preview image for block discovery
+* Tweak - Add support for Block Discovery Preview
 
 = 2.4.4 - 2020/12/08 =
 * This maintenance release has tweaks and a fix for compatibility with WordPress major version 5.6, PHP 7.4.8 and Gutenberg 9.4
@@ -397,6 +401,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.4.5 =
+This maintenance release adds a block preview image for block discovery
 
 = 2.4.4 =
 This maintenance release has tweaks and a fix for compatibility with WordPress major version 5.6, PHP 7.4.8 and Gutenberg 9.4
