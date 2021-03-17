@@ -456,6 +456,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 == Upgrade Notice ==
 
+= 2.4.8 =
+This maintenance release updates 23 deprecated jQuery functions for compatibility with the latest version of jQuery in WordPress 5.7
+
 = 2.4.7 =
 This maintenance release is for compatibility with WordPress 5.7 and Gutenberg 10.0
 
