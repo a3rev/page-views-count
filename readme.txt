@@ -2,8 +2,8 @@
 Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 5.0
-Tested up to: 5.7
-Stable tag: 2.4.8
+Tested up to: 5.8
+Stable tag: 2.4.9
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -102,6 +102,13 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.4.9 - 2021/07/10 =
+* This maintenance release has code rewrites for WordPress 5.8 compatibility plus a Security patch
+* Tweak - Test for compatibility with WordPress 5.8
+* Tweak - Test for compatibility with Gutenberg 10.7
+* Tweak - Register block page-views-count/stats-editor inside block.js file for work compatibility with WordPress 5.8 new features
+* Security - Added escaping for the shortcode postid parameter
 
 = 2.4.8 - 2021/03/17 =
 * This maintenance release updates 23 deprecated jQuery functions for compatibility with the latest version of jQuery in WordPress 5.7
@@ -455,6 +462,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.4.9 =
+This maintenance release has code rewrites for WordPress 5.8 compatibility plus a Security patch
 
 = 2.4.8 =
 This maintenance release updates 23 deprecated jQuery functions for compatibility with the latest version of jQuery in WordPress 5.7

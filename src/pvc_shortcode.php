@@ -27,6 +27,8 @@ class Shortcode
 			), $attr )
 		);
 
+		$postid = esc_attr( $postid );	// XSS ok
+
 		$output = apply_filters( 'pvc_stats_shortcode', '', $postid, $increase, $show_views_today );
 
 		return $output;
