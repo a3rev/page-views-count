@@ -97,21 +97,21 @@ class PVC extends \WP_Widget {
 		$show_views_today = intval( $instance['show_views_today'] );
 ?>
 		<p>
-			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'page-views-count' ); ?>:</label>
-			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
+			<label for="<?php echo esc_attr( $this->get_field_id('title') ); ?>"><?php _e('Title', 'page-views-count' ); ?>:</label>
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id('title') ); ?>" name="<?php echo esc_attr( $this->get_field_name('title') ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
 		</p>
         <p>
-			<label for="<?php echo $this->get_field_id('postid'); ?>"><?php _e('Post/Page ID', 'page-views-count' ); ?>:</label>
-			<input style="width:50px;" id="<?php echo $this->get_field_id('postid'); ?>" name="<?php echo $this->get_field_name('postid'); ?>" type="text" value="<?php echo $postid; ?>" /> <br />
+			<label for="<?php echo esc_attr( $this->get_field_id('postid') ); ?>"><?php _e('Post/Page ID', 'page-views-count' ); ?>:</label>
+			<input style="width:50px;" id="<?php echo esc_attr( $this->get_field_id('postid') ); ?>" name="<?php echo esc_attr( $this->get_field_name('postid') ); ?>" type="text" value="<?php echo esc_attr( $postid ); ?>" /> <br />
 			<span class="description"><?php _e( 'Post/Page ID want to show stats, leave empty for use ID of current post.', 'page-views-count' ); ?></span>
 		</p>
         <p>
-        	<input type="checkbox" <?php checked( $increase, 1 ); ?> id="<?php echo $this->get_field_id('increase'); ?>" name="<?php echo $this->get_field_name('increase'); ?>" value="1" />
-        	<label for="<?php echo $this->get_field_id('increase'); ?>"><?php _e( 'Increase count', 'page-views-count' ); ?></label>
+        	<input type="checkbox" <?php checked( $increase, 1 ); ?> id="<?php echo esc_attr( $this->get_field_id('increase') ); ?>" name="<?php echo esc_attr( $this->get_field_name('increase') ); ?>" value="1" />
+        	<label for="<?php echo esc_attr( $this->get_field_id('increase') ); ?>"><?php _e( 'Increase count', 'page-views-count' ); ?></label>
         </p>
         <p>
-        	<input type="checkbox" <?php checked( $show_views_today, 1 ); ?> id="<?php echo $this->get_field_id('show_views_today'); ?>" name="<?php echo $this->get_field_name('show_views_today'); ?>" value="1" />
-        	<label for="<?php echo $this->get_field_id('show_views_today'); ?>"><?php _e( 'Show Views Today', 'page-views-count' ); ?></label>
+        	<input type="checkbox" <?php checked( $show_views_today, 1 ); ?> id="<?php echo esc_attr( $this->get_field_id('show_views_today') ); ?>" name="<?php echo esc_attr( $this->get_field_name('show_views_today') ); ?>" value="1" />
+        	<label for="<?php echo esc_attr( $this->get_field_id('show_views_today') ); ?>"><?php _e( 'Show Views Today', 'page-views-count' ); ?></label>
         </p>
 <?php
 	}

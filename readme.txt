@@ -3,7 +3,7 @@ Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 5.0
 Tested up to: 5.8
-Stable tag: 2.4.9
+Stable tag: 2.4.11
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -102,6 +102,11 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.4.11 - 2021/07/13 =
+* This maintenance release has more code security hardening 
+* Security - Add more variable, options and html escaping
+* Tweak - Skipped version 2.4.10 to avoid PHP misread
 
 = 2.4.9 - 2021/07/10 =
 * This maintenance release has code rewrites for WordPress 5.8 compatibility plus a Security patch
@@ -462,6 +467,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.4.11 =
+This maintenance release has more code security hardening.
 
 = 2.4.9 =
 This maintenance release has code rewrites for WordPress 5.8 compatibility plus a Security patch

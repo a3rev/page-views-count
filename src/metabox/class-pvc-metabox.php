@@ -69,11 +69,11 @@ class MetaBox
 	    		<div class="a3_pvc_activated_container">
 		    		<p>
 		    			<label for="a3_pvc_total_views" style="display: inline-block; width: 100px;"><?php _e( 'All Time Views', 'page-views-count' ) ?></label>
-		    			<input type="text" name="a3_pvc_total_views" id="a3_pvc_total_views" value="<?php echo $total_views; ?>" style="width: 100px;" />
+		    			<input type="text" name="a3_pvc_total_views" id="a3_pvc_total_views" value="<?php echo esc_attr( $total_views ); ?>" style="width: 100px;" />
 		    		</p>
 		    		<p>
 		    			<label for="a3_pvc_today_views" style="display: inline-block; width: 100px;"><?php _e( 'Today Views', 'page-views-count' ) ?></label>
-		    			<input type="text" name="a3_pvc_today_views" id="a3_pvc_today_views" value="<?php echo $today_views; ?>" style="width: 100px;" />
+		    			<input type="text" name="a3_pvc_today_views" id="a3_pvc_today_views" value="<?php echo esc_attr( $today_views ); ?>" style="width: 100px;" />
 		    		</p>
 	    		</div>
 	    	</div>

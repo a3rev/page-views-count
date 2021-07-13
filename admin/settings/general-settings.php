@@ -310,7 +310,7 @@ class Global_Panel extends FrameWork\Admin_UI
 	 										'default'	=> '',
 									),
 									array(  'id' 		=> 'total_text_after',
-	 										'name' 		=> ' <span class="description"> ' .__( 'Empty Field = Nothing Shows', 'page-views-count' ) . '</span>',
+	 										'name' 		=> __( 'Empty Field = Nothing Shows', 'page-views-count' ),
 	 										'css'		=> 'width:200px;',
 	 										'default'	=> __( 'total views', 'page-views-count' ) 
 									),
@@ -327,7 +327,7 @@ class Global_Panel extends FrameWork\Admin_UI
 	 										'default'	=> '',
 									),
 									array(  'id' 		=> 'today_text_after',
-	 										'name' 		=> ' <span class="description"> ' .__( 'Empty Field = Nothing Shows', 'page-views-count' ) . '</span>', 
+	 										'name' 		=> __( 'Empty Field = Nothing Shows', 'page-views-count' ), 
 	 										'css'		=> 'width:200px;',
 	 										'default'	=> __( 'views today', 'page-views-count' ) 
 									),

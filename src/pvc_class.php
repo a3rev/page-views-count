@@ -230,10 +230,10 @@ class A3_PVC
 	<?php // phpcs:disable ?>
     <!-- PVC Template -->
     <script type="text/template" id="pvc-stats-view-template">
-    <i class="pvc-stats-icon <?php echo $pvc_settings['icon_size']; ?>" aria-hidden="true"><?php echo ( 'eye' == $pvc_settings['icon'] ? self::$eye_icon : self::$chart_icon ); ?></i> 
-	<?php echo $pvc_settings['total_text_before']; ?> <%= total_view %> <?php echo $pvc_settings['total_text_after']; ?>
+    <i class="pvc-stats-icon <?php echo esc_attr( $pvc_settings['icon_size'] ); ?>" aria-hidden="true"><?php echo ( 'eye' == $pvc_settings['icon'] ? self::$eye_icon : self::$chart_icon ); ?></i> 
+	<?php echo esc_html( $pvc_settings['total_text_before'] ); ?> <%= total_view %> <?php echo esc_html( $pvc_settings['total_text_after'] ); ?>
 	<% if ( today_view > 0 ) { %>
-		<span class="views_today">, <?php echo $pvc_settings['today_text_before']; ?> <%= today_view %> <?php echo $pvc_settings['today_text_after']; ?></span>
+		<span class="views_today">, <?php echo esc_html( $pvc_settings['today_text_before'] ); ?> <%= today_view %> <?php echo esc_html( $pvc_settings['today_text_after'] ); ?></span>
 	<% } %>
 	</span>
 	</script>
