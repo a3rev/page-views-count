@@ -19,15 +19,16 @@ class Shortcode
 			return '';
 		}
 
-		extract( shortcode_atts(
+		$attr = shortcode_atts(
 			array(
 				'postid'           => '',
 				'increase'         => 1,
 				'show_views_today' => 1,
-			), $attr )
-		);
+			), $attr );
 
-		$postid = esc_attr( $postid );	// XSS ok
+		$postid           = esc_attr( $attr['postid'] ); // XSS ok
+		$increase         = intval( $attr['increase'] );
+		$show_views_today = intval( $attr['show_views_today'] );
 
 		$output = apply_filters( 'pvc_stats_shortcode', '', $postid, $increase, $show_views_today );
 

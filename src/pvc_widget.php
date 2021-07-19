@@ -20,7 +20,6 @@ class PVC extends \WP_Widget {
 	}
 
 	function widget( $args, $instance ) {
-		extract($args);
 		$title            = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance, $this->id_base);
 		$postid           = sanitize_text_field( $instance['postid'] );
 		$increase         = intval( $instance['increase'] );
@@ -32,14 +31,14 @@ class PVC extends \WP_Widget {
 			return '';
 		}
 
-		echo $before_widget;
+		echo $args['before_widget']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
 		if ( $title ) { 
-			echo $before_title . $title . $after_title;
+			echo $args['before_title'] . $title . $args['after_title']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
 		}
 
 		echo $pvc_stats_output;
 
-		echo $after_widget;
+		echo $args['after_widget']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
 	}
 
 	public function pvc_stats_widget( $output = '', $postid = '', $increase = 1, $show_views_today = 1 ) {
