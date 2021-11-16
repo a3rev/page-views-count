@@ -79,7 +79,7 @@ class Blocks {
 
 	public function create_a3blocks_section() {
 
-		add_filter( 'block_categories', function( $categories ) {
+		add_filter( 'block_categories_all', function( $categories ) {
 
 			$category_slugs = wp_list_pluck( $categories, 'slug' );
 
