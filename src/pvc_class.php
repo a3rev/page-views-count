@@ -100,6 +100,8 @@ class A3_PVC
 		// first try and update the existing total post counter
 		$results = $wpdb->query( $wpdb->prepare( "UPDATE ". $wpdb->prefix . "pvc_total SET postcount = postcount+1 WHERE postnum = '%s' LIMIT 1", $post_id ) );
 
+		// error_log( json_encode( $results ) );
+
 		// if it doesn't exist, then insert two new records
 		// one in the total views, another in today's views
 		if ($results == 0) {

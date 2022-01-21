@@ -1,9 +1,9 @@
 === Page View Count  ===
 Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
-Requires at least: 5.0
-Tested up to: 5.8
-Stable tag: 2.4.13
+Requires at least: 5.6
+Tested up to: 5.9
+Stable tag: 2.4.14
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -29,7 +29,7 @@ A beautifully simple to set up plugin that gives site visitors and site owners t
 * All options and settings are point click - absolutely no coding required  
 
 = COMPATIBILTY =
-Compatible with WordPress 5.3+ and backwards to WP 4.9.0. Compatible with Classic Editor plugin with 5.0+ (Gutenberg Deactivated)
+Compatible with WordPress 5.9+ and backwards to WP 5.6.0 Compatible with Classic Editor plugin (Gutenberg editor Deactivated)
 
 = GUTENBERG BLOCK =
 Using the Gutenberg Editor. Use the Page View Count Block to add the counter to any page or post content.  Block search for 'Page Views' or selecting the block from the a3rev Blocks menu.
@@ -54,7 +54,7 @@ On the plugins dashboard in the + Page Views Count Function options box you will
   
 = CONTRIBUTE  =
 
-When you download Page Views Count, you join our community. Regardless of if you are a WordPress beginner or experienced developer if you'’re interested in contributing to Page Views Count development head over to the [Page Views Count GitHub Repository](https://github.com/a3rev/page-views-count) to find out how you can contribute.
+When you download Page Views Count, you join our community. Regardless of if you are a WordPress beginner or experienced developer if you'â€™re interested in contributing to Page Views Count development head over to the [Page Views Count GitHub Repository](https://github.com/a3rev/page-views-count) to find out how you can contribute.
 Want to add a new language to Page Views Count? Great! You can contribute via [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/page-views-count)
 
 
@@ -62,9 +62,8 @@ Want to add a new language to Page Views Count? Great! You can contribute via [t
 
 = Minimum Requirements =
 
-* WordPress 5.0 or greater
-* PHP version 7.0 or greater
-* MySQL version 5.6 or greater OR MariaDB version 10.0 or greater
+* PHP version 7.4 or greater is recommended
+* MySQL version 5.6 or greater is recommended
 
 = Automatic installation =
 
@@ -102,6 +101,12 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.4.14 - 2022/01/21 =
+* This is a maintenance release for compatibility with WordPress major version 5.9
+* Tweak - Test for compatibility with WordPress 5.9
+* Tweak - Test for compatibility with latest version of Gutenberg from WordPress 5.9
+* Framework - Update a3rev Plugin Framework to version 2.5.0
 
 = 2.4.13 - 2021/11/16 =
 * This maintenance release has a bug fix for compatibility with Gutenberg 10.8 and PHP 8.x
@@ -478,6 +483,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.4.14 =
+This is a maintenance release for compatibility with WordPress major version 5.9
 
 = 2.4.13 =
 This maintenance release has a bug fix for compatibility with Gutenberg 10.8 and PHP 8.x
