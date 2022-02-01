@@ -48,10 +48,15 @@ class A3_PVC
 		$nowisnow = date('Y-m-d');
 
 		if ( !is_array( $post_ids ) ) $post_ids = array( $post_ids );
+		$post_ids = array_map( function( $value ) {
+			global $wpdb;
+			return $wpdb->prepare( '%s', $value );
+		}, $post_ids );
 
 		$sql = $wpdb->prepare( "SELECT t.postnum AS post_id, t.postcount AS total, d.postcount AS today FROM ". $wpdb->prefix . "pvc_total AS t
 			LEFT JOIN ". $wpdb->prefix . "pvc_daily AS d ON t.postnum = d.postnum
 			WHERE t.postnum IN ( ".implode( ',', $post_ids )." ) AND d.time = %s", $nowisnow );
+
 		return $wpdb->get_results($sql);
 	}
 
