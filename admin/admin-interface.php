@@ -596,10 +596,19 @@ class Admin_Interface extends Admin_UI
 	/*-----------------------------------------------------------------------------------*/
 
 	public function save_settings( $options, $option_name = '' ) {
+
+		check_admin_referer( 'save_settings_' . $this->plugin_name );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return false;
+		}
 				
 		if ( !is_array( $options ) || count( $options ) < 1 ) return;
 		
 		if ( empty( $_POST ) ) return false;
+
+		$this->update_google_map_api_key();
+		$GLOBALS[$this->plugin_prefix.'fonts_face']->update_google_font_api_key();
 		
 		$update_options = array();
 		$update_separate_options = array();
@@ -3691,6 +3700,7 @@ class Admin_Interface extends Admin_UI
 			</div> <!-- Close Panel Row -->
 		<?php do_action( $this->plugin_name . '-' . trim( $form_key ) . '_settings_end' ); ?>
             <p class="submit">
+            		<?php wp_nonce_field( 'save_settings_'. $this->plugin_name ); ?>
                     <input type="submit" value="<?php _e('Save changes', 'page-views-count'); ?>" class="button button-primary" name="bt_save_settings" />
                     <input type="submit" name="bt_reset_settings" class="button" value="<?php _e('Reset Settings', 'page-views-count'); ?>"  />
                     <input type="hidden" name="form_name_action" value="<?php echo esc_attr( $form_key ); ?>"  />

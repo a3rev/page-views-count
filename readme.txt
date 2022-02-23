@@ -2,8 +2,8 @@
 Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 5.6
-Tested up to: 5.9
-Stable tag: 2.4.15
+Tested up to: 5.9.1
+Stable tag: 2.5.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -101,6 +101,13 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.5.0 - 2022/02/23 =
+* This update has 4 code tweaks that harden the plugins security and improve performance - please run this update as soon as you see it.
+* Tweak - Nonce check for when settings form is submitted from plugin framework
+* Tweak - Capabilities manage_options check for when settings form is submitted from plugin framework
+* Tweak - Call update_google_map_api_key when settings form is submitted instead of instance of Admin_UI
+* Tweak - Call update_google_font_api_key when settings form is submitted instead of instance of Fonts_Face
 
 = 2.4.15 - 2022/02/01 =
 * This is an important security release that patches a SQL injection vulnerability that affects all previous versions. Please run this immediately.
@@ -487,6 +494,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.5.0 =
+This update has 4 code tweaks that harden the plugins security and improve performance - please run this update as soon as you see it.
 
 = 2.4.15 =
 This is an important security release that patches a SQL injection vulnerability that affects all previous versions. Please run this immediately.

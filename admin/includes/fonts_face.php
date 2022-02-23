@@ -364,6 +364,34 @@ class Fonts_Face extends Admin_UI
 			return;
 		}
 
+		if ( apply_filters( $this->plugin_name . '_new_google_fonts_enable', true ) ) {
+			$this->is_valid_google_api_key();
+			$google_fonts = get_option( $this->plugin_name . '_google_font_list', array() );
+		} else {
+			$google_fonts = array();
+		}
+
+		if ( ! is_array( $google_fonts ) || count( $google_fonts ) < 1 ) {
+			$google_fonts = apply_filters( $this->plugin_name . '_google_fonts', $this->google_fonts );
+		}
+
+		sort( $google_fonts );
+
+		$new_google_fonts = array();
+		foreach ( $google_fonts as $row ) {
+			$new_google_fonts[$row['name']]  = $row;
+		}
+
+		$this->google_fonts = $new_google_fonts;
+
+	}
+
+	public function update_google_font_api_key() {
+
+		if ( ! $this->is_load_google_fonts ) {
+			return;
+		}
+
 		// Enable Google Font API Key
 		if ( isset( $_POST[ $this->google_api_key_option . '_enable' ] ) ) {
 			$old_google_api_key_enable = get_option( $this->google_api_key_option . '_enable', 0 );
@@ -396,27 +424,6 @@ class Fonts_Face extends Admin_UI
 				delete_transient( $this->google_api_key_option . '_status' );
 			}
 		}
-
-		if ( apply_filters( $this->plugin_name . '_new_google_fonts_enable', true ) ) {
-			$this->is_valid_google_api_key();
-			$google_fonts = get_option( $this->plugin_name . '_google_font_list', array() );
-		} else {
-			$google_fonts = array();
-		}
-
-		if ( ! is_array( $google_fonts ) || count( $google_fonts ) < 1 ) {
-			$google_fonts = apply_filters( $this->plugin_name . '_google_fonts', $this->google_fonts );
-		}
-
-		sort( $google_fonts );
-
-		$new_google_fonts = array();
-		foreach ( $google_fonts as $row ) {
-			$new_google_fonts[$row['name']]  = $row;
-		}
-
-		$this->google_fonts = $new_google_fonts;
-
 	}
 
 	public function validate_google_api_key( $g_key = '' ) {
