@@ -387,6 +387,11 @@ class Fonts_Face extends Admin_UI
 	}
 
 	public function update_google_font_api_key() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return false;
+		}
+
+		check_admin_referer( 'save_settings_' . $this->plugin_name );
 
 		if ( ! $this->is_load_google_fonts ) {
 			return;

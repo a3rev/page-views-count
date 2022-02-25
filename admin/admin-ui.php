@@ -180,8 +180,15 @@ class Admin_UI
 	}
 
 	public function update_google_map_api_key() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return false;
+		}
+
+		check_admin_referer( 'save_settings_' . $this->plugin_name );
+
 		// Enable Google Map API Key
 		if ( isset( $_POST[ $this->google_map_api_key_option . '_enable' ] ) ) {
+
 			$old_google_map_api_key_enable = get_option( $this->google_map_api_key_option . '_enable', 0 );
 
 			update_option( $this->google_map_api_key_option . '_enable', 1 );

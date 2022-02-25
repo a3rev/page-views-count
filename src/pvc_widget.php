@@ -31,14 +31,14 @@ class PVC extends \WP_Widget {
 			return '';
 		}
 
-		echo $args['before_widget']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
+		echo wp_kses_post( $args['before_widget'] );
 		if ( $title ) { 
-			echo $args['before_title'] . $title . $args['after_title']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $args['before_title'] . $title . $args['after_title'] );
 		}
 
 		echo $pvc_stats_output;
 
-		echo $args['after_widget']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
+		echo wp_kses_post( $args['after_widget'] );
 	}
 
 	public function pvc_stats_widget( $output = '', $postid = '', $increase = 1, $show_views_today = 1 ) {
