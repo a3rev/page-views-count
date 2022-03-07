@@ -63,7 +63,9 @@ class API
     }
 
     public function increase_stats( \WP_REST_Request $request ) {
-        @ini_set( 'display_errors', false );
+        if ( ! WP_DEBUG || ( WP_DEBUG && ! WP_DEBUG_DISPLAY ) ) {
+            @ini_set( 'display_errors', false ); // Turn off display_errors to prevent malformed JSON.
+        }
 
         $post_ids_text = $request->get_param( 'post_ids' );
 
@@ -102,7 +104,9 @@ class API
     }
 
     public function view_stats( \WP_REST_Request $request ) {
-        @ini_set( 'display_errors', false );
+        if ( ! WP_DEBUG || ( WP_DEBUG && ! WP_DEBUG_DISPLAY ) ) {
+            @ini_set( 'display_errors', false ); // Turn off display_errors to prevent malformed JSON.
+        }
 
         $post_ids_text = $request->get_param( 'post_ids' );
 

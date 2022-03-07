@@ -620,10 +620,14 @@ class Fonts_Face extends Admin_UI
             $line_height = $option['line_height'];
         }
 
+        $font_css = '';
+
 		if ( !@$option['style'] && !@$option['size'] && !@$option['color'] )
-			return 'font-family: '.stripslashes($option["face"]).' !important;';
+			$font_css = 'font-family: '.stripslashes($option["face"]).' !important;';
 		else
-			return 'font:'.$option['style'].' '.$option['size'].'/' . $line_height . ' ' .stripslashes($option['face']).' !important; color:'.$option['color'].' !important;';
+			$font_css = 'font:'.$option['style'].' '.$option['size'].'/' . $line_height . ' ' .stripslashes($option['face']).' !important; color:'.$option['color'].' !important;';
+
+		return apply_filters( $this->plugin_name . '_generate_font_css', $font_css, $option, $em );
 	}
 
 

@@ -1490,11 +1490,7 @@ class Admin_Interface extends Admin_UI
 			if ( ! isset( $value['separate_option'] ) ) $value['separate_option'] = false;
 	
 			// Custom attribute handling
-			$custom_attributes = array();
-	
-			if ( ! empty( $value['custom_attributes'] ) && is_array( $value['custom_attributes'] ) )
-				foreach ( $value['custom_attributes'] as $attribute => $attribute_value )
-					$custom_attributes[] = esc_attr( $attribute ) . '="' . esc_attr( $attribute_value ) . '"';
+			$custom_attributes = isset( $value['custom_attributes'] ) ? $value['custom_attributes'] : array();
 	
 			// Description handling
 			if ( $value['desc_tip'] === true ) {
@@ -1606,7 +1602,7 @@ class Admin_Interface extends Admin_UI
 	
 			if ( $tip && in_array( $value['type'], array( 'checkbox' ) ) ) {
 	
-				$tip = '<p class="description">' . esc_html( $tip ) . '</p>';
+				$tip = '<p class="description">' . wp_kses_post( $tip ) . '</p>';
 	
 			} elseif ( $tip ) {
 	
@@ -1863,9 +1859,9 @@ class Admin_Interface extends Admin_UI
 						echo '<div id="'. esc_attr( $value['id'] ) . '" class="a3rev_panel_box '. esc_attr( $value['class'] ) .'" style="'. esc_attr( $value['css'] ) .'">' . "\n\n";
 
 						// open box handle
-						echo '<div data-form-key="'. esc_attr( trim( $form_key ) ) .'" data-box-id="'. esc_attr( $heading_box_id ) .'" class="a3rev_panel_box_handle ' . $box_handle_class .'" >' . "\n\n";
+						echo '<div data-form-key="'. esc_attr( trim( $form_key ) ) .'" data-box-id="'. esc_attr( $heading_box_id ) .'" class="a3rev_panel_box_handle ' . esc_attr( $box_handle_class ) .'" >' . "\n\n";
 
-						echo ( ! empty( $value['name'] ) ) ? '<h3 class="a3-plugin-ui-panel-box '. $toggle_box_class . ' ' . $opened_class . '">'. esc_html( $value['name'] ) .' '. wptexturize( $view_doc ) .'</h3>' : '';
+						echo ( ! empty( $value['name'] ) ) ? '<h3 class="a3-plugin-ui-panel-box '. esc_attr( $toggle_box_class ) . ' ' . esc_attr( $opened_class ) . '">'. wp_kses_post( $value['name'] ) .' '. wp_kses_post( wptexturize( $view_doc ) ) .'</h3>' : '';
 
 						if ( stristr( $value['class'], 'pro_feature_fields' ) !== false && ! empty( $value['id'] ) ) $this->upgrade_top_message( true, sanitize_title( $value['id'] ) );
 						elseif ( stristr( $value['class'], 'pro_feature_fields' ) !== false ) $this->upgrade_top_message( true );
@@ -1874,7 +1870,7 @@ class Admin_Interface extends Admin_UI
 						echo '</div>' . "\n\n";
 
 						// open box inside
-						echo '<div id="'. esc_attr( $value['id'] ) . '_box_inside" class="a3rev_panel_box_inside '.$opened_class.'" >' . "\n\n";
+						echo '<div id="'. esc_attr( $value['id'] ) . '_box_inside" class="a3rev_panel_box_inside '. esc_attr( $opened_class ) .'" >' . "\n\n";
 
 						echo '<div class="a3rev_panel_inner">' . "\n\n";
 
@@ -1891,12 +1887,12 @@ class Admin_Interface extends Admin_UI
 						if ( stristr( $value['class'], 'pro_feature_fields' ) !== false && ! empty( $value['id'] ) ) $this->upgrade_top_message( true, sanitize_title( $value['id'] ) );
 						elseif ( stristr( $value['class'], 'pro_feature_fields' ) !== false ) $this->upgrade_top_message( true );
 
-						echo ( ! empty( $value['name'] ) ) ? '<h3>'. esc_html( $value['name'] ) .' '. wptexturize( $view_doc ) .'</h3>' : '';
+						echo ( ! empty( $value['name'] ) ) ? '<h3>'. wp_kses_post( $value['name'] ) .' '. wp_kses_post( wptexturize( $view_doc ) ) .'</h3>' : '';
 					}
 
 					if ( ! empty( $value['desc'] ) ) {
 						echo '<div class="a3rev_panel_box_description" >' . "\n\n";
-						echo wpautop( wptexturize( $value['desc'] ) );
+						echo wp_kses_post( wpautop( wptexturize( $value['desc'] ) ) );
 						echo '</div>' . "\n\n";
 					}
 
@@ -1959,7 +1955,7 @@ class Admin_Interface extends Admin_UI
 										value="<?php echo esc_attr( $google_api_key ); ?>"
 										class="a3rev-ui-text a3rev-ui-google-api-key a3rev-ui-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?> <?php echo esc_attr( $value['class'] ); ?>"
 		                                placeholder="<?php echo __( 'Google Fonts API Key' ); ?>"
-										<?php echo implode( ' ', $custom_attributes );	// XSS ok ?>
+										<?php $this->esc_attribute_array_e( $custom_attributes ); // WPCS: XSS ok. ?>
 										/>
 									<button
 									name="<?php echo esc_attr( $this->google_api_key_option ); ?>_validate_bt"
@@ -2027,7 +2023,7 @@ class Admin_Interface extends Admin_UI
 										value="<?php echo esc_attr( $google_map_api_key ); ?>"
 										class="a3rev-ui-text a3rev-ui-google-api-key a3rev-ui-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?> <?php echo esc_attr( $value['class'] ); ?>"
 		                                placeholder="<?php echo __( 'Google Map API Key' ); ?>"
-										<?php echo implode( ' ', $custom_attributes );	// XSS ok ?>
+										<?php $this->esc_attribute_array_e( $custom_attributes ); // WPCS: XSS ok. ?>
 										/>
 									<button
 									name="<?php echo esc_attr( $this->google_map_api_key_option ); ?>_validate_bt"
@@ -2083,19 +2079,19 @@ class Admin_Interface extends Admin_UI
 					$submit_data      = json_encode( $value['submit_data'] );
 
 					?><tr valign="top">
-						<th scope="row" class="titledesc"><?php echo wp_kses_post( $tip ); ?><?php echo esc_html( $value['name'] ); ?></th>
+						<th scope="row" class="titledesc"><?php echo wp_kses_post( $tip ); ?><?php echo wp_kses_post( $value['name'] ); ?></th>
 						<td class="forminp">
 
                             <div class="a3rev-ui-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>-control">
 
 								<button
-									name="<?php echo $name_attribute; // XSS ok ?>"
+									name="<?php echo $name_attribute; // WPCS: XSS ok. ?>"
 									id="<?php echo esc_attr( $id_attribute ); ?>"
 									data-submit_data="<?php echo esc_attr( $submit_data ); ?>"
 									type="button"
 									class="a3rev-ui-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>-button <?php echo esc_attr( $value['class'] ); ?>"
 									style="<?php echo esc_attr( $value['css'] ); ?>"
-									<?php echo implode( ' ', $custom_attributes );	// XSS ok ?>
+									<?php $this->esc_attribute_array_e( $custom_attributes ); // WPCS: XSS ok. ?>
 								><?php echo esc_html( $button_name ); ?></button>
 								<span class="a3rev-ui-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>-successed"><?php echo esc_html( $successed_text ); ?></span>
 								<span class="a3rev-ui-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>-errors"><?php echo esc_html( $errors_text ); ?></span>
@@ -2156,20 +2152,20 @@ class Admin_Interface extends Admin_UI
 					$multi_ajax = json_encode( $multi_ajax );
 
 					?><tr valign="top">
-						<th scope="row" class="titledesc"><?php echo wp_kses_post( $tip ); ?><?php echo esc_html( $value['name'] ); ?></th>
+						<th scope="row" class="titledesc"><?php echo wp_kses_post( $tip ); ?><?php echo wp_kses_post( $value['name'] ); ?></th>
 						<td class="forminp">
 
                             <div class="a3rev-ui-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>-control">
 								<?php echo wp_kses_post( $description ); ?>
 								<button
 									data-resubmit="<?php echo $resubmit ? 1 : 0 ; ?>"
-									name="<?php echo $name_attribute; // XSS ok ?>"
+									name="<?php echo $name_attribute; // WPCS: XSS ok. ?>"
 									id="<?php echo esc_attr( $id_attribute ); ?>"
 									data-multi_ajax="<?php echo esc_attr( $multi_ajax ); ?>"
 									type="button"
 									class="a3rev-ui-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>-button <?php echo esc_attr( $value['class'] ); ?>"
 									style="<?php echo esc_attr( $value['css'] ); ?>"
-									<?php echo implode( ' ', $custom_attributes );	// XSS ok ?>
+									<?php $this->esc_attribute_array_e( $custom_attributes ); // WPCS: XSS ok. ?>
 								<?php if ( ! empty( $confirm_message ) ) { ?>
 									data-confirm_message="<?php echo esc_attr( $confirm_message ); ?>"
 								<?php } ?> 
@@ -2267,7 +2263,7 @@ class Admin_Interface extends Admin_UI
                                 type="checkbox"
 								value="1"
 								<?php checked( $option_value, 1 ); ?>
-								<?php echo implode( ' ', $custom_attributes );	// XSS ok ?>
+								<?php $this->esc_attribute_array_e( $custom_attributes ); // WPCS: XSS ok. ?>
 								/> <span class="description" style="margin-left:5px;"><?php echo __( 'ON and each admin panel setting box OPEN | CLOSED position are saved each time changes are SAVED.', 'page-views-count' ); ?></span>
                         </td>
 					</tr><?php
@@ -2284,18 +2280,18 @@ class Admin_Interface extends Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo wp_kses_post( $tip ); ?>
-							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo wp_kses_post( $value['name'] ); ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
 							<input
-								name="<?php echo $name_attribute; // XSS ok ?>"
+								name="<?php echo $name_attribute; // WPCS: XSS ok. ?>"
 								id="<?php echo esc_attr( $id_attribute ); ?>"
 								type="<?php echo esc_attr( $type ); ?>"
 								style="<?php echo esc_attr( $value['css'] ); ?>"
 								value="<?php echo esc_attr( $option_value ); ?>"
 								class="a3rev-ui-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?> <?php echo esc_attr( $value['class'] ); ?>"
                                 placeholder="<?php echo esc_attr( $value['placeholder'] ); ?>"
-								<?php echo implode( ' ', $custom_attributes );	// XSS ok ?>
+								<?php $this->esc_attribute_array_e( $custom_attributes ); // WPCS: XSS ok. ?>
 								/> <?php echo wp_kses_post( $description ); ?>
 						</td>
 					</tr><?php
@@ -2305,22 +2301,21 @@ class Admin_Interface extends Admin_UI
 				case 'color' :
 					
 					if ( trim( $value['default'] ) == '' ) $value['default'] = '#515151';
-					$default_color = ' data-default-color="' . esc_attr( $value['default'] ) . '"';
 					if ( '' == trim( $option_value ) ) $option_value = 'transparent';
 
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo wp_kses_post( $tip ); ?>
-							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo wp_kses_post( $value['name'] ); ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
 							<input
-								name="<?php echo $name_attribute; // XSS ok ?>"
+								name="<?php echo $name_attribute; // WPCS: XSS ok. ?>"
 								id="<?php echo esc_attr( $id_attribute ); ?>"
 								type="text"
 								value="<?php echo esc_attr( $option_value ); ?>"
 								class="a3rev-color-picker"
-								<?php echo $default_color // XSS ok; ?>
+								data-default-color="<?php echo esc_attr( $value['default'] ); ?>"
 								/> <?php echo wp_kses_post( $description ); ?>
 						</td>
 					</tr><?php
@@ -2334,7 +2329,6 @@ class Admin_Interface extends Admin_UI
 					$enable		= $option_value['enable'];
 
 					if ( trim( $value['default']['color'] ) == '' ) $value['default']['color'] = '#515151';
-					$default_color = ' data-default-color="' . esc_attr( $value['default']['color'] ) . '"';
 
 					$color = $option_value['color'];
 					if ( '' == trim( $color ) ) $color = 'transparent';
@@ -2342,7 +2336,7 @@ class Admin_Interface extends Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
 							<?php echo wp_kses_post( $tip ); ?>
-							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo wp_kses_post( $value['name'] ); ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
 							<input
@@ -2354,7 +2348,7 @@ class Admin_Interface extends Admin_UI
 									type="checkbox"
 									value="1"
 									<?php checked( 1, $enable ); ?>
-									<?php echo implode( ' ', $custom_attributes );	// XSS ok ?>
+									<?php $this->esc_attribute_array_e( $custom_attributes ); // WPCS: XSS ok. ?>
 								/> <?php echo wp_kses_post( $description ); ?>
 							<div style="clear:both;"></div>
 							<div class="a3rev-ui-bg_color-enable-container">
@@ -2364,7 +2358,7 @@ class Admin_Interface extends Admin_UI
 								type="text"
 								value="<?php echo esc_attr( $color ); ?>"
 								class="a3rev-color-picker"
-								<?php echo $default_color; // XSS ok ?>
+								data-default-color="<?php echo esc_attr( $value['default']['color'] ); ?>"
 								/>
 							</div>
 						</td>
@@ -2378,18 +2372,18 @@ class Admin_Interface extends Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo wp_kses_post( $tip ); ?>
-							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo wp_kses_post( $value['name'] ); ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
 							<?php echo wp_kses_post( $description ); ?>
 	
 							<textarea
-								name="<?php echo $name_attribute; // XSS ok ?>"
+								name="<?php echo $name_attribute; // WPCS: XSS ok. ?>"
 								id="<?php echo esc_attr( $id_attribute ); ?>"
 								style="<?php echo esc_attr( $value['css'] ); ?>"
 								class="a3rev-ui-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?> <?php echo esc_attr( $value['class'] ); ?>"
                                 placeholder="<?php echo esc_attr( $value['placeholder'] ); ?>"
-								<?php echo implode( ' ', $custom_attributes );	// XSS ok ?>
+								<?php $this->esc_attribute_array_e( $custom_attributes ); // WPCS: XSS ok. ?>
 								><?php echo esc_textarea( $option_value );  ?></textarea>
 						</td>
 					</tr><?php
@@ -2414,16 +2408,16 @@ class Admin_Interface extends Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo wp_kses_post( $tip ); ?>
-							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo wp_kses_post( $value['name'] ); ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
 							<select
-								name="<?php echo $name_attribute; // XSS ok ?><?php if ( $value['type'] == 'multiselect' ) echo '[]'; ?>"
+								name="<?php echo $name_attribute; // WPCS: XSS ok. ?><?php if ( $value['type'] == 'multiselect' ) echo '[]'; ?>"
 								id="<?php echo esc_attr( $id_attribute ); ?>"
 								style="<?php echo esc_attr( $value['css'] ); ?>"
 								class="a3rev-ui-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?> <?php echo esc_attr( $value['class'] ); ?>"
 								data-placeholder="<?php echo esc_html( $value['placeholder'] ); ?>"
-								<?php echo implode( ' ', $custom_attributes );	// XSS ok ?>
+								<?php $this->esc_attribute_array_e( $custom_attributes ); // WPCS: XSS ok. ?>
 								<?php if ( $value['type'] == 'multiselect' ) echo 'multiple="multiple"'; ?>
 								<?php if ( $is_ajax ) {
 									echo 'options_url="'.esc_url( $value['options_url'] ).'"';
@@ -2481,7 +2475,7 @@ class Admin_Interface extends Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo wp_kses_post( $tip ); ?>
-							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo wp_kses_post( $value['name'] ); ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
 							<fieldset>
@@ -2493,14 +2487,14 @@ class Admin_Interface extends Admin_UI
 										?>
 										<li>
 											<label><input
-												name="<?php echo $name_attribute; // XSS ok ?>"
+												name="<?php echo $name_attribute; // WPCS: XSS ok. ?>"
 												value="<?php echo esc_attr( $val ); ?>"
 												type="radio"
 												style="<?php echo esc_attr( $value['css'] ); ?>"
 												class="a3rev-ui-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?> <?php echo esc_attr( $value['class'] ); ?>"
-												<?php echo implode( ' ', $custom_attributes );	// XSS ok ?>
+												<?php $this->esc_attribute_array_e( $custom_attributes ); // WPCS: XSS ok. ?>
 												<?php checked( $val, $option_value ); ?>
-												/> <span class="description" style="margin-left:5px;"><?php echo esc_html( $text ); ?></span></label>
+												/> <span class="description" style="margin-left:5px;"><?php echo wp_kses_post( $text ); ?></span></label>
 										</li>
 										<?php
 									}
@@ -2520,7 +2514,7 @@ class Admin_Interface extends Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo wp_kses_post( $tip ); ?>
-							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo wp_kses_post( $value['name'] ); ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
 							<fieldset>
@@ -2536,7 +2530,7 @@ class Admin_Interface extends Admin_UI
 										?>
 										<li>
                                             <input
-                                                name="<?php echo $name_attribute; // XSS ok ?>"
+                                                name="<?php echo $name_attribute; // WPCS: XSS ok. ?>"
                                                 <?php if ( $i_option['val'] == $option_value ) echo ' checkbox-disabled="true" ' ; ?>
                                                 class="a3rev-ui-onoff_radio <?php echo esc_attr( $value['class'] ); ?>"
                                                 checked_label="<?php echo esc_html( $i_option['checked_label'] ); ?>"
@@ -2544,8 +2538,8 @@ class Admin_Interface extends Admin_UI
                                                 type="radio"
                                                 value="<?php echo esc_attr( stripslashes( $i_option['val'] ) ); ?>"
                                                 <?php checked( esc_attr( stripslashes( $i_option['val'] ) ), $option_value ); ?>
-                                                <?php echo implode( ' ', $custom_attributes );	// XSS ok ?>
-                                                /> <span class="description" style="margin-left:5px;"><?php echo wptexturize( $i_option['text'] ); ?></span>
+                                                <?php $this->esc_attribute_array_e( $custom_attributes ); // WPCS: XSS ok. ?>
+                                                /> <span class="description" style="margin-left:5px;"><?php echo wp_kses_post( wptexturize( $i_option['text'] ) ); ?></span>
 										</li>
 										<?php
 									}
@@ -2572,7 +2566,7 @@ class Admin_Interface extends Admin_UI
 							if ( $value['show_if_checked'] == 'option' ) echo 'show_options_if_checked';
 						?>">
 						<th scope="row" class="titledesc">
-                        	<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo esc_html( $value['name'] ); ?></label>
+                        	<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo wp_kses_post( $value['name'] ); ?></label>
                         </th>
 						<td class="forminp forminp-checkbox">
 							<fieldset>
@@ -2588,16 +2582,16 @@ class Admin_Interface extends Admin_UI
 					}
 	
 					?>
-						<legend class="screen-reader-text"><span><?php echo esc_html( $value['name'] ); ?></span></legend>
+						<legend class="screen-reader-text"><span><?php echo wp_kses_post( $value['name'] ); ?></span></legend>
 	
 						<label for="<?php echo esc_attr( $id_attribute ); ?>">
 						<input
-							name="<?php echo $name_attribute; // XSS ok ?>"
+							name="<?php echo $name_attribute; // WPCS: XSS ok. ?>"
 							id="<?php echo esc_attr( $id_attribute ); ?>"
 							type="checkbox"
 							value="<?php echo esc_attr( stripslashes( $value['checked_value'] ) ); ?>"
 							<?php checked( $option_value, esc_attr( stripslashes( $value['checked_value'] ) ) ); ?>
-							<?php echo implode( ' ', $custom_attributes );	// XSS ok ?>
+							<?php $this->esc_attribute_array_e( $custom_attributes ); // WPCS: XSS ok. ?>
 						/> <?php echo wp_kses_post( $description ); ?></label> <?php echo wp_kses_post( $tip ); ?>
 					<?php
 	
@@ -2625,11 +2619,11 @@ class Admin_Interface extends Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo wp_kses_post( $tip ); ?>
-							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo wp_kses_post( $value['name'] ); ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
 							<input
-								name="<?php echo $name_attribute; // XSS ok ?>"
+								name="<?php echo $name_attribute; // WPCS: XSS ok. ?>"
                                 id="<?php echo esc_attr( $id_attribute ); ?>"
 								class="a3rev-ui-onoff_checkbox <?php echo esc_attr( $value['class'] ); ?>"
                                 checked_label="<?php echo esc_html( $value['checked_label'] ); ?>"
@@ -2637,7 +2631,7 @@ class Admin_Interface extends Admin_UI
                                 type="checkbox"
 								value="<?php echo esc_attr( stripslashes( $value['checked_value'] ) ); ?>"
 								<?php checked( $option_value, esc_attr( stripslashes( $value['checked_value'] ) ) ); ?>
-								<?php echo implode( ' ', $custom_attributes );	// XSS ok ?>
+								<?php $this->esc_attribute_array_e( $custom_attributes ); // WPCS: XSS ok. ?>
 								/> <?php echo wp_kses_post( $description ); ?>
                         </td>
 					</tr><?php
@@ -2654,11 +2648,11 @@ class Admin_Interface extends Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo wp_kses_post( $tip ); ?>
-							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo wp_kses_post( $value['name'] ); ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
 							<input
-								name="<?php echo $name_attribute; // XSS ok ?>"
+								name="<?php echo $name_attribute; // WPCS: XSS ok. ?>"
                                 id="<?php echo esc_attr( $id_attribute ); ?>"
 								class="a3rev-ui-onoff_checkbox <?php echo esc_attr( $value['class'] ); ?>"
                                 checked_label="<?php echo esc_html( $value['checked_label'] ); ?>"
@@ -2666,7 +2660,7 @@ class Admin_Interface extends Admin_UI
                                 type="checkbox"
 								value="<?php echo esc_attr( stripslashes( $value['checked_value'] ) ); ?>"
 								<?php checked( $option_value, esc_attr( stripslashes( $value['checked_value'] ) ) ); ?>
-								<?php echo implode( ' ', $custom_attributes );	// XSS ok ?>
+								<?php $this->esc_attribute_array_e( $custom_attributes ); // WPCS: XSS ok. ?>
 								/> <?php echo wp_kses_post( $description ); ?>
                         </td>
 					</tr><?php
@@ -2681,7 +2675,7 @@ class Admin_Interface extends Admin_UI
 					$crop 	= checked( 1, $option_value['crop'], false );
 	
 					?><tr valign="top">
-						<th scope="row" class="titledesc"><?php echo wp_kses_post( $tip ); ?><?php echo esc_html( $value['name'] ); ?></th>
+						<th scope="row" class="titledesc"><?php echo wp_kses_post( $tip ); ?><?php echo wp_kses_post( $value['name'] ); ?></th>
 						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
 	
 							<label><?php _e( 'Width', 'page-views-count' ); ?> <input name="<?php echo $name_attribute; ?>[width]" id="<?php echo esc_attr( $id_attribute ); ?>-width" type="text" class="a3rev-ui-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>-width" value="<?php echo esc_attr( $width ); ?>" /></label>
@@ -2716,7 +2710,7 @@ class Admin_Interface extends Admin_UI
 						$args = wp_parse_args( $value['args'], $args );
 	
 					?><tr valign="top">
-						<th scope="row" class="titledesc"><?php echo wp_kses_post( $tip ); ?><?php echo esc_html( $value['name'] ); ?></th>
+						<th scope="row" class="titledesc"><?php echo wp_kses_post( $tip ); ?><?php echo wp_kses_post( $value['name'] ); ?></th>
 						<td class="forminp">
 							<?php echo str_replace(' id=', " data-placeholder='" . esc_html( $value['placeholder'] ) .  "' style='" . esc_attr( $value['css'] ) . "' class='" . esc_attr( $value['class'] ) . "' id=", wp_dropdown_pages( $args ) ); ?> <?php echo wp_kses_post( $description ); ?>
 						</td>
@@ -2725,8 +2719,6 @@ class Admin_Interface extends Admin_UI
 
 				// Font Control
 				case 'typography':
-
-					$default_color = ' data-default-color="' . esc_attr( $value['default']['color'] ) . '"';
 
 					if ( ! isset( $option_value['line_height'] ) ) {
 						$option_value['line_height'] = '1.4em';
@@ -2739,7 +2731,7 @@ class Admin_Interface extends Admin_UI
 					$color       = $option_value['color'];
 
 					?><tr valign="top">
-						<th scope="row" class="titledesc"><?php echo wp_kses_post( $tip ); ?><?php echo esc_html( $value['name'] ); ?></th>
+						<th scope="row" class="titledesc"><?php echo wp_kses_post( $tip ); ?><?php echo wp_kses_post( $value['name'] ); ?></th>
 						<td class="forminp">
                         	<?php echo wp_kses_post( $description ); ?>
                             <div class="a3rev-ui-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>-control">
@@ -2829,7 +2821,7 @@ class Admin_Interface extends Admin_UI
 								type="text"
 								value="<?php echo esc_attr( $color ); ?>"
 								class="a3rev-ui-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>-color a3rev-color-picker"
-								<?php echo $default_color; // XSS ok ?>
+								data-default-color="<?php echo esc_attr( $value['default']['color'] ); ?>"
 								/> 
                                 
                            <!-- Preview Button -->
@@ -2848,7 +2840,6 @@ class Admin_Interface extends Admin_UI
 					if ( ! is_array( $value['default'] ) ) $value['default'] = array();
 					
 					// For Border Styles
-					$default_color = ' data-default-color="' . esc_attr( $value['default']['color'] ) . '"';
 					
 					$width	= $option_value['width'];
 					$style	= $option_value['style'];
@@ -2893,7 +2884,7 @@ class Admin_Interface extends Admin_UI
 					$bottom_right_corner = intval( $bottom_right_corner );
 				
 					?><tr valign="top">
-						<th scope="row" class="titledesc"><?php echo wp_kses_post( $tip ); ?><?php echo esc_html( $value['name'] ); ?></th>
+						<th scope="row" class="titledesc"><?php echo wp_kses_post( $tip ); ?><?php echo wp_kses_post( $value['name'] ); ?></th>
 						<td class="forminp forminp-border_corner">
 							<?php echo wp_kses_post( $description ); ?>
                             <div class="a3rev-ui-settings-control">
@@ -2938,7 +2929,7 @@ class Admin_Interface extends Admin_UI
 								type="text"
 								value="<?php echo esc_attr( $color ); ?>"
 								class="a3rev-ui-border_styles-color a3rev-color-picker"
-								<?php echo $default_color; // XSS ok ?>
+								data-default-color="<?php echo esc_attr( $value['default']['color'] ); ?>"
 								/>
                            
                            <!-- Preview Button -->
@@ -2956,7 +2947,7 @@ class Admin_Interface extends Admin_UI
                                     type="checkbox"
                                     value="rounded"
                                     <?php checked( 'rounded', $corner ); ?>
-                                    <?php echo implode( ' ', $custom_attributes );	// XSS ok ?>
+                                    <?php $this->esc_attribute_array_e( $custom_attributes ); // WPCS: XSS ok. ?>
 								/> 
                                 
 							<!-- Border Rounded Value -->
@@ -3052,15 +3043,13 @@ class Admin_Interface extends Admin_UI
 				
 				// Border Style Control
 				case 'border_styles':
-				
-					$default_color = ' data-default-color="' . esc_attr( $value['default']['color'] ) . '"';
-					
+									
 					$width	= $option_value['width'];
 					$style	= $option_value['style'];
 					$color	= $option_value['color'];
 				
 					?><tr valign="top">
-						<th scope="row" class="titledesc"><?php echo wp_kses_post( $tip ); ?><?php echo esc_html( $value['name'] ); ?></th>
+						<th scope="row" class="titledesc"><?php echo wp_kses_post( $tip ); ?><?php echo wp_kses_post( $value['name'] ); ?></th>
 						<td class="forminp">
 							<?php echo wp_kses_post( $description ); ?>
                             <div class="a3rev-ui-settings-control">
@@ -3105,7 +3094,7 @@ class Admin_Interface extends Admin_UI
 								type="text"
 								value="<?php echo esc_attr( $color ); ?>"
 								class="a3rev-ui-border_styles-color a3rev-color-picker"
-								<?php echo $default_color; // XSS ok ?>
+								data-default-color="<?php echo esc_attr( $value['default']['color'] ); ?>"
 								/>
                            
                            <!-- Preview Button -->
@@ -3159,7 +3148,7 @@ class Admin_Interface extends Admin_UI
 					$bottom_right_corner = intval( $bottom_right_corner );
 				
 					?><tr valign="top">
-						<th scope="row" class="titledesc"><?php echo wp_kses_post( $tip ); ?><?php echo esc_html( $value['name'] ); ?></th>
+						<th scope="row" class="titledesc"><?php echo wp_kses_post( $tip ); ?><?php echo wp_kses_post( $value['name'] ); ?></th>
 						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
                             <div class="a3rev-ui-settings-control">	
                                 <!-- Border Corner : Rounded or Square -->
@@ -3172,7 +3161,7 @@ class Admin_Interface extends Admin_UI
                                     type="checkbox"
                                     value="rounded"
                                     <?php checked( 'rounded', $corner ); ?>
-                                    <?php echo implode( ' ', $custom_attributes );	// XSS ok ?>
+                                    <?php $this->esc_attribute_array_e( $custom_attributes ); // WPCS: XSS ok. ?>
 								/> 
                                 
                                 <!-- Preview Button -->
@@ -3271,9 +3260,7 @@ class Admin_Interface extends Admin_UI
 				
 				// Box Shadow Control
 				case 'box_shadow':
-				
-					$default_color = ' data-default-color="' . esc_attr( $value['default']['color'] ) . '"';
-					
+									
 					if ( ! isset( $option_value['enable'] ) ) $option_value['enable'] = 0;
 					$enable		= $option_value['enable'];
 					if ( ! isset( $option_value['inset'] ) ) $option_value['inset'] = '';
@@ -3285,7 +3272,7 @@ class Admin_Interface extends Admin_UI
 					$inset		= $option_value['inset'];
 				
 					?><tr valign="top">
-						<th scope="row" class="titledesc"><?php echo wp_kses_post( $tip ); ?><?php echo esc_html( $value['name'] ); ?></th>
+						<th scope="row" class="titledesc"><?php echo wp_kses_post( $tip ); ?><?php echo wp_kses_post( $value['name'] ); ?></th>
 						<td class="forminp forminp-box_shadow">
                             <input
                                     name="<?php echo $name_attribute; ?>[enable]"
@@ -3296,7 +3283,7 @@ class Admin_Interface extends Admin_UI
                                     type="checkbox"
                                     value="1"
                                     <?php checked( 1, $enable ); ?>
-                                    <?php echo implode( ' ', $custom_attributes );	// XSS ok ?>
+                                    <?php $this->esc_attribute_array_e( $custom_attributes ); // WPCS: XSS ok. ?>
 								/>
 							<?php echo wp_kses_post( $description ); ?>
                             <div style="clear:both;"></div>    
@@ -3384,7 +3371,7 @@ class Admin_Interface extends Admin_UI
                                     type="checkbox"
                                     value="inset"
                                     <?php checked( 'inset', $inset ); ?>
-                                    <?php echo implode( ' ', $custom_attributes );	// XSS ok ?>
+                                    <?php $this->esc_attribute_array_e( $custom_attributes ); // WPCS: XSS ok. ?>
 								/> 
                            
                            <!-- Box Shadow Color -->
@@ -3394,7 +3381,7 @@ class Admin_Interface extends Admin_UI
 								type="text"
 								value="<?php echo esc_attr( $color ); ?>"
 								class="a3rev-ui-box_shadow-color a3rev-color-picker"
-								<?php echo $default_color; // XSS ok ?>
+								data-default-color="<?php echo esc_attr( $value['default']['color'] ); ?>"
 								/>
                         	
                             <!-- Preview Button -->
@@ -3419,7 +3406,7 @@ class Admin_Interface extends Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo wp_kses_post( $tip ); ?>
-							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo wp_kses_post( $value['name'] ); ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
                         <div class="a3rev-ui-slide-container">
@@ -3429,12 +3416,12 @@ class Admin_Interface extends Admin_UI
                             <div class="a3rev-ui-slide-result-container">
                                 <input
                                     readonly="readonly"
-                                    name="<?php echo $name_attribute; // XSS ok ?>"
+                                    name="<?php echo $name_attribute; // WPCS: XSS ok. ?>"
                                     id="<?php echo esc_attr( $id_attribute ); ?>"
                                     type="text"
                                     value="<?php echo esc_attr( $option_value ); ?>"
                                     class="a3rev-ui-slider"
-                                    <?php echo implode( ' ', $custom_attributes );	// XSS ok ?>
+                                    <?php $this->esc_attribute_array_e( $custom_attributes ); // WPCS: XSS ok. ?>
                                     /> <?php echo wp_kses_post( $description ); ?>
 							</div>
                         </div>
@@ -3463,7 +3450,7 @@ class Admin_Interface extends Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo wp_kses_post( $tip ); ?>
-							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo wp_kses_post( $value['name'] ); ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
                         	<?php echo wp_kses_post( $description ); ?>
@@ -3481,7 +3468,7 @@ class Admin_Interface extends Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo wp_kses_post( $tip ); ?>
-							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo wp_kses_post( $value['name'] ); ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
                         	<?php echo wp_kses_post( $description ); ?>
@@ -3505,7 +3492,7 @@ class Admin_Interface extends Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo wp_kses_post( $tip ); ?>
-							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo wp_kses_post( $value['name'] ); ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
                         	<?php echo wp_kses_post( $description ); ?>
@@ -3565,13 +3552,13 @@ class Admin_Interface extends Admin_UI
 								}
 							?>
                                 <label><input
-                                    name="<?php echo $name_attribute; // XSS ok ?>"
+                                    name="<?php echo $name_attribute; // WPCS: XSS ok. ?>"
                                     id="<?php echo esc_attr( $id_attribute ); ?>"
                                     type="text"
                                     style="<?php echo esc_attr( $text_field['css'] ); ?>"
                                     value="<?php echo esc_attr( $option_value ); ?>"
                                     class="a3rev-ui-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?> <?php echo esc_attr( $text_field['class'] ); ?>"
-                                    /> <span><?php echo esc_html( $text_field['name'] ); ?></span></label> 
+                                    /> <span><?php echo wp_kses_post( $text_field['name'] ); ?></span></label> 
 							<?php
 							}
 							?>
@@ -3590,12 +3577,12 @@ class Admin_Interface extends Admin_UI
 					?><tr valign="top">
 						<th scope="row" class="titledesc">
                         	<?php echo wp_kses_post( $tip ); ?>
-							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo esc_html( $value['name'] ); ?></label>
+							<label for="<?php echo esc_attr( $id_attribute ); ?>"><?php echo wp_kses_post( $value['name'] ); ?></label>
 						</th>
 						<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
                         	<input
                         		readonly="readonly"
-								name="<?php echo $name_attribute; // XSS ok ?>"
+								name="<?php echo $name_attribute; // WPCS: XSS ok. ?>"
 								id="<?php echo esc_attr( $id_attribute ); ?>"
 								type="text"
 								value="<?php echo esc_attr( $option_value ); ?>"
@@ -3790,7 +3777,7 @@ class Admin_Interface extends Admin_UI
 			// open box handle
 			echo '<div data-form-key="custom-boxes" data-box-id="'. esc_attr( $heading_box_id ) .'" class="a3rev_panel_box_handle" >' . "\n\n";
 
-			echo ( ! empty( $options['name'] ) ) ? '<h3 class="a3-plugin-ui-panel-box '. $toggle_box_class . ' ' . $opened_class . '">'. esc_html( $options['name'] ) .' '. wptexturize( $view_doc ) .'</h3>' : '';
+			echo ( ! empty( $options['name'] ) ) ? '<h3 class="a3-plugin-ui-panel-box '. esc_attr( $toggle_box_class ) . ' ' . esc_attr( $opened_class ) . '">'. wp_kses_post( $options['name'] ) .' '. wp_kses_post( wptexturize( $view_doc ) ) .'</h3>' : '';
 
 			if ( stristr( $options['class'], 'pro_feature_fields' ) !== false && ! empty( $options['id'] ) ) $this->upgrade_top_message( true, sanitize_title( $options['id'] ) );
 			elseif ( stristr( $options['class'], 'pro_feature_fields' ) !== false ) $this->upgrade_top_message( true );
@@ -3799,7 +3786,7 @@ class Admin_Interface extends Admin_UI
 			echo '</div>' . "\n\n";
 
 			// open box inside
-			echo '<div id="'. esc_attr( $options['id'] ) . '_box_inside" class="a3rev_panel_box_inside '.$opened_class.'" style="padding-top: 10px;" >' . "\n\n";
+			echo '<div id="'. esc_attr( $options['id'] ) . '_box_inside" class="a3rev_panel_box_inside '. esc_attr( $opened_class) .'" style="padding-top: 10px;" >' . "\n\n";
 
 			echo '<div class="a3rev_panel_inner">' . "\n\n";
 
@@ -3808,12 +3795,12 @@ class Admin_Interface extends Admin_UI
 			if ( stristr( $options['class'], 'pro_feature_fields' ) !== false && ! empty( $options['id'] ) ) $this->upgrade_top_message( true, sanitize_title( $options['id'] ) );
 			elseif ( stristr( $options['class'], 'pro_feature_fields' ) !== false ) $this->upgrade_top_message( true );
 
-			echo ( ! empty( $options['name'] ) ) ? '<h3>'. esc_html( $options['name'] ) .' '. wptexturize( $view_doc ) .'</h3>' : '';
+			echo ( ! empty( $options['name'] ) ) ? '<h3>'. wp_kses_post( $options['name'] ) .' '. wp_kses_post( wptexturize( $view_doc ) ) .'</h3>' : '';
 		}
 
 		if ( ! empty( $options['desc'] ) ) {
 			echo '<div class="a3rev_panel_box_description" >' . "\n\n";
-			echo wpautop( wptexturize( $options['desc'] ) );
+			echo wp_kses_post( wpautop( wptexturize( $options['desc'] ) ) );
 			echo '</div>' . "\n\n";
 		}
 
@@ -3841,6 +3828,23 @@ class Admin_Interface extends Admin_UI
 		}
 		
 		return $values;
+	}
+
+	/*-----------------------------------------------------------------------------------*/
+	/* Escape for an attribute array before echo */
+	/*-----------------------------------------------------------------------------------*/
+	private function esc_attribute_array_e( $attributes = array() ) {
+		if ( empty( $attributes ) ) {
+			echo '';
+		}
+
+		if ( ! is_array( $attributes ) ) {
+			$attributes = array( $attributes );
+		}
+
+		foreach ( $attributes as $attribute => $attribute_value ) {
+			echo ( esc_attr( $attribute ) . '="' . esc_attr( $attribute_value ) . '" ' );
+		}
 	}
 
 	/*-----------------------------------------------------------------------------------*/
@@ -3883,8 +3887,12 @@ class Admin_Interface extends Admin_UI
 	public function generate_border_css( $option ) {
 		
 		$border_css = '';
-		
-		$border_css .= 'border: ' . esc_attr( $option['width'] ) . ' ' . esc_attr( $option['style'] ) . ' ' . esc_attr( $option['color'] ) .' !important;';
+
+		if ( empty( $option['width'] ) || '0px' == $option['width'] ) {
+			$border_css .= 'border: none !important;';
+		} else {
+			$border_css .= 'border: ' . esc_attr( $option['width'] ) . ' ' . esc_attr( $option['style'] ) . ' ' . esc_attr( $option['color'] ) .' !important;';
+		}
 			
 		if ( isset( $option['corner'] ) && esc_attr( $option['corner'] ) == 'rounded' ) {
 			if ( ! isset( $option['rounded_value'] ) ) $option['rounded_value'] = 0;
@@ -3902,8 +3910,7 @@ class Admin_Interface extends Admin_UI
 			$border_css .= '-webkit-border-radius: 0px !important;';	
 		}
 		
-		return $border_css;
-		
+		return apply_filters( $this->plugin_name . '_generate_border_css', $border_css, $option );
 	}
 	
 	/*-----------------------------------------------------------------------------------*/
@@ -3913,11 +3920,14 @@ class Admin_Interface extends Admin_UI
 	public function generate_border_style_css( $option ) {
 		
 		$border_style_css = '';
+
+		if ( empty( $option['width'] ) || '0px' == $option['width'] ) {
+			$border_style_css .= 'border: none !important;';
+		} else {
+			$border_style_css .= 'border: ' . esc_attr( $option['width'] ) . ' ' . esc_attr( $option['style'] ) . ' ' . esc_attr( $option['color'] ) .' !important;';
+		}
 		
-		$border_style_css .= 'border: ' . esc_attr( $option['width'] ) . ' ' . esc_attr( $option['style'] ) . ' ' . esc_attr( $option['color'] ) .' !important;';
-		
-		return $border_style_css;
-		
+		return apply_filters( $this->plugin_name . '_generate_border_style_css', $border_style_css, $option );
 	}
 	
 	/*-----------------------------------------------------------------------------------*/
@@ -3944,8 +3954,7 @@ class Admin_Interface extends Admin_UI
 			$border_corner_css .= '-webkit-border-radius: 0px !important;';
 		}
 		
-		return $border_corner_css;
-		
+		return apply_filters( $this->plugin_name . '_generate_border_corner_css', $border_corner_css, $option );
 	}
 	
 	/*-----------------------------------------------------------------------------------*/
@@ -3967,8 +3976,7 @@ class Admin_Interface extends Admin_UI
             $shadow_css .= '-webkit-box-shadow: none !important ;';
 		}
 		
-		return $shadow_css;
-		
+		return apply_filters( $this->plugin_name . '_generate_shadow_css', $shadow_css, $option );		
 	}
 
 	/*-----------------------------------------------------------------------------------*/
@@ -3997,8 +4005,7 @@ class Admin_Interface extends Admin_UI
 			$return_css .= 'background-color: transparent !important ;';
 		}
 
-		return $return_css;
-
+		return apply_filters( $this->plugin_name . '_generate_background_color_css', $return_css, $option, $transparency );		
 	}
 
 }

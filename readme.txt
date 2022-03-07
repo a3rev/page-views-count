@@ -3,7 +3,7 @@ Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 5.6
 Tested up to: 5.9.1
-Stable tag: 2.5.1
+Stable tag: 2.5.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -101,6 +101,15 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.5.2 - 2022/03/07 =
+* This maintenance release contains more code security hardening updates – please run it now.
+* Security - Define new esc_attribute_array_e function to escape attribute array late for echo
+* Security - Escape $default_color late for echo
+* Security - Put $-variable additional with html include into wp_kses_post
+* Security - Turn off display_errors to prevent malformed JSON from API for when WP_DEBUG is set to off OR WP_DEBUG_DISPLAY is set to off
+* Framework - Allow filters output of CSS are generated from plugin framework
+* Framework - Upgrade Plugin Framework to version 2.6.0
 
 = 2.5.1 - 2022/02/25 =
 * This maintenance release contains security hardening updates - please run it now.
@@ -500,6 +509,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.5.2 =
+This maintenance release contains more code security hardening updates – please run it now.
 
 = 2.5.1 =
 This maintenance release contains security hardening updates - please run it now.

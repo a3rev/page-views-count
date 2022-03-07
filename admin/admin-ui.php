@@ -33,7 +33,7 @@ class Admin_UI
 	 * You must change to correct plugin name that you are working
 	 */
 
-	public $framework_version      = '2.5.0';
+	public $framework_version      = '2.6.0';
 	public $plugin_name            = A3_PVC_KEY;
 	public $plugin_path            = A3_PVC_PLUGIN_NAME;
 	public $google_api_key_option  = '';
@@ -259,7 +259,7 @@ class Admin_UI
 		$output = apply_filters( $this->plugin_name . '_plugin_premium_video', $output );
 
 		if ( $echo )
-			echo $output;
+			echo wp_kses_post( $output );
 		else
 			return $output;
 	}
@@ -280,7 +280,7 @@ class Admin_UI
 		$output .= '</div>';
 
 		if ( $echo )
-			echo $output;
+			echo wp_kses_post( $output );
 		else
 			return $output;
 	}
@@ -298,7 +298,7 @@ class Admin_UI
 		}
 
 		if ( $echo )
-			echo $output;
+			echo wp_kses_post( $output );
 		else
 			return $output;
 	}
@@ -332,7 +332,7 @@ class Admin_UI
 		}
 
 		if ( $echo )
-			echo $output;
+			echo wp_kses_post( $output );
 		else
 			return $output;
 	}
@@ -353,7 +353,7 @@ class Admin_UI
 		$output = apply_filters( $this->plugin_name . '_plugin_extension_start', $output );
 
 		if ( $echo )
-			echo $output;
+			echo wp_kses_post( $output );
 		else
 			return $output;
 	}
@@ -369,7 +369,7 @@ class Admin_UI
 		$output = apply_filters( $this->plugin_name . '_plugin_extension_end', $output );
 
 		if ( $echo )
-			echo $output;
+			echo wp_kses_post( $output );
 		else
 			return $output;
 
@@ -389,7 +389,7 @@ class Admin_UI
 
 		$upgrade_top_message = apply_filters( $this->plugin_name . '_upgrade_top_message', $upgrade_top_message, $setting_id );
 
-		if ( $echo ) echo $upgrade_top_message;
+		if ( $echo ) echo wp_kses_post( $upgrade_top_message );
 		else return $upgrade_top_message;
 
 	}

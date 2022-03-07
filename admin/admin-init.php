@@ -281,7 +281,7 @@ class Admin_Init extends Admin_UI
 			$separate_text = '';
 			$activated_first_subtab = false;
 			foreach ( $subtabs as $subtab ) {
-				echo '<li>' . $separate_text . '<a href="#' . trim( esc_attr( $subtab['name'] ) ) . '" class="';
+				echo '<li>' . esc_html( $separate_text ) . '<a href="#' . trim( esc_attr( $subtab['name'] ) ) . '" class="';
 				if ( $current_subtab == '' && $activated_first_subtab === false ) {
 					echo 'current';
 					$activated_first_subtab = true;

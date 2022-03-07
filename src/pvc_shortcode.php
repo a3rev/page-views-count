@@ -26,7 +26,7 @@ class Shortcode
 				'show_views_today' => 1,
 			), $attr );
 
-		$postid           = esc_attr( $attr['postid'] ); // XSS ok
+		$postid           = esc_attr( $attr['postid'] );
 		$increase         = intval( $attr['increase'] );
 		$show_views_today = intval( $attr['show_views_today'] );
 
