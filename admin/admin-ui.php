@@ -193,7 +193,7 @@ class Admin_UI
 
 			update_option( $this->google_map_api_key_option . '_enable', 1 );
 
-			$option_value = trim( sanitize_text_field( $_POST[ $this->google_map_api_key_option ] ) );
+			$option_value = trim( sanitize_text_field( wp_unslash( $_POST[ $this->google_map_api_key_option ] ) ) );
 			update_option( $this->google_map_api_key_option, $option_value );
 
 			if ( 1 != $old_google_map_api_key_enable ) {
@@ -208,7 +208,7 @@ class Admin_UI
 
 			update_option( $this->google_map_api_key_option . '_enable', 0 );
 
-			$option_value = trim( sanitize_text_field( $_POST[ $this->google_map_api_key_option ] ) );
+			$option_value = trim( sanitize_text_field( wp_unslash( $_POST[ $this->google_map_api_key_option ] ) ) );
 			update_option( $this->google_map_api_key_option, $option_value );
 
 			if ( 0 != $old_google_map_api_key_enable ) {

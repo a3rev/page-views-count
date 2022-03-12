@@ -323,7 +323,7 @@ class A3_PVC
 			$pvc_settings = get_option('pvc_settings', array() );
 		}
 		if ( self::pvc_is_activated( $post->ID ) && 'no' != $pvc_settings['show_on_excerpt_content'] ) {
-			echo self::pvc_stats_counter($post->ID);
+			echo wp_kses_post( self::pvc_stats_counter($post->ID) );
 		}
 	}
 
@@ -335,13 +335,13 @@ class A3_PVC
 			$pvc_settings = get_option('pvc_settings', array() );
 		}
 		if ( self::pvc_is_activated( $post->ID ) && 'no' != $pvc_settings['show_on_excerpt_content'] ) {
-			echo self::pvc_stats_counter($post->ID);
+			echo wp_kses_post( self::pvc_stats_counter($post->ID) );
 		}
 	}
 
 	public static function custom_stats_echo($postid=0, $have_echo = 1, $attributes = array() ){
 		if($have_echo == 1)
-			echo self::pvc_stats_counter($postid, false, $attributes );
+			echo wp_kses_post( self::pvc_stats_counter($postid, false, $attributes ) );
 		else
 			return self::pvc_stats_counter($postid, false, $attributes );
 	}
@@ -359,7 +359,7 @@ class A3_PVC
 		$output .= self::pvc_stats_counter($postid, true, $attributes );
 
 		if ( $have_echo == 1 )
-			echo $output;
+			echo wp_kses_post( $output );
 		else
 			return $output;
 	}

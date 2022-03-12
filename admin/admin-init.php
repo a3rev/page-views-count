@@ -199,7 +199,7 @@ class Admin_Init extends Admin_UI
 			<?php
 					if ( $page_data !== false) {
 						echo esc_html( $page_data['page_title'] );
-						if ( isset( $page_data['view_doc'] ) ) echo $page_data['view_doc'];
+						if ( isset( $page_data['view_doc'] ) ) echo wp_kses_post( $page_data['view_doc'] );
 					}
 			?>
 			</h1>

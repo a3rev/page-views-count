@@ -7,8 +7,8 @@ global $pvc_settings;
 }
 /* Stats Icon */
 body .pvc-stats-icon, body .pvc-stats-icon svg {
-	color: <?php echo $pvc_settings['icon_color']; ?> !important;
-	fill: <?php echo $pvc_settings['icon_color']; ?> !important;
+	color: <?php echo esc_html( $pvc_settings['icon_color'] ); ?> !important;
+	fill: <?php echo esc_html( $pvc_settings['icon_color'] ); ?> !important;
 }
 body .pvc_stats {
 <?php if ( 'centre' == $pvc_settings['aligment'] ) { ?>

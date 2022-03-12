@@ -164,7 +164,7 @@ if ( 'responsi' === get_template() ) {
 
            if (function_exists('pvc_stats_update'))
                $html .= '<div class="add_view_count' . $class . '">' . pvc_stats_update($postid, 0) . '</div>';
-           echo $html;
+           echo wp_kses_post( $html );
        }
    }
 
@@ -192,7 +192,7 @@ function pvc_ict_t_e( $name, $string ) {
 	global $pvc_wpml;
 	$string = ( function_exists('icl_t') ? icl_t( $pvc_wpml->plugin_wpml_name, $name, $string ) : $string );
 	
-	echo $string;
+	echo wp_kses_post( $string );
 }
 
 function pvc_ict_t__( $name, $string ) {

@@ -60,19 +60,19 @@ class MetaBox
 		    			class="a3_pvc_activated"
 		    			type="checkbox"
 		    			value="true"
-		    			checked_label="<?php _e( 'ON', 'page-views-count' ); ?>"
-						unchecked_label="<?php _e( 'OFF', 'page-views-count' ); ?>"
+		    			checked_label="<?php esc_attr_e( 'ON', 'page-views-count' ); ?>"
+						unchecked_label="<?php esc_attr_e( 'OFF', 'page-views-count' ); ?>"
 		    			<?php checked( $is_activated ); ?> />
-		    		<label for="a3_pvc_activated"><?php _e( 'Activate on this item', 'page-views-count' ) ?></label>
+		    		<label for="a3_pvc_activated"><?php esc_html_e( 'Activate on this item', 'page-views-count' ) ?></label>
 	    		</div>
 	    		<div style="clear:both;"></div>
 	    		<div class="a3_pvc_activated_container">
 		    		<p>
-		    			<label for="a3_pvc_total_views" style="display: inline-block; width: 100px;"><?php _e( 'All Time Views', 'page-views-count' ) ?></label>
+		    			<label for="a3_pvc_total_views" style="display: inline-block; width: 100px;"><?php esc_html_e( 'All Time Views', 'page-views-count' ) ?></label>
 		    			<input type="text" name="a3_pvc_total_views" id="a3_pvc_total_views" value="<?php echo esc_attr( $total_views ); ?>" style="width: 100px;" />
 		    		</p>
 		    		<p>
-		    			<label for="a3_pvc_today_views" style="display: inline-block; width: 100px;"><?php _e( 'Today Views', 'page-views-count' ) ?></label>
+		    			<label for="a3_pvc_today_views" style="display: inline-block; width: 100px;"><?php esc_html_e( 'Today Views', 'page-views-count' ) ?></label>
 		    			<input type="text" name="a3_pvc_today_views" id="a3_pvc_today_views" value="<?php echo esc_attr( $today_views ); ?>" style="width: 100px;" />
 		    		</p>
 	    		</div>
@@ -114,7 +114,7 @@ class MetaBox
 		if ( ! isset( $_POST['a3_pvc_activation_custom_box_nonce'] ) )
 			return $post_id;
 
-		$nonce = $_POST['a3_pvc_activation_custom_box_nonce'];
+		$nonce = sanitize_text_field( wp_unslash( $_POST['a3_pvc_activation_custom_box_nonce'] ) );
 
 		// Verify that the nonce is valid.
 		if ( ! wp_verify_nonce( $nonce, 'a3_pvc_activation_custom_box' ) )
@@ -126,7 +126,7 @@ class MetaBox
 			return $post_id;
 
 		// Check the user's permissions.
-		if ( 'page' == $_POST['post_type'] ) {
+		if ( isset( $_POST['post_type'] ) && 'page' == $_POST['post_type'] ) {
 
 			if ( ! current_user_can( 'edit_page', $post_id ) )
 				return $post_id;
@@ -149,8 +149,8 @@ class MetaBox
 
 		// Manual change Total Views and Today Views
 		if ( isset( $_POST['a3_pvc_total_views'] ) && isset( $_POST['a3_pvc_today_views'] ) ) {
-			$total_views = absint( trim( $_POST['a3_pvc_total_views'] ) );
-			$today_views = absint( trim( $_POST['a3_pvc_today_views'] ) );
+			$total_views = sanitize_text_field( absint( $_POST['a3_pvc_total_views'] ) );
+			$today_views = sanitize_text_field( absint( $_POST['a3_pvc_today_views'] ) );
 
 			A3_PVC::pvc_stats_manual_update( $post_id, $total_views, $today_views );
 		}

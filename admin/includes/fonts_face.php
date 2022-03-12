@@ -403,7 +403,7 @@ class Fonts_Face extends Admin_UI
 
 			update_option( $this->google_api_key_option . '_enable', 1 );
 
-			$option_value = trim( sanitize_text_field( $_POST[ $this->google_api_key_option ] ) );
+			$option_value = trim( sanitize_text_field( wp_unslash( $_POST[ $this->google_api_key_option ] ) ) );
 
 			$old_google_api_key_option = get_option( $this->google_api_key_option );
 
@@ -421,7 +421,7 @@ class Fonts_Face extends Admin_UI
 
 			update_option( $this->google_api_key_option . '_enable', 0 );
 
-			$option_value = trim( sanitize_text_field( $_POST[ $this->google_api_key_option ] ) );
+			$option_value = trim( sanitize_text_field( wp_unslash( $_POST[ $this->google_api_key_option ] ) ) );
 			update_option( $this->google_api_key_option, $option_value );
 
 			if ( 0 != $old_google_api_key_enable ) {
@@ -657,14 +657,20 @@ class Fonts_Face extends Admin_UI
 			// Output google font css in header
 			if ( trim( $fonts ) != '' ) {
 				$fonts = str_replace( " ","+",$fonts);
-				$output .= "\n<!-- Google Webfonts -->\n";
-				$output .= '<link href="http'. ( is_ssl() ? 's' : '' ) .'://fonts.googleapis.com/css?family=' . $fonts .'" rel="stylesheet" type="text/css" />'."\n";
-				$output = str_replace( '|"','"',$output);
+
+				if ( $echo ) {
+					echo "\n<!-- Google Webfonts -->\n";
+					echo '<link href="http'. ( is_ssl() ? 's' : '' ) .'://fonts.googleapis.com/css?family=' . esc_attr( $fonts ) .'" rel="stylesheet" type="text/css" />'."\n";
+				} else {
+					$output .= "\n<!-- Google Webfonts -->\n";
+					$output .= '<link href="http'. ( is_ssl() ? 's' : '' ) .'://fonts.googleapis.com/css?family=' . esc_attr( $fonts ) .'" rel="stylesheet" type="text/css" />'."\n";
+					$output = str_replace( '|"','"',$output);
+				}
 			}
 		}
 
 		if ( $echo )
-			echo $output;
+			echo '';
 		else
 			return $output;
 
