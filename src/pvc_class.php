@@ -261,7 +261,7 @@ class A3_PVC
 		remove_action('genesis_before_post_content', array( __CLASS__, 'genesis_pvc_stats_echo'));
 		remove_action('genesis_after_post_content', array( __CLASS__, 'genesis_pvc_stats_echo'));
 		global $post;
-		if ( ! $post ) return;
+		if ( ! $post ) return $content;
 
 		$args=array(
 			  'public'   => true,
@@ -300,7 +300,7 @@ class A3_PVC
 		remove_action('genesis_before_post_content', array( __CLASS__, 'genesis_pvc_stats_echo'));
 		remove_action('genesis_after_post_content', array( __CLASS__, 'genesis_pvc_stats_echo'));
 		global $post;
-		if ( ! $post ) return;
+		if ( ! $post ) return $excerpt;
 		global $pvc_settings;
 		if ( empty( $pvc_settings ) ) {
 			$pvc_settings = get_option('pvc_settings', array() );
