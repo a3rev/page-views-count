@@ -2,8 +2,8 @@
 Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 5.6
-Tested up to: 5.9.1
-Stable tag: 2.5.4
+Tested up to: 6.0
+Stable tag: 2.5.5
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -101,6 +101,11 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.5.5 - 2022/05/24 =
+* This maintenance release is for compatibility with WordPress major version 6.0 plus a bug fix.
+* Tweak - Test for compatibility with WordPress 6.0
+* Fix - Alignment settings for page view count block not working on frontend
 
 = 2.5.4 - 2022/04/18 =
 * This maintenance release has 2 fixes for plugins that filter custom content without post or page.
@@ -522,6 +527,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.5.5 =
+This maintenance release is for compatibility with WordPress major version 6.0 plus a bug fix.
 
 = 2.5.4 =
 This maintenance release has 2 fixes for plugins that filter custom content without post or page.

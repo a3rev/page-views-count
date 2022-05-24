@@ -187,14 +187,14 @@ class Blocks {
 		}
 
 		if ( ! empty( $attributes['postID'] ) ) {
-			return pvc_stats( $attributes['postID'], 0 );
+			return '<div>' . pvc_stats( $attributes['postID'], 0 ) . '</div>';
 		} elseif( isset( $attributes['isDisabled'] ) && false === $attributes['isDisabled'] ) {
 
 			global $post;
 
 			$post_id = $post->ID;
 
-			return pvc_stats_update( $post_id, 0, $attributes );
+			return '<div>' . pvc_stats_update( $post_id, 0, $attributes ) . '</div>';
 		}
 
 		return '';
