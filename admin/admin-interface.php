@@ -908,7 +908,7 @@ class Admin_Interface extends Admin_UI
 								if ( is_array( $_POST[ $option_name ][ $id_attribute ] ) ) {
 									$option_value = array_map( 'sanitize_textarea_field', wp_unslash( $_POST[ $option_name ][ $id_attribute ] ) );
 								} else {
-									$option_value = sanitize_textarea_field( wp_unslash( _POST[ $option_name ][ $id_attribute ] ) );
+									$option_value = sanitize_textarea_field( wp_unslash( $_POST[ $option_name ][ $id_attribute ] ) );
 								}
 							} else {
 								if ( is_array( $_POST[ $option_name ][ $id_attribute ] ) ) {
@@ -1030,6 +1030,14 @@ class Admin_Interface extends Admin_UI
 	/*-----------------------------------------------------------------------------------*/
 
 	public function reset_settings( $options, $option_name = '', $reset = false, $free_version = false ) {
+
+		if ( $reset ) {
+			check_admin_referer( 'save_settings_' . $this->plugin_name );
+
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return false;
+			}
+		}
 		
 		if ( !is_array( $options ) || count( $options ) < 1 ) return;
 		
