@@ -33,7 +33,7 @@ class Admin_UI
 	 * You must change to correct plugin name that you are working
 	 */
 
-	public $framework_version      = '2.6.1';
+	public $framework_version      = '2.6.2';
 	public $plugin_name            = A3_PVC_KEY;
 	public $plugin_path            = A3_PVC_PLUGIN_NAME;
 	public $google_api_key_option  = '';
