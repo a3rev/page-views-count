@@ -3,7 +3,7 @@ Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 5.6
 Tested up to: 6.1
-Stable tag: 2.5.6
+Stable tag: 2.6.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -101,6 +101,15 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.6.0 - 2023/01/03 =
+* This feature release removes the fontawesome lib and replaces icons with SVGs plus adds Default Topography option to font controls.
+* Feature - Convert icon from font awesome to SVG
+* Feature - Update styling for new SVG icons
+* Plugin Framework - Update typography control from plugin framework to add support for Default value
+* Plugin Framework - Default value will get fonts set in the theme.
+* Plugin Framework - Change generate typography style for change on typography control
+* Plugin Framework - Remove fontawesome lib
 
 = 2.5.6 - 2022/09/20 =
 * This maintenance release has a security vulnerability patch, please run this update.
@@ -531,6 +540,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.6.0 =
+This feature release removes the fontawesome lib and replaces icons with SVGs plus adds Default Topography option to font controls.
 
 = 2.5.6 =
 This maintenance release has a security vulnerability patch, please run this update.
