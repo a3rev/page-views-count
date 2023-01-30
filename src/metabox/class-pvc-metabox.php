@@ -34,6 +34,10 @@ class MetaBox
 	public function render_meta_box_content( $post ) {
 		global $wp_version;
 
+		if ( ! $post || empty( $post->ID ) ) {
+			return '';
+		}
+
 		wp_enqueue_script( 'jquery' );
 
 		// Add an nonce field so we can check for it later.

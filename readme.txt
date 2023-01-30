@@ -3,7 +3,7 @@ Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 5.6
 Tested up to: 6.1
-Stable tag: 2.6.1
+Stable tag: 2.6.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -101,6 +101,10 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.6.2 - 2023/01/30 =
+* This maintenance release adds compatibility with plugins that set user roles, ie membership plugins. 
+* Tweak - Validate $post->ID is not empty for compatibility with User Role plugins
 
 = 2.6.1 - 2023/01/07 =
 * Please run this update now to apply a security vulnerability patch 
@@ -544,6 +548,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.6.2 =
+This maintenance release adds compatibility with plugins that set user roles, ie membership plugins.
 
 = 2.6.1 =
 Please run this update now to apply a security vulnerability patch
