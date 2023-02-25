@@ -3,7 +3,7 @@ Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 5.6
 Tested up to: 6.1
-Stable tag: 2.6.2
+Stable tag: 2.6.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -101,6 +101,11 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.6.3 - 2023/02/25 =
+* This maintenance release had 2 performance tweaks for the page view count loading icon.
+* Tweak - Upgrade loading icon to a larger one for improved display on mobile retina
+* Tweak - Set loading icon width and height attributes to comply with Google Core Web Vitals standards.
 
 = 2.6.2 - 2023/01/30 =
 * This maintenance release adds compatibility with plugins that set user roles, ie membership plugins. 
@@ -548,6 +553,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.6.3 =
+This maintenance release had 2 performance tweaks for the page view count loading icon.
 
 = 2.6.2 =
 This maintenance release adds compatibility with plugins that set user roles, ie membership plugins.

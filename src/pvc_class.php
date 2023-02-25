@@ -212,7 +212,7 @@ class A3_PVC
 		}
 
 		if ( $pvc_settings['enable_ajax_load'] == 'yes' && empty( $attributes['in_editor'] ) ) {
-			$stats_html = '<p id="pvc_stats_'. esc_attr( $post_id ).'" class="pvc_stats '. esc_attr( $views_type ) .' '. esc_attr( $custom_class ) .' '.$load_by_ajax_update_class.'" data-element-id="'. esc_attr( $post_id ).'" style="'. esc_attr( $custom_style ) .'"><i class="pvc-stats-icon '. esc_attr( $pvc_settings['icon_size'] ).'" aria-hidden="true">'. ( 'eye' == $pvc_settings['icon'] ? self::$eye_icon : self::$chart_icon ) .'</i> <img src="'.A3_PVC_URL.'/ajax-loader.gif" border=0 /></p>';
+			$stats_html = '<p id="pvc_stats_'. esc_attr( $post_id ).'" class="pvc_stats '. esc_attr( $views_type ) .' '. esc_attr( $custom_class ) .' '.$load_by_ajax_update_class.'" data-element-id="'. esc_attr( $post_id ).'" style="'. esc_attr( $custom_style ) .'"><i class="pvc-stats-icon '. esc_attr( $pvc_settings['icon_size'] ).'" aria-hidden="true">'. ( 'eye' == $pvc_settings['icon'] ? self::$eye_icon : self::$chart_icon ) .'</i> <img width="16" height="16" alt="'. esc_attr( __( 'Loading' ) ) .'" src="'.A3_PVC_URL.'/ajax-loader-2x.gif" border=0 /></p>';
 		} else {
 			$stats_html = '<p class="pvc_stats '. esc_attr( $views_type ) .' '. esc_attr( $custom_class ) .'" data-element-id="'.esc_attr( $post_id ).'" style="'. esc_attr( $custom_style ) .'"><i class="pvc-stats-icon '.esc_attr( $pvc_settings['icon_size'] ).'" aria-hidden="true">'. ( 'eye' == $pvc_settings['icon'] ? self::$eye_icon : self::$chart_icon ) .'</i> ' . self::pvc_get_stats( $post_id, $views_type ) . '</p>';
 		}
