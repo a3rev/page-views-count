@@ -69,7 +69,7 @@ add_filter( $GLOBALS[A3_PVC_PREFIX.'admin_init']->plugin_name . '_plugin_extensi
 add_action( 'pvc_empty_daily_table_daily_event_hook', 'pvc_empty_daily_table_do_daily' );
 function pvc_empty_daily_table_do_daily() {
 	global $wpdb;
-	$wpdb->query("DELETE FROM " . $wpdb->prefix . "pvc_daily WHERE time <= '".date('Y-m-d', strtotime('-2 days'))."'");
+	$wpdb->query("DELETE FROM " . $wpdb->prefix . "pvc_daily WHERE time <= '".wp_date('Y-m-d', strtotime('-2 days'))."'");
 }
 
 $pvc_settings = get_option( 'pvc_settings', array( 'position' => 'bottom' ) );
@@ -98,7 +98,7 @@ function pvc_lite_upgrade_plugin () {
 	if(version_compare(get_option('a3_pvc_version'), '1.3.5') === -1){
 		update_option('a3_pvc_version', '1.3.5');
 
-		wp_schedule_event( strtotime( date('Y-m-d'). ' 00:00:00' ), 'daily', 'pvc_empty_daily_table_daily_event_hook' );
+		wp_schedule_event( strtotime( wp_date('Y-m-d'). ' 00:00:00' ), 'daily', 'pvc_empty_daily_table_daily_event_hook' );
 		global $wpdb;
 		$sql = "ALTER TABLE ". $wpdb->prefix . "pvc_daily  CHANGE `id` `id` BIGINT NOT NULL AUTO_INCREMENT";
 		$wpdb->query($sql);

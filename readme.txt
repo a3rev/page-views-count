@@ -3,7 +3,7 @@ Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 5.6
 Tested up to: 6.2
-Stable tag: 2.6.3
+Stable tag: 2.7.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -101,6 +101,11 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.7.0 - 2023/04/08 =
+* This release changes the daily views reset from fixed GMT = 00 to use the timezone that is set in the site's WordPress General Settings.
+* Feature - Use the timezone from WordPress General Settings as the reset time for daily views counter.
+* Tweak - Test for compatibility with WordPress 6.2
 
 = 2.6.3 - 2023/02/25 =
 * This maintenance release had 2 performance tweaks for the page view count loading icon.
@@ -553,6 +558,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.7.0 =
+This release changes the daily views reset from fixed GMT = 00 to use the timezone that is set in the site's WordPress General Settings.
 
 = 2.6.3 =
 This maintenance release had 2 performance tweaks for the page view count loading icon.

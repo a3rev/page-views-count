@@ -45,7 +45,7 @@ class A3_PVC
 
 	public static function pvc_fetch_posts_stats( $post_ids ) {
 		global $wpdb;
-		$nowisnow = date('Y-m-d');
+		$nowisnow = wp_date('Y-m-d');
 
 		if ( !is_array( $post_ids ) ) $post_ids = array( $post_ids );
 		$post_ids = array_map( function( $value ) {
@@ -89,7 +89,7 @@ class A3_PVC
 
 	public static function pvc_fetch_post_today( $post_id ) {
 		global $wpdb;
-		$nowisnow = date('Y-m-d');
+		$nowisnow = wp_date('Y-m-d');
 
 		$sql = $wpdb->prepare( "SELECT postcount AS today FROM ". $wpdb->prefix . "pvc_daily
 			WHERE postnum = %s AND time = %s", $post_id, $nowisnow );
@@ -100,7 +100,7 @@ class A3_PVC
 		global $wpdb;
 
 		// get the local time based off WordPress setting
-		$nowisnow = date('Y-m-d');
+		$nowisnow = wp_date('Y-m-d');
 
 		// first try and update the existing total post counter
 		$results = $wpdb->query( $wpdb->prepare( "UPDATE ". $wpdb->prefix . "pvc_total SET postcount = postcount+1 WHERE postnum = '%s' LIMIT 1", $post_id ) );
@@ -126,7 +126,7 @@ class A3_PVC
 		global $wpdb;
 
 		// get the local time based off WordPress setting
-		$nowisnow = date('Y-m-d');
+		$nowisnow = wp_date('Y-m-d');
 
 		// if it doesn't exist, then insert new record
 		// one in the total views
