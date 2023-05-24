@@ -97,6 +97,8 @@ class Global_Panel extends FrameWork\Admin_UI
 
 		add_action( $this->plugin_name . '_settings_' . 'pvc_page_view_count_function_box' . '_start', array( $this, 'page_view_count_function_content' ) );
 
+		add_action( $this->plugin_name . '-' . $this->form_key . '_after_settings_save', array( $this, 'after_settings_save_reset' ) );
+		add_action( $this->plugin_name . '_init_scripts', array( $this, 'validate_pvc_endpoint' ) );
 	}
 
 	/*-----------------------------------------------------------------------------------*/
@@ -132,6 +134,20 @@ class Global_Panel extends FrameWork\Admin_UI
 			$uninstallable_plugins = (array) get_option('uninstall_plugins');
 			unset($uninstallable_plugins[ $this->plugin_path ]);
 			update_option('uninstall_plugins', $uninstallable_plugins);
+		}
+	}
+
+	public function after_settings_save_reset() {
+		if ( isset( $_POST['bt_reset_settings'] ) && 1 != get_option( 'pvc_current_rest_api_enabled', 1 ) ) {
+			$pvc_settings = get_option( 'pvc_settings', array() );
+			$pvc_settings['ajax_load_type'] = 'admin_ajax';
+			update_option( 'pvc_settings', $pvc_settings );
+		}
+	}
+
+	public function validate_pvc_endpoint() {
+		if ( isset( $_POST['bt_save_settings'] ) || isset( $_POST['bt_reset_settings'] ) ) {
+			\A3Rev\PageViewsCount\A3_PVC::validate_pvc_endpoint_rest_api_enable();
 		}
 	}
 
@@ -387,14 +403,14 @@ class Global_Panel extends FrameWork\Admin_UI
            	),
 			array(
 				'name' 		=> __( 'Ajax Load', 'page-views-count' ),
-				'desc' 		=> __( 'ON to load page views counter on front end by ajax event (recommended). Prevents caching plugins and CDNs from caching the count. If using caching you must clear the cache to see changes after turning this setting ON or OFF.', 'page-views-count' ),
-				'id' 		=> 'enable_ajax_load',
-				'type' 		=> 'onoff_checkbox',
-				'default' 	=> 'no',
-				'checked_value'		=> 'yes',
-				'unchecked_value'	=> 'no',
-				'checked_label'		=> __( 'ON', 'page-views-count' ),
-				'unchecked_label' 	=> __( 'OFF', 'page-views-count' ),
+				'desc' 		=> __( ' Default and recommended is WP REST API. ADMIN-AJAX is the fallback option.', 'page-views-count' ),
+				'id' 		=> 'ajax_load_type',
+				'default'	=> 'rest_api',
+				'type' 		=> 'switcher_checkbox',
+				'checked_value'		=> 'rest_api',
+				'unchecked_value'	=> 'admin_ajax',
+				'checked_label'		=> __( 'WP REST API', 'page-views-count' ),
+				'unchecked_label' 	=> __( 'ADMIN AJAX', 'page-views-count' ),
 			),
 
 			array(

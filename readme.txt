@@ -2,8 +2,8 @@
 Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 5.6
-Tested up to: 6.2
-Stable tag: 2.7.0
+Tested up to: 6.2.2
+Stable tag: 2.8.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -101,6 +101,17 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.8.0 - 2023/05/24 =
+* This release removes loading PVC Stats with PHP and replaces with REST API as default with Admin-ajax as the fallback.
+* Feature - Support options for choose WP REST API or Admin Ajax load PVC stats
+* Tweak - Remove load PVC stats by PHP 
+* Tweak - On upgrade if using PHP to load PVC stats it will update to use WP REST API
+* Tweak - If WP REST API is not active it will fall back to ADMIN-AJAX
+* Tweak - Auto detect if WP REST API and PVC endpoint are disabled, it will fall back to the ADMIN-AJAX 
+* Tweak - Add warning notification if WP REST API or PVC Endpoint are disabled.
+* Tweak - Updated setting and help text on the Page View Count Load option box.
+* Tweak - Test for compatibility with WordPress 6.2.2
 
 = 2.7.0 - 2023/04/08 =
 * This release changes the daily views reset from fixed GMT = 00 to use the timezone that is set in the site's WordPress General Settings.
@@ -558,6 +569,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.8.0 =
+This release removes loading PVC Stats with PHP and replaces with REST API as default with Admin-ajax as the fallback.
 
 = 2.7.0 =
 This release changes the daily views reset from fixed GMT = 00 to use the timezone that is set in the site's WordPress General Settings.

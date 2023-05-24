@@ -177,6 +177,7 @@ class A3_PVC
 	public static function pvc_stats_counter( $post_id, $increase_views = false, $attributes = array() ) {
 		global $wpdb;
 		global $pvc_settings;
+		global $pvc_enable_ajax_load;
 
 		$load_by_ajax_update_class = '';
 		if ( $increase_views ) $load_by_ajax_update_class = 'pvc_load_by_ajax_update';
@@ -211,7 +212,7 @@ class A3_PVC
 			$views_type = $pvc_settings['views_type'];
 		}
 
-		if ( $pvc_settings['enable_ajax_load'] == 'yes' && empty( $attributes['in_editor'] ) ) {
+		if ( $pvc_enable_ajax_load && empty( $attributes['in_editor'] ) ) {
 			$stats_html = '<p id="pvc_stats_'. esc_attr( $post_id ).'" class="pvc_stats '. esc_attr( $views_type ) .' '. esc_attr( $custom_class ) .' '.$load_by_ajax_update_class.'" data-element-id="'. esc_attr( $post_id ).'" style="'. esc_attr( $custom_style ) .'"><i class="pvc-stats-icon '. esc_attr( $pvc_settings['icon_size'] ).'" aria-hidden="true">'. ( 'eye' == $pvc_settings['icon'] ? self::$eye_icon : self::$chart_icon ) .'</i> <img width="16" height="16" alt="'. esc_attr( __( 'Loading' ) ) .'" src="'.A3_PVC_URL.'/ajax-loader-2x.gif" border=0 /></p>';
 		} else {
 			$stats_html = '<p class="pvc_stats '. esc_attr( $views_type ) .' '. esc_attr( $custom_class ) .'" data-element-id="'.esc_attr( $post_id ).'" style="'. esc_attr( $custom_style ) .'"><i class="pvc-stats-icon '.esc_attr( $pvc_settings['icon_size'] ).'" aria-hidden="true">'. ( 'eye' == $pvc_settings['icon'] ? self::$eye_icon : self::$chart_icon ) .'</i> ' . self::pvc_get_stats( $post_id, $views_type ) . '</p>';
@@ -225,12 +226,13 @@ class A3_PVC
 	public static function register_plugin_scripts() {
 		global $pvc_settings;
 		global $pvc_api;
+		global $pvc_enable_ajax_load;
 
 		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
 
 		wp_enqueue_style( 'a3-pvc-style', A3_PVC_CSS_URL . '/style'.$suffix.'.css', array(), A3_PVC_VERSION );
 
-		if ( $pvc_settings['enable_ajax_load'] != 'yes' ) return;
+		if ( ! $pvc_enable_ajax_load ) return;
 
 	?>
 	<?php // @codingStandardsIgnoreStart ?>
@@ -248,7 +250,12 @@ class A3_PVC
 	<?php // @codingStandardsIgnoreEnd ?>
     <?php
 		wp_enqueue_script( 'a3-pvc-backbone', A3_PVC_JS_URL . '/pvc.backbone'.$suffix.'.js', array( 'jquery', 'backbone', 'underscore' ), A3_PVC_VERSION );
-		wp_localize_script( 'a3-pvc-backbone', 'vars', array( 'rest_api_url' => rest_url( '/' . $pvc_api->namespace ) ) );
+		wp_localize_script( 'a3-pvc-backbone', 'pvc_vars', array(
+			'rest_api_url' => rest_url( '/' . $pvc_api->namespace ),
+			'ajax_url' => admin_url( 'admin-ajax.php' ),
+			'security' => wp_create_nonce( 'pvc_stats_counter' ),
+			'ajax_load_type' => isset( $pvc_settings['ajax_load_type'] ) ? $pvc_settings['ajax_load_type'] : 'rest_api',
+		) );
 	}
 
 	public static function pvc_remove_stats($content) {
@@ -261,6 +268,7 @@ class A3_PVC
 		remove_action('genesis_before_post_content', array( __CLASS__, 'genesis_pvc_stats_echo'));
 		remove_action('genesis_after_post_content', array( __CLASS__, 'genesis_pvc_stats_echo'));
 		global $post;
+		global $pvc_enable_ajax_load;
 		if ( ! $post ) return $content;
 
 		$args=array(
@@ -278,7 +286,7 @@ class A3_PVC
 
 		if ( self::pvc_is_activated( $post->ID ) ) {
 			if ( is_singular() || is_singular( $post_types ) ) {
-				if ( ! isset( $pvc_settings['enable_ajax_load'] ) || $pvc_settings['enable_ajax_load'] != 'yes' ) {
+				if ( ! $pvc_enable_ajax_load ) {
 					self::pvc_stats_update($post->ID);
 				}
 				$pvc_stats_html = self::pvc_stats_counter($post->ID, true );
@@ -349,10 +357,11 @@ class A3_PVC
 	public static function custom_stats_update_echo($postid=0, $have_echo=1, $attributes = array() ){
 		$output = '';
 		global $pvc_settings;
+		global $pvc_enable_ajax_load;
 		if ( empty( $pvc_settings ) ) {
 			$pvc_settings = get_option('pvc_settings', array() );
 		}
-		if ( ! isset( $pvc_settings['enable_ajax_load'] ) || $pvc_settings['enable_ajax_load'] != 'yes' ) {
+		if ( ! $pvc_enable_ajax_load ) {
 			self::pvc_stats_update($postid);
 		}
 
@@ -428,6 +437,70 @@ class A3_PVC
 
 	public static function a3_wp_admin() {
 		wp_enqueue_style( 'a3rev-wp-admin-style', A3_PVC_CSS_URL . '/a3_wp_admin.css' );
+	}
+
+	public static function yellow_message_dontshow() {
+		check_ajax_referer( 'pvc_yellow_message_dontshow', 'security' );
+		$option_name   = sanitize_text_field( $_REQUEST['option_name'] );
+		update_option( $option_name, 1 );
+		die();
+	}
+
+	public static function validate_pvc_endpoint_rest_api_enable() {
+		global $pvc_api;
+		$rest_api_enabled = true;
+		$pvc_endpoint_response = wp_remote_get( rest_url( '/' . $pvc_api->namespace ) );
+		if ( is_wp_error( $pvc_endpoint_response ) || wp_remote_retrieve_response_code( $pvc_endpoint_response ) !== 200 ) {
+			$rest_api_enabled = false;
+		}
+
+		if ( ! $rest_api_enabled ) {
+			$pvc_settings = get_option( 'pvc_settings', array() );
+			$pvc_settings['ajax_load_type'] = 'admin_ajax';
+			update_option( 'pvc_settings', $pvc_settings );
+			if ( isset( $_POST['pvc_settings'] ) && is_array( $_POST['pvc_settings'] ) && isset( $_POST['pvc_settings']['ajax_load_type'] ) ) {
+				unset( $_POST['pvc_settings']['ajax_load_type'] );
+			}
+		}
+
+		delete_option( 'pvc_endpoint_rest_api_disabled_dismiss' );
+		update_option( 'pvc_current_rest_api_enabled', $rest_api_enabled ? 1 : 0 );
+
+		return $rest_api_enabled;
+	}
+
+	public static function pvc_endpoint_rest_api_disabled_warning() {
+		$had_dismiss = get_option( 'pvc_endpoint_rest_api_disabled_dismiss' );
+		$current_rest_api_enabled = get_option( 'pvc_current_rest_api_enabled', 1 );
+		if ( ! empty( $had_dismiss ) || 1 == $current_rest_api_enabled ) {
+			return;
+		}
+?>
+		<div class="below-h2 a3-notification warning upgrade dismissible pvc_endpoint_rest_api_disabled" style="display:block !important;">
+			<div style="float: left;">
+    			<?php echo __( '"Warning: WP REST API is not active. Page View Count will use Admin-Ajax to load the frontend count."' , 'page-views-count' ); ?>
+    		</div>
+			<div class="a3-notification-dismiss">
+				<a href="javascript:void(0);" class="pvc_endpoint_rest_api_disabled_bt" aria-label="Close"><?php echo __( 'Dismiss', 'page-views-count' ); ?></a>
+			</div>
+			<script>
+			(function($) {
+			$(document).ready(function() {
+				
+				$(document).on( "click", ".pvc_endpoint_rest_api_disabled_bt", function(){
+					$(".pvc_endpoint_rest_api_disabled").slideUp();
+					var data = {
+							action: 		"pvc_yellow_message_dontshow",
+							option_name: 	"pvc_endpoint_rest_api_disabled_dismiss",
+							security: 		"<?php echo wp_create_nonce("pvc_yellow_message_dontshow"); ?>"
+						};
+					$.post( "<?php echo admin_url( 'admin-ajax.php', 'relative' ); ?>", data);
+				});
+			});
+			})(jQuery);
+			</script>
+		</div>
+<?php
 	}
 
 	public static function plugin_extension_box( $boxes = array() ) {

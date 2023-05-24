@@ -18,6 +18,26 @@ class API
 
     public function __construct() {
         add_action( 'rest_api_init', array( $this, 'rest_api_init' ) );
+        add_action( 'wp_ajax_pvc_increase', array( $this, 'pvc_increase_ajax' ) );
+        add_action( 'wp_ajax_pvc_view', array( $this, 'pvc_view_ajax' ) );
+    }
+
+    public function pvc_increase_ajax() {
+        check_ajax_referer( 'pvc_stats_counter', 'security' );
+        if ( ! empty( $_GET['ids'] ) ) {
+            echo $this->pvc_increase( sanitize_text_field( $_GET['ids'] ) );
+        }
+
+        die();
+    }
+
+    public function pvc_view_ajax() {
+        check_ajax_referer( 'pvc_stats_counter', 'security' );
+        if ( ! empty( $_GET['ids'] ) ) {
+            echo $this->pvc_view( sanitize_text_field( $_GET['ids'] ) );
+        }
+
+        die();
     }
 
     public function rest_api_init() {
@@ -76,7 +96,28 @@ class API
             ) ); 
         }
 
-        $post_ids = explode( ',', $post_ids_text );
+        return $this->pvc_increase( $post_ids_text );
+    }
+
+    public function view_stats( \WP_REST_Request $request ) {
+        if ( ! WP_DEBUG || ( WP_DEBUG && ! WP_DEBUG_DISPLAY ) ) {
+            @ini_set( 'display_errors', false ); // Turn off display_errors to prevent malformed JSON.
+        }
+
+        $post_ids_text = $request->get_param( 'post_ids' );
+
+        if ( '' == trim( $post_ids_text ) ) {
+           return wp_send_json( array(
+                'success' => false,
+                'message' => __( "Post Ids is empty", 'page-views-count' ),
+            ) ); 
+        }
+
+        return $this->pvc_view( $post_ids_text );
+    }
+
+    public function pvc_increase( $post_ids ) {
+        $post_ids = explode( ',', $post_ids );
 
         if ( empty ( $post_ids ) ) {
             return wp_send_json( array(
@@ -103,21 +144,8 @@ class API
         return wp_send_json( $json_data );
     }
 
-    public function view_stats( \WP_REST_Request $request ) {
-        if ( ! WP_DEBUG || ( WP_DEBUG && ! WP_DEBUG_DISPLAY ) ) {
-            @ini_set( 'display_errors', false ); // Turn off display_errors to prevent malformed JSON.
-        }
-
-        $post_ids_text = $request->get_param( 'post_ids' );
-
-        if ( '' == trim( $post_ids_text ) ) {
-           return wp_send_json( array(
-                'success' => false,
-                'message' => __( "Post Ids is empty", 'page-views-count' ),
-            ) ); 
-        }
-
-        $post_ids = explode( ',', $post_ids_text );
+    public function pvc_view( $post_ids ) {
+        $post_ids = explode( ',', $post_ids );
 
         if ( empty ( $post_ids ) ) {
             return wp_send_json( array(

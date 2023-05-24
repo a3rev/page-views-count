@@ -1,6 +1,6 @@
 jQuery( function( $ ) {
-	var rest_api_url = vars.rest_api_url;
-	
+	var call_url = typeof pvc_vars.ajax_load_type != 'undefined' && pvc_vars.ajax_load_type == 'admin_ajax' ? pvc_vars.ajax_url : pvc_vars.rest_api_url;
+
 	pvc = { apps: {}, models: {}, collections: {}, views: {} };
 
 	_.templateSettings = {
@@ -20,7 +20,7 @@ jQuery( function( $ ) {
 	pvc.collections.Stats = Backbone.Collection.extend({
 		model: pvc.models.State,
 		
-		url: rest_api_url
+		url: call_url
 		
 	});
 	
@@ -57,8 +57,8 @@ jQuery( function( $ ) {
 	});
 	
 	pvc.apps.app = {
-		initialize: function( pvc_ids, rest_api_url ) {
-			this.rest_api_url = rest_api_url;
+		initialize: function( pvc_ids ) {
+			this.call_url = call_url;
 			//console.log('Load Page View Count of ' + JSON.stringify(pvc_ids) );
 
 			view_pvc_ids = [];
@@ -73,7 +73,8 @@ jQuery( function( $ ) {
 			});
 
 			if ( increase_pvc_ids.length ) {
-				$.get( this.rest_api_url + '/increase/' + increase_pvc_ids.join(','), function( data_pvc ) {
+				action = typeof pvc_vars.ajax_load_type != 'undefined' && pvc_vars.ajax_load_type == 'admin_ajax' ? '?action=pvc_increase&security=' + pvc_vars.security + '&ids=' : '/increase/';
+				$.get( this.call_url + action + increase_pvc_ids.join(','), function( data_pvc ) {
 					//console.log(data_pvc);
 					if ( data_pvc.success ) {
 						$.each( data_pvc.items, function (index, data) {
@@ -87,7 +88,8 @@ jQuery( function( $ ) {
 			}
 
 			if ( view_pvc_ids.length ) {
-				$.get( this.rest_api_url + '/view/' + view_pvc_ids.join(','), function( data_pvc ) {
+				action = typeof pvc_vars.ajax_load_type != 'undefined' && pvc_vars.ajax_load_type == 'admin_ajax' ? '?action=pvc_view&security=' + pvc_vars.security + '&ids=' : '/view/';
+				$.get( this.call_url + action + view_pvc_ids.join(','), function( data_pvc ) {
 					//console.log(data_pvc);
 					if ( data_pvc.success ) {
 						$.each( data_pvc.items , function (index, data) {
@@ -116,6 +118,6 @@ jQuery( document ).ready( function( $ ) {
 		});
 		
 		var app = pvc.apps.app;
-		app.initialize( pvc_ids, vars.rest_api_url );
+		app.initialize( pvc_ids );
 	}
 });

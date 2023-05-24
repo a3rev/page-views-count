@@ -35,6 +35,8 @@ function a3_pvc_plugin_init() {
 
 		// Build sass
 		$GLOBALS[A3_PVC_PREFIX.'less']->plugin_build_sass();
+
+		\A3Rev\PageViewsCount\A3_PVC::validate_pvc_endpoint_rest_api_enable();
 	}
 
 	// Set up localisation
@@ -86,6 +88,10 @@ add_filter('the_excerpt', array('\A3Rev\PageViewsCount\A3_PVC','excerpt_pvc_stat
 // Add ajax script to load page view count stats into footer
 add_action( 'wp_enqueue_scripts', array( '\A3Rev\PageViewsCount\A3_PVC', 'register_plugin_scripts' ) );
 
+// AJAX hide yellow message dontshow
+add_action('wp_ajax_pvc_yellow_message_dontshow', array('\A3Rev\PageViewsCount\A3_PVC', 'yellow_message_dontshow') );
+add_action('wp_ajax_nopriv_pvc_yellow_message_dontshow', array('\A3Rev\PageViewsCount\A3_PVC', 'yellow_message_dontshow') );
+
 // Check upgrade functions
 add_action('plugins_loaded', 'pvc_lite_upgrade_plugin');
 function pvc_lite_upgrade_plugin () {
@@ -136,9 +142,19 @@ function pvc_lite_upgrade_plugin () {
 		$GLOBALS[A3_PVC_PREFIX.'less']->plugin_build_sass();
 	}
 
+	if ( version_compare( get_option('a3_pvc_version'), '2.8.0' ) === -1 ) {
+		update_option('a3_pvc_version', '2.8.0');
+
+		add_action( 'admin_init', function() {
+			\A3Rev\PageViewsCount\A3_PVC::validate_pvc_endpoint_rest_api_enable();
+		} );
+	}
+
 	update_option( 'a3_pvc_version', A3_PVC_VERSION );
 
 }
+
+add_action( 'admin_notices', array( '\A3Rev\PageViewsCount\A3_PVC', 'pvc_endpoint_rest_api_disabled_warning' ) );
 
 if ( 'responsi' === get_template() ) {
    remove_filter('the_content', array(
