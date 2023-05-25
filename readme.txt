@@ -3,7 +3,7 @@ Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 5.6
 Tested up to: 6.2.2
-Stable tag: 2.8.0
+Stable tag: 2.8.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -101,6 +101,10 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.8.1 - 2023/05/25 =
+* This maintenance release has 1 fix for plugin on new option ADMIN-AJAX.
+* Fix - add action to wp_ajax_nopriv_ for new option ADMIN-AJAX
 
 = 2.8.0 - 2023/05/24 =
 * This release removes loading PVC Stats with PHP and replaces with REST API as default with Admin-ajax as the fallback.
@@ -569,6 +573,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.8.1 =
+This maintenance release has 1 fix for plugin on new option ADMIN-AJAX.
 
 = 2.8.0 =
 This release removes loading PVC Stats with PHP and replaces with REST API as default with Admin-ajax as the fallback.

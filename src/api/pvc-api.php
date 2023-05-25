@@ -19,7 +19,9 @@ class API
     public function __construct() {
         add_action( 'rest_api_init', array( $this, 'rest_api_init' ) );
         add_action( 'wp_ajax_pvc_increase', array( $this, 'pvc_increase_ajax' ) );
+        add_action( 'wp_ajax_nopriv_pvc_increase', array( $this, 'pvc_increase_ajax' ) );
         add_action( 'wp_ajax_pvc_view', array( $this, 'pvc_view_ajax' ) );
+        add_action( 'wp_ajax_nopriv_pvc_view', array( $this, 'pvc_view_ajax' ) );
     }
 
     public function pvc_increase_ajax() {
