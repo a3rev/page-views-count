@@ -1,9 +1,9 @@
 === Page View Count  ===
 Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
-Requires at least: 5.6
-Tested up to: 6.3
-Stable tag: 2.8.1
+Requires at least: 6.0
+Tested up to: 6.4.1
+Stable tag: 2.8.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -101,6 +101,12 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.8.2 - 2023/11/23 =
+* This maintenance release has plugin framework updates for compatibility with PHP 8.1 onwards, plus compatibility with WordPress 6.4.1
+* Tweak - Test for compatibility with WordPress 6.4.1
+* Framework - Set parameter number of preg_match function from null to 0 for compatibility with PHP 8.1 onwards
+* Framework - Validate empty before call trim for option value
 
 = 2.8.1 - 2023/05/25 =
 * This maintenance release has 1 fix for plugin on new option ADMIN-AJAX.
@@ -573,6 +579,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.8.2 =
+This maintenance release has plugin framework updates for compatibility with PHP 8.1 onwards, plus compatibility with WordPress 6.4.1
 
 = 2.8.1 =
 This maintenance release has 1 fix for plugin on new option ADMIN-AJAX.
