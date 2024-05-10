@@ -55,7 +55,7 @@ class A3_PVC
 
 		$sql = $wpdb->prepare( "SELECT t.postnum AS post_id, t.postcount AS total, d.postcount AS today FROM ". $wpdb->prefix . "pvc_total AS t
 			LEFT JOIN ". $wpdb->prefix . "pvc_daily AS d ON t.postnum = d.postnum
-			WHERE t.postnum IN ( ".implode( ',', $post_ids )." ) AND d.time = %s", $nowisnow );
+			WHERE t.postnum IN ( ".implode( ',', $post_ids )." ) AND d.time = %s ORDER BY t.postcount ASC", $nowisnow );
 
 		return $wpdb->get_results($sql);
 	}
@@ -83,7 +83,7 @@ class A3_PVC
 		global $wpdb;
 
 		$sql = $wpdb->prepare( "SELECT postcount AS total FROM ". $wpdb->prefix . "pvc_total
-			WHERE postnum = %s", $post_id );
+			WHERE postnum = %s ORDER BY postcount DESC", $post_id );
 		return $wpdb->get_var($sql);
 	}
 
@@ -103,14 +103,14 @@ class A3_PVC
 		$nowisnow = wp_date('Y-m-d');
 
 		// first try and update the existing total post counter
-		$results = $wpdb->query( $wpdb->prepare( "UPDATE ". $wpdb->prefix . "pvc_total SET postcount = postcount+1 WHERE postnum = '%s' LIMIT 1", $post_id ) );
+		$results = $wpdb->query( $wpdb->prepare( "UPDATE ". $wpdb->prefix . "pvc_total SET postcount = postcount+1 WHERE postnum = %s LIMIT 1", $post_id ) );
 
 		// error_log( json_encode( $results ) );
 
 		// if it doesn't exist, then insert two new records
 		// one in the total views, another in today's views
 		if ($results == 0) {
-			$wpdb->query( $wpdb->prepare( "INSERT INTO ". $wpdb->prefix . "pvc_total (postnum, postcount) VALUES ('%s', 1)", $post_id ) );
+			$wpdb->query( $wpdb->prepare( "INSERT INTO ". $wpdb->prefix . "pvc_total (postnum, postcount) VALUES ( %s, 1)", $post_id ) );
 			$wpdb->query( $wpdb->prepare ( "INSERT INTO ". $wpdb->prefix . "pvc_daily (time, postnum, postcount) VALUES ('%s', '%s', 1)", $nowisnow, $post_id ) );
 		// post exists so let's just update the counter
 		} else {

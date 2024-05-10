@@ -2,8 +2,8 @@
 Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 6.0
-Tested up to: 6.4.1
-Stable tag: 2.8.2
+Tested up to: 6.5.3
+Stable tag: 2.8.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -101,6 +101,11 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.8.3 - 2024/05/10 =
+* This maintenance release has an edge case fix that means total views record is created again at 1 when a duplicate post ID exists in the database.
+* Tweak - Test for compatibility with WordPress 6.5.3
+* Fix - Get correct total views instead create new record with value 1 when it has duplicate post ID from database (edge case).
 
 = 2.8.2 - 2023/11/23 =
 * This maintenance release has plugin framework updates for compatibility with PHP 8.1 onwards, plus compatibility with WordPress 6.4.1
@@ -579,6 +584,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.8.3 =
+This maintenance release has an edge case fix that means total views record is created again at 1 when a duplicate post ID exists in the database.
 
 = 2.8.2 =
 This maintenance release has plugin framework updates for compatibility with PHP 8.1 onwards, plus compatibility with WordPress 6.4.1
