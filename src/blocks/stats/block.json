@@ -1,14 +1,17 @@
 {
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
 	"name": "page-views-count/stats",
 	"title": "Page Views",
 	"description": "Show all time views and views today",
 	"textdomain": "page-views-count",
-	"icon": {
-		"foreground": "#24b6f1"
-	},
 	"category": "a3rev-blocks",
 	"supports": {
-		"multiple": false
+		"multiple": false,
+		"spacing": {
+			"margin": true,
+			"padding": false
+		}
 	},
 	"keywords": [ "Page Views Count", "Views", "Stats" ],
 	"example": {
@@ -18,7 +21,8 @@
 	},
 	"attributes": {
 		"align": {
-			"type": "string"
+			"type": "string",
+			"default": "left"
 		},
 		"postID": {
 			"type": "string",
@@ -32,5 +36,10 @@
 			"type": "boolean",
 			"default": false
 		}
-	}
+	},
+	"selectors": {
+        "root": ".wp-block-apage-views-count-stats"
+    },
+    "editorScript": "page_views_count-cgb-block-js",
+	"editorStyle": [ "a3pvc" ]
 }

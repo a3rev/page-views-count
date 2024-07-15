@@ -21,4 +21,3 @@ updateCategory('a3rev-blocks', {
 });
 
 import './blocks/stats/block';
-import './blocks/stats-editor/block';
