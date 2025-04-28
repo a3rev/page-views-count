@@ -2,8 +2,8 @@
 Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 6.0
-Tested up to: 6.6
-Stable tag: 2.8.4
+Tested up to: 6.8
+Stable tag: 2.8.5
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -11,7 +11,7 @@ Places an icon, all time views count and views today count at the bottom of post
 
 == DESCRIPTION ==
 
-A beautifully simple to set up plugin that gives site visitors and site owners the ability to quickly and easily see how many people have visited that page or post. 
+A beautifully simple to set up plugin that gives site visitors and site owners the ability to quickly and easily see how many people have visited that page or post.
 
 = FEATURES =
 
@@ -20,13 +20,13 @@ A beautifully simple to set up plugin that gives site visitors and site owners t
 * Set the Position of the counter to show at the top of the page or post or at the bottom
 * Set alignment of the counter Left, Right or Centre
 * Set the colour and size of the counter icon
-* Option to use load by Ajax to prevent the count from being cached by caching plugins 
+* Option to use load by Ajax to prevent the count from being cached by caching plugins
 * Option to Manually set / edit total views and views today from Page View Count meta box on any post or page editor
-* Add Page Views counter via the PVC Gutenberg block 
+* Add Page Views counter via the PVC Gutenberg block
 * Add Page Views counter via shortcode
 * Add Page Views counter via widget
 * Developers can add the Page Views Counter via php tag
-* All options and settings are point click - absolutely no coding required  
+* All options and settings are point click - absolutely no coding required
 
 = COMPATIBILTY =
 Compatible with WordPress 5.9+ and backwards to WP 5.6.0 Compatible with Classic Editor plugin (Gutenberg editor Deactivated)
@@ -41,17 +41,17 @@ Fully compatible with Elementor templates. Add counter via Shortcode or widget t
 
 = DEVELOPERS =
 
-On the plugins dashboard in the + Page Views Count Function options box you will find the Page Views Count functions and notes on how to use them. 
+On the plugins dashboard in the + Page Views Count Function options box you will find the Page Views Count functions and notes on how to use them.
 
-* Use to manually add Page views count to any content or object in the theme. 
-* Use to add page View Count to any content that is not create using WordPress custom post / taxonomy type. 
-* Use to create a custom position of the Page Views Count 
+* Use to manually add Page views count to any content or object in the theme.
+* Use to add page View Count to any content that is not create using WordPress custom post / taxonomy type.
+* Use to create a custom position of the Page Views Count
 * Functions support echo and return parameters when getting visitor stats on any variable.
 
 = TROUBLESHOOTING =
 
 * The number 1 support request we get about the plugin is that it double or triple counts page or post loads. Yes it does and if you see that it is a Red Flag that you have a misconfiguration or bug in your theme or a plugin. Page Views Count does exactly that - counts each time the page or post is loading in the browser - if its counting twice it is because the browser is double loading the page. That is a bad thing and you or your developer needs to fix that.
-  
+
 = CONTRIBUTE  =
 
 When you download Page Views Count, you join our community. Regardless of if you are a WordPress beginner or experienced developer if you'â€™re interested in contributing to Page Views Count development head over to the [Page Views Count GitHub Repository](https://github.com/a3rev/page-views-count) to find out how you can contribute.
@@ -102,6 +102,13 @@ The manual installation method involves down loading our plugin and uploading it
 
 == Changelog ==
 
+= 2.8.5 - 2025/04/28 =
+* This maintenance update applies 3 security patches and compatibility with WordPress 6.8 - please upgrade now.
+* Security Hardening - Reject the request if the key provided does not match the list of allowed keys
+* Security Hardening - Allow only administrators with manage_options capability to perform the action
+* Security Hardening - Allow only administrators with manage_options capability to enqueue script
+* Tweak - Tested for compatibility with WordPress 6.8
+
 = 2.8.4 - 2024/07/15 =
 * This release has various tweaks for compatibility with WordPress 6.6
 * Tweak - Tested for compatibility with WordPress 6.6
@@ -127,10 +134,10 @@ The manual installation method involves down loading our plugin and uploading it
 = 2.8.0 - 2023/05/24 =
 * This release removes loading PVC Stats with PHP and replaces with REST API as default with Admin-ajax as the fallback.
 * Feature - Support options for choose WP REST API or Admin Ajax load PVC stats
-* Tweak - Remove load PVC stats by PHP 
+* Tweak - Remove load PVC stats by PHP
 * Tweak - On upgrade if using PHP to load PVC stats it will update to use WP REST API
 * Tweak - If WP REST API is not active it will fall back to ADMIN-AJAX
-* Tweak - Auto detect if WP REST API and PVC endpoint are disabled, it will fall back to the ADMIN-AJAX 
+* Tweak - Auto detect if WP REST API and PVC endpoint are disabled, it will fall back to the ADMIN-AJAX
 * Tweak - Add warning notification if WP REST API or PVC Endpoint are disabled.
 * Tweak - Updated setting and help text on the Page View Count Load option box.
 * Tweak - Test for compatibility with WordPress 6.2.2
@@ -146,11 +153,11 @@ The manual installation method involves down loading our plugin and uploading it
 * Tweak - Set loading icon width and height attributes to comply with Google Core Web Vitals standards.
 
 = 2.6.2 - 2023/01/30 =
-* This maintenance release adds compatibility with plugins that set user roles, ie membership plugins. 
+* This maintenance release adds compatibility with plugins that set user roles, ie membership plugins.
 * Tweak - Validate $post->ID is not empty for compatibility with User Role plugins
 
 = 2.6.1 - 2023/01/07 =
-* Please run this update now to apply a security vulnerability patch 
+* Please run this update now to apply a security vulnerability patch
 * Security - Page View Block security hardening.
 
 = 2.6.0 - 2023/01/03 =
@@ -177,15 +184,15 @@ The manual installation method involves down loading our plugin and uploading it
 * Fix - Return custom content for 3rd plugin that use apply_filters 'the_excerpt' instead of the post, page or post type.
 
 = 2.5.3 - 2022/03/12 =
-* This security release follows a full security audit with code refactoring, security hardening including additional escaping and sanitizing. 
+* This security release follows a full security audit with code refactoring, security hardening including additional escaping and sanitizing.
 * Security - Define new esc_attribute_name_e function to escape attribute name late for echo
 * Security - Define new esc_description_e function to escape description late for echo
-* Security - Escape all $-variable 
-* Security - Sanitize all $_REQUEST, $_GET, $_POST 
+* Security - Escape all $-variable
+* Security - Sanitize all $_REQUEST, $_GET, $_POST
 * Security - Apply wp_unslash before sanitize
 
 = 2.5.2 - 2022/03/07 =
-* This maintenance release contains more code security hardening updates – please run it now.
+* This maintenance release contains more code security hardening updates ï¿½ please run it now.
 * Security - Define new esc_attribute_array_e function to escape attribute array late for echo
 * Security - Escape $default_color late for echo
 * Security - Put $-variable additional with html include into wp_kses_post
@@ -228,7 +235,7 @@ The manual installation method involves down loading our plugin and uploading it
 * Security - Get variable via name instead of use extract
 
 = 2.4.11 - 2021/07/13 =
-* This maintenance release has more code security hardening 
+* This maintenance release has more code security hardening
 * Security - Add more variable, options and html escaping
 * Tweak - Skipped version 2.4.10 to avoid PHP misread
 
@@ -242,28 +249,28 @@ The manual installation method involves down loading our plugin and uploading it
 = 2.4.8 - 2021/03/17 =
 * This maintenance release updates 23 deprecated jQuery functions for compatibility with the latest version of jQuery in WordPress 5.7
 * Tweak - Update JavaScript on plugin framework for compatibility with latest version of jQuery and resolve PHP warning event shorthand is deprecated.
-* Tweak - Replace deprecated .change( handler ) with .on( 'change', handler ) 
-* Tweak - Replace deprecated .change() with .trigger('change') 
+* Tweak - Replace deprecated .change( handler ) with .on( 'change', handler )
+* Tweak - Replace deprecated .change() with .trigger('change')
 * Tweak - Replace deprecated .focus( handler ) with .on( 'focus', handler )
 * Tweak - Replace deprecated .focus() with .trigger('focus')
 * Tweak - Replace deprecated .click( handler ) with .on( 'click', handler )
 * Tweak - Replace deprecated .click() with .trigger('click')
 * Tweak - Replace deprecated .select( handler ) with .on( 'select', handler )
-* Tweak - Replace deprecated .select() with .trigger('select') 
-* Tweak - Replace deprecated .blur( handler ) with .on( 'blur', handler ) 
-* Tweak - Replace deprecated .blur() with .trigger('blur') 
-* Tweak - Replace deprecated .resize( handler ) with .on( 'resize', handler ) 
-* Tweak - Replace deprecated .submit( handler ) with .on( 'submit', handler ) 
-* Tweak - Replace deprecated .scroll( handler ) with .on( 'scroll', handler ) 
-* Tweak - Replace deprecated .mousedown( handler ) with .on( 'mousedown', handler ) 
-* Tweak - Replace deprecated .mouseover( handler ) with .on( 'mouseover', handler ) 
+* Tweak - Replace deprecated .select() with .trigger('select')
+* Tweak - Replace deprecated .blur( handler ) with .on( 'blur', handler )
+* Tweak - Replace deprecated .blur() with .trigger('blur')
+* Tweak - Replace deprecated .resize( handler ) with .on( 'resize', handler )
+* Tweak - Replace deprecated .submit( handler ) with .on( 'submit', handler )
+* Tweak - Replace deprecated .scroll( handler ) with .on( 'scroll', handler )
+* Tweak - Replace deprecated .mousedown( handler ) with .on( 'mousedown', handler )
+* Tweak - Replace deprecated .mouseover( handler ) with .on( 'mouseover', handler )
 * Tweak - Replace deprecated .mouseout( handler ) with .on( 'mouseout', handler )
-* Tweak - Replace deprecated .keydown( handler ) with .on( 'keydown', handler ) 
-* Tweak - Replace deprecated .attr('disabled', 'disabled') with .prop('disabled', true) 
-* Tweak - Replace deprecated .removeAttr('disabled') with .prop('disabled', false) 
-* Tweak - Replace deprecated .attr('selected', 'selected') with .prop('selected', true) 
-* Tweak - Replace deprecated .removeAttr('selected') with .prop('selected', false) 
-* Tweak - Replace deprecated .attr('checked', 'checked') with .prop('checked', true) 
+* Tweak - Replace deprecated .keydown( handler ) with .on( 'keydown', handler )
+* Tweak - Replace deprecated .attr('disabled', 'disabled') with .prop('disabled', true)
+* Tweak - Replace deprecated .removeAttr('disabled') with .prop('disabled', false)
+* Tweak - Replace deprecated .attr('selected', 'selected') with .prop('selected', true)
+* Tweak - Replace deprecated .removeAttr('selected') with .prop('selected', false)
+* Tweak - Replace deprecated .attr('checked', 'checked') with .prop('checked', true)
 * Tweak - Replace deprecated .removeAttr('checked') with .prop('checked', false)
 
 = 2.4.7 - 2021/03/09 =
@@ -276,22 +283,22 @@ The manual installation method involves down loading our plugin and uploading it
 * Tweak - Update JavaScript on plugin framework for work compatibility with latest version of jQuery
 * Fix - Replace .bind( event, handler ) by .on( event, handler ) for compatibility with latest version of jQuery
 * Fix - Replace :eq() Selector by .eq() for compatibility with latest version of jQuery
-* Fix - Replace .error() by .on( “error” ) for compatibility with latest version of jQuery
+* Fix - Replace .error() by .on( ï¿½errorï¿½ ) for compatibility with latest version of jQuery
 * Fix - Replace :first Selector by .first() for compatibility with latest version of jQuery
 * Fix - Replace :gt(0) Selector by .slice(1) for compatibility with latest version of jQuery
 * Fix - Remove jQuery.browser for compatibility with latest version of jQuery
 * Fix - Replace jQuery.isArray() by Array.isArray() for compatibility with latest version of jQuery
-* Fix - Replace jQuery.isFunction(x) by typeof x === “function” for compatibility with latest version of jQuery
-* Fix - Replace jQuery.isNumeric(x) by typeof x === “number” for compatibility with latest version of jQuery
+* Fix - Replace jQuery.isFunction(x) by typeof x === ï¿½functionï¿½ for compatibility with latest version of jQuery
+* Fix - Replace jQuery.isNumeric(x) by typeof x === ï¿½numberï¿½ for compatibility with latest version of jQuery
 * Fix - Replace jQuery.now() by Date.now() for compatibility with latest version of jQuery
 * Fix - Replace jQuery.parseJSON() by JSON.parse() for compatibility with latest version of jQuery
 * Fix - Remove jQuery.support for compatibility with latest version of jQuery
 * Fix - Replace jQuery.trim(x) by x.trim() for compatibility with latest version of jQuery
 * Fix - Replace jQuery.type(x) by typeof x for compatibility with latest version of jQuery
-* Fix - Replace .load( handler ) by .on( “load”, handler ) for compatibility with latest version of jQuery
+* Fix - Replace .load( handler ) by .on( ï¿½loadï¿½, handler ) for compatibility with latest version of jQuery
 * Fix - Replace .size() by .length for compatibility with latest version of jQuery
 * Fix - Replace .unbind( event ) by .off( event ) for compatibility with latest version of jQuery
-* Fix - Replace .unload( handler ) by .on( “unload”, handler ) for compatibility with latest version of jQuery
+* Fix - Replace .unload( handler ) by .on( ï¿½unloadï¿½, handler ) for compatibility with latest version of jQuery
 
 = 2.4.5 - 2020/12/15 =
 * This maintenance release adds a block preview image for block discovery
@@ -322,13 +329,13 @@ The manual installation method involves down loading our plugin and uploading it
 * Fix - Update some code from global ${$this- to $GLOBALS[$this missed on previous version
 
 = 2.4.0 - 2020/03/19 =
-* This big feature release adds dynamic text, change Total Views and Views Today text from the plugins dashboard. Add support for Dynamic Text string translation. Compatibility with WordPress 5.4, Gutenberg 7.5, WooCommerce 4.0 plus PHP 7.0 to 7.4 
+* This big feature release adds dynamic text, change Total Views and Views Today text from the plugins dashboard. Add support for Dynamic Text string translation. Compatibility with WordPress 5.4, Gutenberg 7.5, WooCommerce 4.0 plus PHP 7.0 to 7.4
 * Feature - Add dynamic text support for Total Views and Views Today day text from plugin settings
 * Feature - Option to show text on either side of the count number or both sides
 * Feature - Add dynamic text strings support for translations with plugins like WPML and Qtranslate
 * Tweak - Add the dynamic text options to the Counter Position and Style option box.
-* Tweak - Replace No total views yet text with the number 0 
-* Tweak - Do not show Views Today when the count is 0  
+* Tweak - Replace No total views yet text with the number 0
+* Tweak - Do not show Views Today when the count is 0
 * Tweak - Move the Counter Icon settings to new options box.
 * Tweak - Update Gutenberg block for work compatibility with Gutenberg latest version 7.5
 * Tweak - Test for compatibility with WordPress 5.4
@@ -336,8 +343,8 @@ The manual installation method involves down loading our plugin and uploading it
 * Tweak - Update readme decription screenshots.
 
 = 2.3.0 - 2020/03/10 =
-* This feature release contains, new PVC shortcode, new PVC Widget, option to only show total views, a new eye icon option, full compatibility with Elementor Templates, completion of PHP Composer refactor and 4 PHP fixes for compatibility with PHP v 7.0 to 7.4. 
-* Feature - Add new PVC shortcode `[pvc_stats postid="" increase="1" show_views_today="1"]` 
+* This feature release contains, new PVC shortcode, new PVC Widget, option to only show total views, a new eye icon option, full compatibility with Elementor Templates, completion of PHP Composer refactor and 4 PHP fixes for compatibility with PHP v 7.0 to 7.4.
+* Feature - Add new PVC shortcode `[pvc_stats postid="" increase="1" show_views_today="1"]`
 * Feature - Add new PVC widget
 * Feature - Add new Counter Icon eye option
 * Feature - Add Counter Views Type option: Default is ## Total Views, ## Views Today, Option is ## Total Views (hide Views Today)
@@ -373,10 +380,10 @@ The manual installation method involves down loading our plugin and uploading it
 * Fix - PHP warning continue targeting switch is equivalent to break for compatibility on PHP 7.3
 
 = 2.1.1 - 2018/12/17 =
-* This is a maintenance update for WordPress version 5.0.2 and PHP 7.3 compatibility. 
-* Framework - Update to use WordPress ESLint rules 
+* This is a maintenance update for WordPress version 5.0.2 and PHP 7.3 compatibility.
+* Framework - Update to use WordPress ESLint rules
 * Framework - Test and update for compatibility with PHP 7.3
-* Tweak - Test for compatibility with WordPress 
+* Tweak - Test for compatibility with WordPress
 
 = 2.1.0 - 2018/12/14 =
 * This feature upgrade ports Page View Count editor meta to Page Views Gutenberg block. Full compatibility with WP 5.0.1, 4.9.9 and the Classic editor.
@@ -391,20 +398,20 @@ The manual installation method involves down loading our plugin and uploading it
 * Tweak - Test for compatibility with WordPress 5.0.1 and WordPress 4.9.9
 
 = 2.0.5 - 2018/05/26 =
-* This maintenance update is for compatibility with WordPress 4.9.6 and the new GDPR compliance requirements for users in the EU 
+* This maintenance update is for compatibility with WordPress 4.9.6 and the new GDPR compliance requirements for users in the EU
 * Tweak - Test for compatibility with WordPress 4.9.6
 * Tweak - Check for any issues with GDPR compliance. None Found
 * Framework - Update a3rev Plugin Framework to version 2.0.3
 
 = 2.0.4 - 2018/03/06 =
 * Maintenance Update. Fixes for Views today count always showing 0 value, PHP warning and conflict with Yoast SEO Facebook description
-* Tweak - Update Readme - Installation - Minimum Requirements PHP to version 5.6.0 
-* Fix - Update variable to resolve todays views always showing 0. Thanks to @stefanodalli  
+* Tweak - Update Readme - Installation - Minimum Requirements PHP to version 5.6.0
+* Fix - Update variable to resolve todays views always showing 0. Thanks to @stefanodalli
 * Fix - Check if global $post exist to resolve PHP Notice Trying to get property of non-object in pvc_class.php on line 225
 * Fix - Remove old filter that was causing conflict with Yoast SEO Facebook description meta causing the post content to be used and not be changed. Thanks to @banana7777 for reporting the issue
 
 = 2.0.3 - 2018/02/13 =
-* Maintenance Update. Under the bonnet tweaks to keep your plugin running smoothly and is the foundation for new features to be developed this year 
+* Maintenance Update. Under the bonnet tweaks to keep your plugin running smoothly and is the foundation for new features to be developed this year
 * Framework - Update a3rev Plugin Framework to version 2.0.2
 * Framework - Add Framework version for all style and script files
 * Tweak - Update for full compatibility with a3rev Dashboard plugin
@@ -437,7 +444,7 @@ The manual installation method involves down loading our plugin and uploading it
 * Feature - Plugin source code now on public Github repository to allow users and developers to contribute
 * Tweak - Update Ajax load for connect to WordPress JSON RESTful API instead of calling to admin-ajax.php
 * Tweak - Register fontawesome in plugin framework with style name font-awesome-styles
-* Tweak - Update plugins readme to show description of new features, link to Github Repo and translations page 
+* Tweak - Update plugins readme to show description of new features, link to Github Repo and translations page
 * Tweak - Tested for compatibility with WordPress major version 4.8.0
 
 = 1.4.0 - 2016/04/15 =
@@ -592,6 +599,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 == Upgrade Notice ==
 
+= 2.8.5 =
+This maintenance update applies 3 security patches and compatibility with WordPress 6.8 - please upgrade now.
+
 = 2.8.4 =
 This release has various tweaks for compatibility with WordPress 6.6
 
@@ -635,7 +645,7 @@ This maintenance release has 2 fixes for plugins that filter custom content with
 This security release follows a full security audit with code refactoring, security hardening including additional escaping and sanitizing.
 
 = 2.5.2 =
-This maintenance release contains more code security hardening updates – please run it now.
+This maintenance release contains more code security hardening updates ï¿½ please run it now.
 
 = 2.5.1 =
 This maintenance release contains security hardening updates - please run it now.

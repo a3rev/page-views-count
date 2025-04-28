@@ -96,11 +96,6 @@ add_action('wp_ajax_nopriv_pvc_yellow_message_dontshow', array('\A3Rev\PageViews
 add_action('plugins_loaded', 'pvc_lite_upgrade_plugin');
 function pvc_lite_upgrade_plugin () {
 
-	if(version_compare(get_option('a3_pvc_version'), '1.2') === -1){
-		update_option('a3_pvc_version', '1.2');
-		\A3Rev\PageViewsCount\A3_PVC::upgrade_version_1_2();
-	}
-
 	if(version_compare(get_option('a3_pvc_version'), '1.3.5') === -1){
 		update_option('a3_pvc_version', '1.3.5');
 
@@ -207,13 +202,13 @@ if ( 'responsi' === get_template() ) {
 function pvc_ict_t_e( $name, $string ) {
 	global $pvc_wpml;
 	$string = ( function_exists('icl_t') ? icl_t( $pvc_wpml->plugin_wpml_name, $name, $string ) : $string );
-	
+
 	echo wp_kses_post( $string );
 }
 
 function pvc_ict_t__( $name, $string ) {
 	global $pvc_wpml;
 	$string = ( function_exists('icl_t') ? icl_t( $pvc_wpml->plugin_wpml_name, $name, $string ) : $string );
-	
+
 	return $string;
 }
