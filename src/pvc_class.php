@@ -40,16 +40,12 @@ class A3_PVC
 		$nowisnow = wp_date('Y-m-d');
 
 		if ( !is_array( $post_ids ) ) $post_ids = array( $post_ids );
-		$post_ids = array_map( function( $value ) {
-			global $wpdb;
-			return $wpdb->prepare( '%s', $value );
-		}, $post_ids );
 
-		// Create placeholders for each ID
+		// Create placeholders for each ID.
 		$placeholders = implode(',', array_fill(0, count($post_ids), '%s'));
 
-		// Add $nowisnow to the end of post_ids array for the final prepare statement
-		$prepare_values = $post_ids;
+		// Add $nowisnow to the end of post_ids array for the final prepare statement.
+		$prepare_values   = $post_ids;
 		$prepare_values[] = $nowisnow;
 
 		$sql = $wpdb->prepare(
