@@ -82,9 +82,9 @@ class Global_Panel extends FrameWork\Admin_UI
 		//$this->subtab_init();
 
 		$this->form_messages = array(
-				'success_message'	=> __( 'Page View Count Settings successfully saved.', 'page-views-count' ),
-				'error_message'		=> __( 'Error: Page View Count Settings can not save.', 'page-views-count' ),
-				'reset_message'		=> __( 'Page View Count Settings successfully reseted.', 'page-views-count' ),
+				'success_message'	=> __( 'Page View Count Settings successfully saved.' ),
+				'error_message'		=> __( 'Error: Page View Count Settings can not save.' ),
+				'reset_message'		=> __( 'Page View Count Settings successfully reseted.' ),
 			);
 
 		add_action( $this->plugin_name . '_set_default_settings' , array( $this, 'set_default_settings' ) );
@@ -315,11 +315,11 @@ class Global_Panel extends FrameWork\Admin_UI
 					),
 				),
 			),
-			array(  
+			array(
 				'name' 		=> __( 'Total Views Text', 'page-views-count' ),
 				'id' 		=> 'total_text',
 				'type' 		=> 'array_textfields',
-				'ids'		=> array( 
+				'ids'		=> array(
 	 								array(  'id' 		=> 'total_text_before',
 	 										'name' 		=> '##',
 	 										'css'		=> 'width:200px;',
@@ -328,24 +328,24 @@ class Global_Panel extends FrameWork\Admin_UI
 									array(  'id' 		=> 'total_text_after',
 	 										'name' 		=> __( 'Empty Field = Nothing Shows', 'page-views-count' ),
 	 										'css'		=> 'width:200px;',
-	 										'default'	=> __( 'total views', 'page-views-count' ) 
+	 										'default'	=> __( 'total views', 'page-views-count' )
 									),
 	 							)
 			),
-			array(  
+			array(
 				'name' 		=> __( 'Views Today Text', 'page-views-count' ),
 				'id' 		=> 'today_text',
 				'type' 		=> 'array_textfields',
-				'ids'		=> array( 
+				'ids'		=> array(
 	 								array(  'id' 		=> 'today_text_before',
 	 										'name' 		=> '##',
 	 										'css'		=> 'width:200px;',
 	 										'default'	=> '',
 									),
 									array(  'id' 		=> 'today_text_after',
-	 										'name' 		=> __( 'Empty Field = Nothing Shows', 'page-views-count' ), 
+	 										'name' 		=> __( 'Empty Field = Nothing Shows', 'page-views-count' ),
 	 										'css'		=> 'width:200px;',
-	 										'default'	=> __( 'views today', 'page-views-count' ) 
+	 										'default'	=> __( 'views today', 'page-views-count' )
 									),
 	 							)
 			),
@@ -382,13 +382,13 @@ class Global_Panel extends FrameWork\Admin_UI
 				'id' 		=> 'icon_size',
 				'default'	=> 'medium',
 				'type' 		=> 'select',
-				'options' => array( 
+				'options' => array(
 					'small'  => __( 'Small', 'page-views-count' ),
 					'medium' => __( 'Medium', 'page-views-count' ),
 					'large'  => __( 'Large', 'page-views-count' ),
 				),
 			),
-			array(  
+			array(
 				'name' => __( 'Icon Color', 'page-views-count' ),
 				'id' 		=> 'icon_color',
 				'default'	=> '#000000',

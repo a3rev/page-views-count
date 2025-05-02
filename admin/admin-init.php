@@ -44,7 +44,7 @@ class Admin_Init extends Admin_UI
 		$menu_hook = 'admin_menu';
 		add_action( $menu_hook, array( $this, 'register_admin_menu' ) );
 
-		add_action( 'plugins_loaded', array( $this, 'get_all_settings' ), 8 );
+		add_action( 'init', array( $this, 'get_all_settings' ), 0 );
 	}
 
 	/*-----------------------------------------------------------------------------------*/

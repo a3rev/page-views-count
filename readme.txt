@@ -3,7 +3,7 @@ Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 2.8.6
+Stable tag: 2.8.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -101,6 +101,11 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.8.7 - 2025/05/02 =
+* This maintenance release has 2 user identified code bug fixes.
+* Fix - Remove wp_ajax_nopriv_  action for not logged in user. Props @PluginVulnerabilities for reporting the issue
+* Fix - Call get_all_settings at init to resolve textdomain load warning. Props @adrianodownload for reporting the bug
 
 = 2.8.6 - 2025/04/28 =
 * This maintenance release has a bug fix that was introduced in security patch release 2.8.5 earlier today.
@@ -603,6 +608,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.8.7 =
+This maintenance release has 2 user identified code bug fixes.
 
 = 2.8.6 =
 This maintenance release has a bug fix that was introduced in security patch release 2.8.5 earlier today.

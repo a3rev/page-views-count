@@ -90,7 +90,6 @@ add_action( 'wp_enqueue_scripts', array( '\A3Rev\PageViewsCount\A3_PVC', 'regist
 
 // AJAX hide yellow message dontshow
 add_action('wp_ajax_pvc_yellow_message_dontshow', array('\A3Rev\PageViewsCount\A3_PVC', 'yellow_message_dontshow') );
-add_action('wp_ajax_nopriv_pvc_yellow_message_dontshow', array('\A3Rev\PageViewsCount\A3_PVC', 'yellow_message_dontshow') );
 
 // Check upgrade functions
 add_action('plugins_loaded', 'pvc_lite_upgrade_plugin');
