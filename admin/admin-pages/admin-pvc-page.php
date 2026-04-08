@@ -43,7 +43,12 @@ class Settings extends FrameWork\Admin_UI
 	/*-----------------------------------------------------------------------------------*/
 	public function __construct() {
 		$this->page_init();
-		$this->tabs_include();
+
+		if ( did_action( 'after_setup_theme' ) ) {
+			$this->tabs_include();
+		} else {
+			add_action( 'after_setup_theme', array( $this, 'tabs_include' ) );
+		}
 	}
 
 	/*-----------------------------------------------------------------------------------*/

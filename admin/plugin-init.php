@@ -43,7 +43,7 @@ function a3_pvc_plugin_init() {
 	a3_pvc_load_plugin_textdomain();
 }
 
-add_action( 'init', 'a3_pvc_plugin_init' );
+add_action( 'after_setup_theme', 'a3_pvc_plugin_init' );
 
 add_action( 'widgets_init', function() {
 	register_widget( '\A3Rev\PageViewsCount\Widget\PVC' );

@@ -36,7 +36,7 @@ class Admin_Init extends Admin_UI
 	/*-----------------------------------------------------------------------------------*/
 	public function init() {
 
-		add_action( 'plugins_loaded', array( $this, 'add_admin_menu' ), 7 );
+		add_action( 'after_setup_theme', array( $this, 'add_admin_menu' ), 20 );
 
 		// Filter to add admin pages for Amin UI process
 		add_filter( $this->plugin_name . '_admin_pages', array( $this, 'add_admin_pages' ) );
@@ -44,7 +44,7 @@ class Admin_Init extends Admin_UI
 		$menu_hook = 'admin_menu';
 		add_action( $menu_hook, array( $this, 'register_admin_menu' ) );
 
-		add_action( 'init', array( $this, 'get_all_settings' ), 0 );
+		add_action( 'after_setup_theme', array( $this, 'get_all_settings' ), 20 );
 	}
 
 	/*-----------------------------------------------------------------------------------*/
