@@ -19,6 +19,7 @@ return array(
     'A3Rev\\PageViewsCount\\FrameWork\\Tabs\\Global_Settings' => $baseDir . '/admin/tabs/admin-pvc-tab.php',
     'A3Rev\\PageViewsCount\\FrameWork\\Uploader' => $baseDir . '/admin/includes/uploader/class-uploader.php',
     'A3Rev\\PageViewsCount\\MetaBox' => $baseDir . '/src/metabox/class-pvc-metabox.php',
+    'A3Rev\\PageViewsCount\\Pvc_Editor_Sidebar' => $baseDir . '/src/metabox/class-pvc-editor-sidebar.php',
     'A3Rev\\PageViewsCount\\Shortcode' => $baseDir . '/src/pvc_shortcode.php',
     'A3Rev\\PageViewsCount\\WPML_Functions' => $baseDir . '/src/class-wpml-functions.php',
     'A3Rev\\PageViewsCount\\Widget\\PVC' => $baseDir . '/src/pvc_widget.php',

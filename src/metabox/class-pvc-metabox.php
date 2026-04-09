@@ -12,6 +12,10 @@ class MetaBox
 	 * Adds the meta box container.
 	 */
 	public function add_meta_box( $post_type ) {
+		if ( function_exists( 'use_block_editor_for_post_type' ) && use_block_editor_for_post_type( $post_type ) ) {
+			return;
+		}
+
 		add_meta_box(
 			'a3_pvc'
 			,__( 'Page View Counter', 'page-views-count' )

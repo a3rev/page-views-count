@@ -54,6 +54,8 @@ if ( version_compare( PHP_VERSION, '5.6.0', '>=' ) ) {
 
 	new \A3Rev\PageViewsCount\MetaBox();
 
+	new \A3Rev\PageViewsCount\Pvc_Editor_Sidebar();
+
 	// Gutenberg blocks init
 	new \A3Rev\PageViewsCount\Blocks();
 	require 'src/blocks/stats/block.php';
