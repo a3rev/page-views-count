@@ -43,7 +43,7 @@ class Admin_UI
 	public $version_transient      = '';
 	public $is_free_plugin         = true;
 	public $is_load_google_fonts   = true;
-	
+
 	public $support_url            = '';
 
 
@@ -84,13 +84,13 @@ class Admin_UI
 		$this->version_transient         = A3_PVC_KEY . '_licinfo';
 
 		if ( defined( 'A3_PVC_G_FONTS' ) ) {
-			$this->is_load_google_fonts = (boolean) A3_PVC_G_FONTS;
+			$this->is_load_google_fonts = (bool) A3_PVC_G_FONTS;
 		}
 
 		$this->support_url = 'https://wordpress.org/support/plugin/page-views-count/';
 	}
-	
-	
+
+
 	/*-----------------------------------------------------------------------------------*/
 	/* admin_plugin_url() */
 	/*-----------------------------------------------------------------------------------*/
@@ -217,7 +217,7 @@ class Admin_UI
 				delete_transient( $this->google_map_api_key_option . '_status' );
 			}
 		}
-	} 
+	}
 
 	/**
 	 * get_premium_video_data()

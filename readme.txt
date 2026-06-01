@@ -3,7 +3,7 @@ Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 6.0
 Tested up to: 7.0
-Stable tag: 2.9.0
+Stable tag: 2.9.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -101,6 +101,10 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.9.1 - 2026/06/01 =
+* This maintenance release adds compatibility with PHP 8.5.
+* Tweak - Replace deprecated `(boolean)` cast with `(bool)` for compatibility with PHP 8.5
 
 = 2.9.0 - 2026/04/09 =
 * This maintenance release has bug fixes and compatibility with WordPress 7.0
@@ -617,6 +621,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notice ==
+
+= 2.9.1 =
+* This maintenance release adds compatibility with PHP 8.5.
 
 = 2.9.0 =
 This maintenance release has bug fixes and compatibility with WordPress 7.0
