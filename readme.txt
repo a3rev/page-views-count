@@ -3,7 +3,7 @@ Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: wordpress page view, page view count , post views, post view count, gutenberg
 Requires at least: 6.0
 Tested up to: 7.0
-Stable tag: 2.9.1
+Stable tag: 2.9.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -101,6 +101,14 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.9.2 - 2026/06/29 =
+* This maintenance release applies security hardening and minor code tidy-ups.
+* Hardening - Restrict admin AJAX actions to authorized users and remove the unauthenticated hook
+* Hardening - Limit the number of IDs processed per page view count request
+* Tweak - Enable SSL verification on outbound API requests
+* Tweak - Remove deprecated get_magic_quotes_gpc() usage for PHP 8 compatibility
+* Tweak - Remove redundant output in the page view AJAX handlers
 
 = 2.9.1 - 2026/06/01 =
 * This maintenance release adds compatibility with PHP 8.5.
