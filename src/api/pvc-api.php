@@ -11,10 +11,12 @@ class API
 
     public $namespace = 'pvc/v1';
 
-    public $rest_bases = array( 
+    public $rest_bases = array(
             '/increase',
             '/view'
         );
+
+    const MAX_IDS_PER_REQUEST = 100;
 
     public function __construct() {
         add_action( 'rest_api_init', array( $this, 'rest_api_init' ) );
@@ -27,7 +29,7 @@ class API
     public function pvc_increase_ajax() {
         check_ajax_referer( 'pvc_stats_counter', 'security' );
         if ( ! empty( $_GET['ids'] ) ) {
-            echo $this->pvc_increase( sanitize_text_field( $_GET['ids'] ) );
+            $this->pvc_increase( sanitize_text_field( $_GET['ids'] ) );
         }
 
         die();
@@ -36,7 +38,7 @@ class API
     public function pvc_view_ajax() {
         check_ajax_referer( 'pvc_stats_counter', 'security' );
         if ( ! empty( $_GET['ids'] ) ) {
-            echo $this->pvc_view( sanitize_text_field( $_GET['ids'] ) );
+            $this->pvc_view( sanitize_text_field( $_GET['ids'] ) );
         }
 
         die();
@@ -130,6 +132,9 @@ class API
 
         $post_ids = array_map( 'trim', $post_ids );
 
+        // Bound IDs handled per request to prevent unbounded row creation.
+        $post_ids = array_slice( array_unique( $post_ids ), 0, self::MAX_IDS_PER_REQUEST );
+
         $ids = array();
         foreach ( $post_ids as $post_id ) {
             if ( ! in_array( $post_id, $ids ) ) {
@@ -157,6 +162,9 @@ class API
         }
 
         $post_ids = array_map( 'trim', $post_ids );
+
+        // Bound IDs handled per request to prevent unbounded row creation.
+        $post_ids = array_slice( array_unique( $post_ids ), 0, self::MAX_IDS_PER_REQUEST );
 
         $json_data = array(
             'success' => true,
